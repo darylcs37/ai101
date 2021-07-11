@@ -1,0 +1,404 @@
+<html>
+<head>
+<title>
+	myAI (24 Apr 2021)
+</title>
+
+<style>
+body {
+	margin-top   : 2pt;
+	margin-left  : 2pt;
+	margin-right : 2pt;
+
+	SCROLLBAR-FACE-COLOR: gray;
+	FONT-SIZE: 20pt;
+	SCROLLBAR-HIGHLIGHT-COLOR: white;
+	SCROLLBAR-SHADOW-COLOR: black;
+	color: black;
+	SCROLLBAR-3DLIGHT-COLOR: black;
+	SCROLLBAR-ARROW-COLOR: black;
+	SCROLLBAR-TRACK-COLOR: silver;
+	font-family: verdana, arial, helvetica, sans-serif;
+	SCROLLBAR-DARKSHADOW-COLOR: white;
+	TEXT-ALIGN: left
+}
+
+table {
+
+	FONT-SIZE: 10pt;
+
+}
+
+/*---Title-------------------------------------------------------------------*/
+H1 {
+	/*
+	font-family : "new century schoolbook, serif, Times";
+ #00BFFF;
+	*/
+	border-left-width:  "20pt";
+	border-left-style:  solid;
+	border-left-color : black;
+	border	: sunken;
+
+	background	: "#FF3366";
+	color		: "#FFFFFF";
+	font-size	: "30px";
+	text-align	: left;
+
+	padding-top    : 5pt;
+	padding-left   : 5pt;
+	padding-bottom : 5pt;
+	padding-right  : 5pt;
+	margin         : 0pt;
+}
+
+A:link    { color: #2F4F4F; } /* unvisited link daa520 */
+A:visited { color: #405888; } /* visited links */
+
+/*---Header------------------------------------------------------------------*/
+H2 {
+	background   : "#3366FF";
+	color        : "#FFFFFF";
+	font-size    : "30px";
+
+	padding-top    : 5pt;
+	padding-left   : 5pt;
+	padding-bottom : 5pt;
+	padding-right  : 5pt;
+	margin         : 0pt;
+}
+
+H3 {
+	background   : "#23238E";
+	color        : "#FFFFFF";
+	font-size    : "20px";
+
+	padding-top    : 5pt;
+	padding-left   : 5pt;
+	padding-bottom : 5pt;
+	padding-right  : 5pt;
+	margin         : 0pt;
+}
+
+H4 {
+	background   : "#CD7F32";
+	color        : "#FFFFFF";
+	font-size    : "15px";
+
+	padding-top    :  8pt;
+	padding-left   :  8pt;
+	padding-bottom :  8pt;
+	padding-right  :  8pt;
+}
+
+
+/*---3D boxes------------------------------------------------------------------*/
+.GreyList {
+	background     : #dddddd;
+	border-width   : 0px;
+	padding-top    : 20px;
+	padding-bottom : 5px;
+	border-bottom-width : 2px;
+}
+
+.LightGreyList {
+	background     : #eeeeee;
+	border-width   : 0px;
+	padding-top    : 20px;
+	padding-bottom : 5px;
+	border-bottom-width : 2px;
+	padding-left        : 10px;
+	padding-right       : 5px;
+}
+
+.CodeExample{
+	background  : #eeeeee;
+	font-family : Courier, Helvetica, Arial;
+}
+
+
+
+/*---Now Tags------------------------------------------------------------------*/
+.tagBlue {
+	background   : #3377ff;
+	color        : #FFFFFF;
+	href        : #FFFFFF;
+	anchor        : #FFFFFF;
+}
+
+
+
+/*---------------------------------------------------------------------------*/
+/* menu header */
+  .tblBlueHeader {font-size: 12px; font-weight: bold;
+                  background: #333399; border-top: solid 1px #394CB8; border-left: solid 1px #394CB8;}
+  .tblBlueBody {font-size: 12px; color: #ffffff; background: #333366;
+                border-top: solid 1px #434376; border-left: solid 1px #434376; border-bottom: solid 1px #232356; border-right: solid 1px #232356;}
+
+  .tblGreenHeader {font-size: 12px; font-weight: bold; background: #4D9933;
+                   border-top: solid 1px #437643; border-left: solid 1px #437643; border-bottom: solid 1px #235623; border-right: solid 1px #235623;}
+  .tblGreenBody {font-size: 12px; background: #1B3D29;
+                 border-top: solid 1px #437643; border-left: solid 1px #437643; border-bottom: solid 1px #235623; border-right: solid 1px #235623;}
+  a.tblGreenLink {text-decoration: none; color: #000000; linkColor:#000000; alinkColor:#000000; vlinkColor :#000000;}
+  a.tblGreenLink.link {color:#000000; }
+  a.tblGreenLink.visited {color:#000000; }
+
+/*---------------------------------------------------------------------------*/
+</style>
+
+
+
+</head>
+<body>
+
+
+
+<p/>
+
+<table width="100%">
+<tr valign="top"><td width="30%">
+
+
+
+<hr><!----------------------------------------------------------->
+<h1>	AI101 - Hands-on 	</h1>
+
+
+<ol start=1 type=1>
+<hr><!----------------------------------------------------------->
+<h2>	Text	</h2>
+
+<li/>		<a href="https://translate.google.com.sg/">		Google translate	</a>,
+		<a href="https://blog.statsbot.co/machine-learning-translation-96f0ed8f19e4">	How It Works	</a>
+
+<li/>		<a href="https://www.google.com/search?client=firefox-b-ab&ei=fZjiXPKlN4HYvATrrq3ACA&q=Pasta+%26+Noodles&oq=Pasta+%26+Noodles&gs_l=psy-ab.3..0l8j0i22i30l2.55941.60475..60642...3.0..1.200.1442.17j2j1......0....1..gws-wiz.......0i71j0i131j0i67j0i10j0i10i67j0i131i67.s1CB0KSiwtk">	Google Knowledge Graph </a>,
+		<a href="https://yoast.com/google-knowledge-graph/">		How It Works	</a>
+
+<li/>		Examples <a href="https://try.rosette.com/">		Rosette </a>,
+		<a href="http://www.epsilonsys.com/text-api-demo/web-ner/ner_multilang_enttyty_rd_last.php">		Epsilon Sys </a>,
+		<a href="https://huggingface.co/hmtl/">		HuggingFace </a>,
+		<a href="https://demo.allennlp.org/coreference-resolution">		Allen NLP </a>,
+		<a href="http://corenlp.run/#text=Hongkong%20protest%20is%20getting%20serious%20with%20lots%20of%20concern%20from%20neighbouring%20countries">				Stanford NLP </a>,
+		<a href="https://explosion.ai/demos/displacy-ent">	Explosion.AI - Spacy NER </a>,
+		<a href="https://dandelion.eu/semantic-text/entity-extraction-demo/">		Dandelion NER	</a>,
+		<a href="https://www.linkedin.com/pulse/spacyirl-2019-conference-overview-ivan-bilan">		How It Works	</a>
+
+<li/>		<a href="https://app.inferkit.com/demo">		Write With Transformer Demo 1 	</a>,
+		<a href="https://transformer.huggingface.co/">		Demo 2 	</a>,
+		<a href="https://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/">	How It Works	</a>,
+		<a href="https://arxiv.org/abs/2002.12327">	2	</a>,
+		<a href="https://jalammar.github.io/illustrated-transformer/">	3	</a>,
+		<a href="http://jalammar.github.io/illustrated-bert/">	4 (BERT) 	</a>,
+		<a href="https://www.lyrn.ai/2018/11/07/explained-bert-state-of-the-art-language-model-for-nlp/">	5 (BERT)	</a>,
+		<a href="https://www.analyticsvidhya.com/blog/2019/09/demystifying-bert-groundbreaking-nlp-framework/">	6 (BERT)	</a>,
+		<a href="http://jalammar.github.io/illustrated-gpt2/">	7 (GPT-2)	</a>,
+		<a href="https://amaarora.github.io/2020/02/18/annotatedGPT2.html?utm_campaign=Data_Elixir&utm_source=Data_Elixir_273">	8 (GPT-2)	</a>,
+		<a href="https://jalammar.github.io/how-gpt3-works-visualizations-animations/">	9 (GPT-3)	</a>,
+		<a href="https://neptune.ai/blog/bert-and-the-transformer-architecture-reshaping-the-ai-landscape">	10 (BERT)	</a>,
+
+<li/>		<a href="https://newsyoucantuse.com/">		News You Cannot Use	</a>,
+		<a href="https://www.fakefake.news/">			Fake Fake News	</a>,
+		<a href="https://medium.com/@ageitgey/deepfaking-the-news-with-nlp-and-transformer-models-5e057ebd697d">	How It Works	</a>
+
+
+<hr><!----------------------------------------------------------->
+<br/><h2>	Image	</h2>
+
+<li/>		<a href="http://deepscene.cs.uni-freiburg.de/">		Image - Segmentation	</a>
+
+<li/>		Model Gallery (Celeb) <a href="https://www.clarifai.com/models/celebrity-image-recognition">	Clarifai	</a>,
+		<a href="https://sightengine.com/detect-recognize-celebrities">	SightEngine	</a>,
+		<a href="https://starbyface.com/">		StarByFace	</a>,
+		<a href="https://www.carinaphysio.com.au/index_files/hover_image_464403.jpg">		Sample 1	</a>,
+		<a href="https://starbyface.com/ImgFiles/Zhang%20Ziyi/3.jpg">		Sample 2	</a>,
+
+
+<p/>
+
+<li/>		<a href="https://www.clarifai.com/models/face-detection">	Face Detection  (Clarifai)	</a>,
+		<a href="https://www.clarifai.com/developers/model-gallery">	Image Understanding (Clarifai)	</a>,
+		<a href="https://static.ricemedia.co/wp-content/uploads/2017/11/ABTM4-Jack-Neo-Cast_Rice-Media.jpg">	Sample 1	</a>,
+		<a href="https://media.cleo.com.sg/2019/04/pokemon-centre-jewel-changi-airport-singapore.jpg">	Sample 2	</a>
+<li/>		<a href="https://sightengine.com/demo">	SightEngine Image Analysis	</a>
+
+<p/>
+<li/>		<a href="https://demos.algorithmia.com/deep-style/">	Style Transfer (Algorithmia)	</a>,
+		<a href="https://static.ricemedia.co/wp-content/uploads/2017/11/ABTM4-Jack-Neo-Cast_Rice-Media.jpg">	Sample 1	</a>,
+
+<li/>		<a href="https://thispersondoesnotexist.com/">	GAN - This Person Does Not Exist	</a>,
+		<a href="https://generated.photos/faces">	GAN - Generated.Photos	</a>,
+
+		<a href="https://thisxdoesnotexist.com/">	GAN - This X Does Not Exist	</a>
+
+		<a href="https://github.com/NVlabs/stylegan2">	How It Works	</a>,
+		<a href="https://towardsdatascience.com/graduating-in-gans-going-from-understanding-generative-adversarial-networks-to-running-your-own-39804c283399">	2	</a>
+
+<li/>		<a href="https://erkaman.github.io/regl-cnn/src/demo.html">		Single Digit Handwriting </a>
+<li/>		<a href="https://www.autodraw.com/">	AutoDraw	</a>,
+		<a href="https://quickdraw.withgoogle.com/#">		Google Quickdraw	</a>,
+		<a href="https://ai.googleblog.com/2017/04/teaching-machines-to-draw.html">	How It Works	</a>
+		<a href="https://towardsdatascience.com/doodling-with-deep-learning-1b0e11b858aa">	2	</a>
+
+<li/>		GauGAN
+		<a href="http://nvidia-research-mingyuliu.com/gaugan">	Nvidia GauGAN </a>,
+		<a href="https://ganpaint.io/demo/?project=church">	GANPaint Studio	</a>,
+		<a href="http://gandissect.res.ibm.com/ganpaint.html?project=churchoutdoor&layer=layer4">	Scene In-Painting	</a>
+
+<li/>		<a href="https://make.girls.moe/#/">		Cartoon GAN	</a>,
+		<a href="https://www.gwern.net/Faces#cropping">	How It Works	</a>,
+		<a href="https://github.com/FilipAndersson245/cartoon-gan">	2	</a>
+
+<li/>		<a href="https://vqa.cloudcv.org/">		Visual Q&A		</a>
+<li/>		<a href="http://demo.visualdialog.org/">		Visual Q&A (Chatbot)		</a>
+
+<li/>		<a href="http://stanislaschaillou.com/thesis/GAN/unit_program/">		Floorplan (Stanislas Chaillou)	</a>
+
+
+
+<hr><!----------------------------------------------------------->
+<br/><h2>	Video (requires WebCam) </h2>
+
+<li/>		<a href="https://storage.googleapis.com/tfjs-models/demos/posenet/camera.html">	PoseNet		</a>,
+		<a href="https://storage.googleapis.com/tfjs-models/demos/body-pix/index.html">	BodyPix		</a>,
+		<a href="http://zeus.robots.ox.ac.uk/posesearch/index.html">	Pose based Video Retrieval		</a>,
+		<a href="https://medium.com/neuromation-blog/neuronuggets-understanding-human-poses-in-real-time-b73cb74b3818">	How It Works	</a>
+
+<li/>		<a href="https://googlecreativelab.github.io/posenet-sketchbook/">	Google Creative Lab - PoseNet		</a>
+
+<li/>		<a href="https://pose-animator-demo.firebaseapp.com/camera.html">		Pose Animator		</a>,
+		<a href="https://storage.googleapis.com/tfjs-models/demos/facemesh/index.html">		MediaPipe FaceMesh Tracking		</a>,
+		<a href="https://developers.googleblog.com/2020/01/mediapipe-on-web.html">		MediaPipe Hand Tracking			</a>,
+		<a href="https://victordibia.github.io/handtrack.js/#/doodle">				HandTrack	</a>,
+		<a href="https://blog.tensorflow.org/2020/03/face-and-hand-tracking-in-browser-with-mediapipe-and-tensorflowjs.html">	How It Works	</a>,
+		<a href="https://github.com/google/mediapipe/">	2	</a>,
+		<a href="https://github.com/yemount/pose-animator/blob/master/README.md">		3		</a>,
+
+
+<hr><!----------------------------------------------------------->
+<br/><h2>	Audio - Speech / Music	</h2>
+<li/>		Text-To-Speech <a href="https://www.voicery.com/">	Voicery </a>,
+		<a href="https://cloud.google.com/text-to-speech/">	Google </a>,
+		<a href="https://aws.amazon.com/polly/">			Amazon Polly	</a>,
+
+
+		<a href="https://www.naturalreaders.com/online/">		Natural Readers	</a>,
+		<a href="https://heartbeat.fritz.ai/a-2019-guide-to-speech-synthesis-with-deep-learning-630afcafb9dd">	How It Works 1	</a>,
+		<a href="https://becominghuman.ai/into-a-better-speech-synthesis-technology-29411b64f2a2">	How It Works 2	</a>
+
+<li/>		Speech-To-Text
+		<a href="https://speech-to-text-demo.ng.bluemix.net/?_ga=2.107919877.685084357.1571040934-1389318902.1571040934&cm_mc_uid=15490699469315710409320&cm_mc_sid_50200000=70621591571040932032&cm_mc_sid_52640000=90165271571040932039">	IBM Bluemix	</a>,
+
+<li/>		<a href="https://openai.com/blog/musenet/">	MuseNet	</a>
+<li/>		<a href="https://storage.googleapis.com/magentadata/papers/maestro/index.html">	Maestro	</a>
+<li/>		<a href="https://magenta.tensorflow.org/music-transformer">	Tensorflow - Music Transformer	</a>
+<li/>		<a href="https://magenta.tensorflow.org/demos">	Tensorflow - Magenta 	</a>
+<li/>		<a href="http://www.vocaloid.com/en/">	Yamaha vocaloid 	</a>
+
+<hr><!----------------------------------------------------------->
+<br/><h2>	Reading Material	</h2>
+<li/>		<a href="https://vas3k.com/blog/machine_learning/">	Machine Learning for Everyone	</a>
+<li/>		<a href="https://www.deeplearningbook.org/lecture_slides.html">	Deep Learning Book	</a>
+<li/>		Stanford <a href="http://cs229.stanford.edu/">	CS229 - Machine Learning Course	</a>
+		<a href="http://cs231n.stanford.edu/">		CS231n: Convolutional Neural Networks for Visual Recognition	</a>
+<li/>		CV 	<a href="https://cv-tricks.com/keras/understand-implement-resnets/">		Detailed Guide to Understand and Implement ResNets	</a>,
+		<a href="https://www.pyimagesearch.com/start-here/">	Start Here with Computer Vision, Deep Learning, and OpenCV	</a>
+
+<li/>		<a href="https://research.fb.com/the-facebook-field-guide-to-machine-learning-video-series/">	Facebook Field Guide to Machine Learning video series	</a>
+
+
+<li/>		NLP <a href="https://www.analyticsvidhya.com/blog/2020/01/learning-path-nlp-2020/">	A Comprehensive Learning Path to Understand and Master NLP in 2020		</a>
+		<a href="https://developers.google.com/machine-learning/crash-course/ml-intro">	Google Machine Learning Crash Course	</a>
+
+<li/>		<a href="https://github.com/chiphuyen/machine-learning-systems-design?utm_campaign=Your%20guide%20to%20AI&utm_medium=email&utm_source=Revue%20newsletter">		Machine Learning Systems Design	</a>
+<li/>		<a href="https://github.com/visual-ml-notes/visual-machine-learning-notes">		Machine Learning Visual Notes (conferences e.g. NeurIPS)	</a>
+
+<hr><!----------------------------------------------------------->
+<br/><h2>	Hands-on </h2>
+
+<li/>		<a href="https://github.com/Avik-Jain/100-Days-Of-ML-Code">		100 Days of Machine Learning Coding	</a>
+<li/>		<a href="https://codeburst.io/ai-in-the-browser-939d8ab387a2">	AI in the Browser	</a>
+<li/>		<a href="https://experiments.withgoogle.com/collection/ai">	Google AI Experiments	</a>
+<li/>		<a href="https://teachablemachine.withgoogle.com/">		Google TeachableMachine		</a>
+<li/>		<a href="https://www.analyticsvidhya.com/blog/2019/07/pytorch-transformers-nlp-python/">		Introduction to PyTorch-Transformers: An Incredible Library for State-of-the-Art NLP (with Python code)	</a>
+
+<li/>		<a href="https://www.analyticsvidhya.com/blog/2019/10/how-to-build-knowledge-graph-text-using-spacy/">	Knowledge Graph - Mine Information from Text 	</a>
+
+<li/>		Fast.AI <a href="https://course.fast.ai/">	Practical Deep Learning for Coders	</a>,	<a href="https://book.fast.ai/">	Book </a>
+
+<li/>		<a href="https://infovis.fh-potsdam.de/tutorials/?utm_campaign=Data_Elixir&utm_source=Data_Elixir_301">	Information Visualization	</a>
+
+<li/>		<a href=https://www.nvidia.com/en-us/research/ai-playground/">		Nvidia AI Playground </a>
+<li/>		<a href="https://affinelayer.com/pixsrv/index.html">		Image To Image	</a>,
+		<a href="https://affinelayer.com/pix2pix/">	Tensorflow Pix2Pix	</a>,
+		<a href="https://phillipi.github.io/pix2pix/">	How It Works	</a>
+
+<li/>		<a href="https://sketch2code.azurewebsites.net/">		Sketch2Code	</a>
+
+
+<hr><!----------------------------------------------------------->
+<br/><h2>	Others </h2>
+
+<li/>		<a href="blog.josephmisiti.com/a-huge-list-of-machine-learning-repositories">		Awesome AI/ML	</a>
+
+<li/>		Application <a href="https://machinelearningmastery.com/impressive-applications-of-generative-adversarial-networks/">		GAN	</a>,
+
+<li/>		<a href="https://heartbeat.fritz.ai/">	Fritz.ai	</a>
+
+<li/>		<a href="https://ml5js.org/community/">	ML5js		</a>
+
+<li/>		Reinforced Learning <a href="https://selfdrivingcars.mit.edu/deeptraffic/">	MIT DeepTraffic	</a>,
+		<a href="https://selfdrivingcars.mit.edu/">			MIT Deep Learning for Self-Driving Cars	</a>,
+		<a href="https://blogs.nvidia.com/blog/2017/07/07/deeptraffic-how-an-mit-simulation-game-uses-deep-learning-to-reduce-gridlock/">	Nvidia
+	</a>
+
+<li/>		<a href="https://www.robots.ox.ac.uk/~vgg/demo/">	Oxford - Visual Geometry Group		</a>
+
+
+
+
+<li/>		<a href="https://poloclub.github.io/ganlab/">		GAN Lab	</a>
+<li/>		<a href="https://blog.insightdatascience.com/how-to-solve-90-of-nlp-problems-a-step-by-step-guide-fda605278e4e">	NLP - Using Machine Learning to understand and leverage text	</a>
+<li/>		<a href="https://www.louisdorard.com/machine-learning-canvas">	Machine Learning Canvas		</a>
+
+<li/>		<a href="https://twitter.com/roadrunning01">		Twitter - RoadRunning - latest GAN developments </a>
+
+<li/>		<a href="https://www.hadr.ai/">		Artificial Intelligence for Humanitarian Assistance and Disaster Response (HDAR) Workshop @ NeurIPS 2019	</a>
+
+<li/>		Tensorflow 	<a href="https://tenso.rs/">			TensorFire </a>,
+		<a href="https://www.tensorflow.org/js/demos">		TensorFlow JS	</a>,
+
+<li/>		3D Mapping - Drone <a href="https://sketchfab.com/3d-models/skydio-2-w-dronedeploy-nine-ten-drones-fe6ec5bd381843af92ec446fda3754c0">	Skydio (SketchFab)</a>,
+		<a href="https://sketchfab.com/3d-models/hq-birmingham-3d-city-model-6f9d610206c245478b07f32b4451cf09">	Birmingham  (SketchFab)	</a>
+
+<li/>		2D photo to 3D  	<a href="https://nerf-w.github.io/">			NeRF in the Wild - Neural Radiance Fields for Unconstrained Photo Collections	</a>
+
+
+
+<li/>		<a href="https://www.google.com/maps/@1.2963418,103.9023566,974a,35y,305.44h,53.9t/data=!3m1!1e3">		Google Maps 3D	</a>
+<li/>		<a href="https://www.google.com/maps/@1.3065418,103.9207201,3a,75y,243.02h,85.3t/data=!3m7!1e1!3m5!1skTHXHV9LoS51reUe1aV1zA!2e0!6s%2F%2Fgeo1.ggpht.com%2Fcbk%3Fpanoid%3DkTHXHV9LoS51reUe1aV1zA%26output%3Dthumbnail%26cb_client%3Dmaps_sv.tactile.gps%26thumb%3D2%26w%3D203%26h%3D100%26yaw%3D134.34714%26pitch%3D0%26thumbfov%3D100!7i16384!8i8192">		Google Streeview	</a>
+
+
+<li/>		<a href="https://dair.ai/"> Newsletter - dair.ai - Democratizing Artificial Intelligence Research, Education, and Technologies	</a>,
+		<a href="https://medium.com/dair-ai"> 2	</a>
+
+
+<hr><!----------------------------------------------------------->
+<br/><h2>	Videos	</h2>
+
+<li/>		<a href="https://www.youtube.com/user/teamrework/videos">	Re-Work	</a>
+<li/>		<a href="https://www.youtube.com/c/K%C3%A1rolyZsolnai/videos">	Two Minute Papers	</a>
+
+<hr><!----------------------------------------------------------->
+<br/><h2>	Datasets </h2>
+<li/>		<a href="https://www.datasetlist.com/">		DataSetList Machine Learning	</a>
+<li/>		<a href="https://toolbox.google.com/datasetsearch">	Google Dataset Search	</a>
+<li/>		<a href="https://aminer.org/data-sna#Linkedin">	AMiner Datasets 	</a>
+<li/>		<a href="https://lcmou.github.io/ERA_Dataset/">	CV - Event Recognition in Aerial Videos 	</a>
+<li/>		Benchmarking <a href="https://www.eff.org/ai/metrics">	Measuring the Progress of AI Research	</a>,
+		<a href="https://github.com/AI-metrics/AI-metrics">		Github	</a>,
+
+
+</ol>
+
+</body>
+</html>
