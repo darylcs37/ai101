@@ -10,23 +10,21 @@ body {
 	margin-left  : 2pt;
 	margin-right : 2pt;
 
-	SCROLLBAR-FACE-COLOR: gray;
-	FONT-SIZE: 20pt;
-	SCROLLBAR-HIGHLIGHT-COLOR: white;
-	SCROLLBAR-SHADOW-COLOR: black;
-	color: black;
-	SCROLLBAR-3DLIGHT-COLOR: black;
-	SCROLLBAR-ARROW-COLOR: black;
-	SCROLLBAR-TRACK-COLOR: silver;
-      font-family: Consolas,monaco,monospace; 
-	SCROLLBAR-DARKSHADOW-COLOR: white;
-	TEXT-ALIGN: left
+	scrollbar-face-color       : gray;
+	font-size                  : 20pt;
+	scrollbar-highlight-color  : white;
+	scrollbar-shadow-color     : black;
+	color                      : black;
+	scrollbar-3dlight-color    : black;
+	scrollbar-arrow-color      : black;
+	scrollbar-track-color      : silver;
+      font-family                : Consolas,monaco,monospace; 
+	scrollbar-darkshadow-color : white;
+	text-align                 : left
 }
 
 table {
-
-	FONT-SIZE: 12pt;
-
+	font-size: 12pt;
 }
 
 /*---Title-------------------------------------------------------------------*/
@@ -39,17 +37,16 @@ H1 {
 	border-left-style:  solid;
 	border-left-color : black;
 	border	: sunken;
+	background-color : #FFC300;
+	color	           : #FFFFFF;
+	font-size        : "30px";
+	text-align       : left;
 
-	background	: "#FF3366";
-	color		: "#FFFFFF";
-	font-size	: "30px";
-	text-align	: left;
-
-	padding-top    : 5pt;
-	padding-left   : 5pt;
-	padding-bottom : 5pt;
-	padding-right  : 5pt;
-	margin         : 0pt;
+	padding-top      : 5pt;
+	padding-left     : 5pt;
+	padding-bottom   : 5pt;
+	padding-right    : 5pt;
+	margin           : 0pt;
 }
 
 A:link    { color: #2F4F4F; } /* unvisited link daa520 */
@@ -57,9 +54,9 @@ A:visited { color: #405888; } /* visited links */
 
 /*---Header------------------------------------------------------------------*/
 H2 {
-	background   : "#3366FF";
-	color        : "#FFFFFF";
-	font-size    : "30px";
+	background-color : #FF5733;
+	color            : #FFFFFF;
+	font-size        : 30px;
 
 	padding-top    : 5pt;
 	padding-left   : 5pt;
@@ -69,9 +66,9 @@ H2 {
 }
 
 H3 {
-	background   : "#23238E";
-	color        : "#FFFFFF";
-	font-size    : "20px";
+	background-color : #C70039;
+	color        : #FFFFFF;
+	font-size    : 20px;
 
 	padding-top    : 5pt;
 	padding-left   : 5pt;
@@ -81,9 +78,9 @@ H3 {
 }
 
 H4 {
-	background   : "#CD7F32";
-	color        : "#FFFFFF";
-	font-size    : "15px";
+	background-color : #CD7F32;
+	color          : #FFFFFF;
+	font-size      : 15px;
 
 	padding-top    :  8pt;
 	padding-left   :  8pt;
@@ -91,10 +88,14 @@ H4 {
 	padding-right  :  8pt;
 }
 
+mark {
+	background-color : #DAF7A6;
+	color            : black;
+}
 
 /*---3D boxes------------------------------------------------------------------*/
 .GreyList {
-	background     : #dddddd;
+	background-color : #dddddd;
 	border-width   : 0px;
 	padding-top    : 20px;
 	padding-bottom : 5px;
@@ -116,17 +117,13 @@ H4 {
 	font-family : Courier, Helvetica, Arial;
 }
 
-
-
 /*---Now Tags------------------------------------------------------------------*/
 .tagBlue {
-	background   : #3377ff;
-	color        : #FFFFFF;
+	background  : #3377ff;
+	color       : #FFFFFF;
 	href        : #FFFFFF;
-	anchor        : #FFFFFF;
+	anchor      : #FFFFFF;
 }
-
-
 
 /*---------------------------------------------------------------------------*/
 /* menu header */
@@ -158,14 +155,10 @@ H4 {
 <table width="100%">
 <tr valign="top"><td width="30%">
 
-
-
-<hr><!----------------------------------------------------------->
 <h1>	AI101 - Hands-on 	</h1>
 
-
 <ol start=1 type=1>
-<hr><!----------------------------------------------------------->
+<!---------------------------------------------------------------------------->
 <h2>	Text	</h2>
 
 <li/>		<a href="https://translate.google.com.sg/">		Google translate	</a>,
@@ -184,12 +177,13 @@ H4 {
 
 <li/>		<a href="https://www.google.com/search?client=firefox-b-ab&ei=fZjiXPKlN4HYvATrrq3ACA&q=Pasta+%26+Noodles&oq=Pasta+%26+Noodles&gs_l=psy-ab.3..0l8j0i22i30l2.55941.60475..60642...3.0..1.200.1442.17j2j1......0....1..gws-wiz.......0i71j0i131j0i67j0i10j0i10i67j0i131i67.s1CB0KSiwtk">	Google Knowledge Graph </a>,
 		<a href="https://blog.google/products/search/about-knowledge-graph-and-knowledge-panels/">		101	</a>,
-		<a href="https://yoast.com/google-knowledge-graph/">		How It Works	</a>
+		<a href="https://yoast.com/google-knowledge-graph/">		How It Works	</a>, 
+		<a href="https://www.seobythesea.com/2018/10/how-googles-knowledge-graph-updates-itself-by-answering-questions/">		2	</a>
 
 <li/>		Large Language Models 
-		<a href="https://chat.openai.com/">		ChatGPT	</a>,
-		<a href="https://www.perplexity.ai/">		Perplexity.AI	</a>,
-		<a href="https://huggingface.co/spaces/Qwen/Qwen2-7b-instruct-demo">		Qwen2-72B-Instruct	</a>,
+		<mark><a href="https://chat.openai.com/">		ChatGPT	</a>,</mark>
+		<mark><a href="https://www.perplexity.ai/">		Perplexity.AI	</a>,</mark>
+		<mark><a href="https://huggingface.co/spaces/Qwen/Qwen2-7b-instruct-demo">		Qwen2-72B-Instruct	</a>,</mark>
 		<a href="https://www.bing.com/new?FORM=MY02AJ">		Bing Chat	</a>,
 		<a href="https://ai.google.dev/aistudio">		Google AI Studio	</a>,
 		<a href="https://www.youtube.com/watch?v=Rk3nTUfRZmo">	How It Works	</a>,
@@ -204,7 +198,7 @@ H4 {
 		<a href="https://medium.com/@ageitgey/deepfaking-the-news-with-nlp-and-transformer-models-5e057ebd697d">	How It Works	</a>
 
 <li/>		Text to Image
-		<a href="https://huggingface.co/spaces/stabilityai/stable-diffusion">	Stability.AI	</a>,
+		<mark><a href="https://huggingface.co/spaces/stabilityai/stable-diffusion">	Stability.AI	</a>,</mark>
 		<a href="https://clipdrop.co/instant-text-to-image">	Clipdrop - Text to Image  </a>,
 		<a href="https://prompthero.com/landscapes-prompts">	PromptHero - Landscape Prompts	</a>, 
 		<a href="https://www.freepik.com/search?ai=excluded&format=search&last_filter=query&last_value=urban%20city&premium=1&query=urban%20city&type=photo">	Freepik	</a>, 
@@ -219,7 +213,12 @@ H4 {
 <li/>		Text to Music <a href="https://mpost.io/top-20-ai-text-to-music-samples-with-prompts-by-mubert/">	Text-to-Music samples with prompts 	</a>,
 			<a href="https://mpost.io/top-5-ai-musicaudio-generators-to-create-royalty-free-tracks/">	music audio generators 	</a>,
 
-<hr><!----------------------------------------------------------->
+<li/>		Text To Video <a href="https://runwayml.com/ai-magic-tools/gen-2/">		Runway.ML Gen-2	</a>,
+		<mark><a href="https://haiper.ai/product/text-to-video">	Haiper		</a></mark>, 
+		<a href="https://runwayml.com/footage-packs/">	Sample Footages		</a>,
+		<a href="https://research.runwayml.com/">	How It Works		</a>,
+		<a href="https://huggingface.co/spaces/ysharma/text-to-ner-to-image-to-video">	Text to Audio/Image/Video story-telling	</a>
+<!---------------------------------------------------------------------------->
 <br/><h2>	Image	</h2>
 
 <li/>		<a href="https://segment-anything.com/demo">		Segment-Anything	</a>,
@@ -236,18 +235,17 @@ H4 {
 <li/>		<a href="http://deepscene.cs.uni-freiburg.de/">		Image - Segmentation	</a>
 <p/>
 
-<li/>		Hugging Face <a href="https://huggingface.co/spaces/hysts/ibug-face_detection">	Group Face Detection  	</a>,
-		<a href="https://huggingface.co/spaces/hysts/ibug-emotion_recognition">	Emotion Recognition	</a>, 
-		<a href="https://huggingface.co/spaces/Gradio-Blocks/ViTPose">	ViTPose	</a>,
+<li/>		Hugging Face <mark><a href="https://huggingface.co/spaces/hysts/ibug-face_detection">	Group Face Detection  	</a>,</mark>
+		<mark><a href="https://huggingface.co/spaces/hysts/ibug-emotion_recognition">	Emotion Recognition	</a>, </mark>
+		<mark><a href="https://huggingface.co/spaces/Gradio-Blocks/ViTPose">	ViTPose	</a>,</mark>
 		<a href="https://huggingface.co/spaces/akhaliq/Real-ESRGAN">	Image SuperResolution	</a>,
 		<a href="https://www.flickr.com/search/?text=Students%20studying">	Students studying	</a>,
 		<a href="https://github.com/topics/image-restoration">	Image Restoration - How It Works		</a>,
 
 <p/>
 		
-		
-<li/>		Synthetic Data (to test Fake News Detection algorithms) <a href="https://thispersondoesnotexist.com/">	GAN - This Person Does Not Exist	</a>,
-		<a href="https://thisxdoesnotexist.com/">	GAN - This X Does Not Exist	</a>, 
+<li/>		<mark>Synthetic Data (to test Fake News Detection algorithms) <a href="https://thispersondoesnotexist.com/">	GAN - This Person Does Not Exist	</a>,</mark>
+		<mark><a href="https://thisxdoesnotexist.com/">	GAN - This X Does Not Exist	</a>, </mark>
 		<a href="https://github.com/NVlabs/stylegan2">	How It Works	</a>,
 		<a href="https://towardsdatascience.com/graduating-in-gans-going-from-understanding-generative-adversarial-networks-to-running-your-own-39804c283399">	2	</a>
 
@@ -256,7 +254,7 @@ H4 {
 <li/>		<a href="https://clipdrop.co/stable-doodle">	Stable doodle 	</a>
 
 <li/>		<a href="https://www.autodraw.com/">	AutoDraw	</a>,
-		<a href="https://quickdraw.withgoogle.com/#">		Google Quickdraw	</a>,
+		<mark><a href="https://quickdraw.withgoogle.com/#">		Google Quickdraw	</a>,</mark>
 		<a href="https://ai.googleblog.com/2017/04/teaching-machines-to-draw.html">	How It Works	</a>,
 		<a href="https://towardsdatascience.com/doodling-with-deep-learning-1b0e11b858aa">	2	</a>
 
@@ -266,12 +264,12 @@ H4 {
 <li/>		<a href="https://huggingface.co/spaces/akhaliq/AnimeGANv2">		Anime GAN	</a>
 
 <li/>		<a href="http://stanislaschaillou.com/thesis/GAN/unit_program/">		Floorplan (Stanislas Chaillou)	</a>
-<li/>		<a href="https://geospy.ai/">		Location from Image		</a>
+<li/>		<mark><a href="https://geospy.ai/">		Location from Image		</a></mark>
 
-<hr><!----------------------------------------------------------->
+<!---------------------------------------------------------------------------->
 <br/><h2>	Video (requires WebCam) </h2>
 
-<li/>		<a href="https://storage.googleapis.com/tfjs-models/demos/posenet/camera.html">	PoseNet		</a>,
+<li/>		<mark><a href="https://storage.googleapis.com/tfjs-models/demos/posenet/camera.html">	PoseNet		</a>,</mark>
 		<a href="https://storage.googleapis.com/tfjs-models/demos/body-pix/index.html">	BodyPix		</a>,
 		<a href="http://zeus.robots.ox.ac.uk/posesearch/index.html">	Pose based Video Retrieval		</a>,
 		<a href="https://medium.com/neuromation-blog/neuronuggets-understanding-human-poses-in-real-time-b73cb74b3818">	How It Works	</a>
@@ -296,14 +294,9 @@ H4 {
 		<a href="https://www.assemblyai.com/blog/mediapipe-for-dummies/">		mediapipe-for-dummies		</a>,
 		<a href="https://viz.mediapipe.dev/demo/hand_tracking">		hand tracking code		</a>,
 
-<li/>		HuggingFace <a href="https://huggingface.co/spaces/ysharma/text-to-ner-to-image-to-video">	Text to Audio/Image/Video story-telling	</a>
-
-<li/>		Text To Video <a href="https://runwayml.com/ai-magic-tools/gen-2/">		Runway.ML Gen-2	</a>,
-		<a href="https://runwayml.com/footage-packs/">	Sample Footages		</a>,
-		<a href="https://research.runwayml.com/">	How It Works		</a>
 
 
-<hr><!----------------------------------------------------------->
+<!---------------------------------------------------------------------------->
 <br/><h2>	Audio - Speech / Music	</h2>
 
 
@@ -311,7 +304,7 @@ H4 {
 		<a href="https://stability.ai/research/stable-audio-efficient-timing-latent-diffusion">	How It Works	</a>
 
 <li/>		Text-To-Speech 
-		<a href="https://elevenlabs.io/text-to-speech">		ElevenLabs	</a>,
+		<mark><a href="https://elevenlabs.io/text-to-speech">		ElevenLabs	</a>,</mark>
 		<a href="https://speechify.com/text-to-speech-online/">	Speechify	</a>,
 		<a href="https://www.naturalreaders.com/online/">		Natural Readers	</a>,
 		<a href="https://becominghuman.ai/into-a-better-speech-synthesis-technology-29411b64f2a2">	How It Works 2	</a>
@@ -327,10 +320,10 @@ H4 {
 <li/>		<a href="http://www.vocaloid.com/en/">	Yamaha vocaloid 	</a>
 
 <li/>		AI Cover <a href="https://www.youtube.com/watch?v=qtpKbU8Jt9w">	Maroon 5: Memories SpongeBob 	</a>, 
-		<a href="https://www.youtube.com/watch?v=E7yHuqA9LKk">	Sun YanZi - Mayday	</a>, 
-		<a href="https://www.youtube.com/watch?v=cpCZULOxTVA">	Sun YanZi - Love Story	</a>, 
+		<mark><a href="https://www.youtube.com/watch?v=E7yHuqA9LKk">	Sun YanZi - Mayday	</a>, </mark>
+		<mark><a href="https://www.youtube.com/watch?v=cpCZULOxTVA">	Sun YanZi - Love Story	</a>, </mark>
 
-<hr><!----------------------------------------------------------->
+<!---------------------------------------------------------------------------->
 <br/><h2>	Reading Material	</h2>
 
 <li/>		<a href="https://medium.com/d-classified">	DSTA Medium Page	</a>,
@@ -353,7 +346,7 @@ H4 {
 
 <li/>		<a href="https://blog.josephmisiti.com/a-huge-list-of-machine-learning-repositories">		Awesome AI/ML	</a>
 
-<hr><!----------------------------------------------------------->
+<!---------------------------------------------------------------------------->
 <br/><h2>	Hands-on </h2>
 
 
@@ -377,7 +370,8 @@ H4 {
 
 <li/>		<a href="https://creativitywith.ai/library/">		creativitywith.ai	</a>
 <li/>		<a href="https://clipdrop.co/tools/">	Clipdrop - Stable Diffusion  </a>
-<hr><!----------------------------------------------------------->
+
+<!---------------------------------------------------------------------------->
 <br/><h2>	Others </h2>
 
 <li/>		Digital Humans <a href="https://huggingface.co/spaces/vinthony/SadTalker">	HugginFace Sad Talker	</a>,
@@ -420,14 +414,15 @@ H4 {
 <li/>		<a href="https://www.google.com/maps/@1.3651036,103.8336029,1024a,35y,2.23h,43.66t/data=!3m1!1e3?entry=ttu">		Google Maps 3D	</a>
 <li/>		<a href="https://www.google.com/maps/@1.3752711,103.8342017,3a,75y,200.06h,90t/data=!3m7!1e1!3m5!1s2iuGsRlCjCWHvifcVEl4bA!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fpanoid%3D2iuGsRlCjCWHvifcVEl4bA%26cb_client%3Dmaps_sv.tactile.gps%26w%3D203%26h%3D100%26yaw%3D200.05307%26pitch%3D0%26thumbfov%3D100!7i16384!8i8192?coh=205409&entry=ttu">		Google Streeview	</a>
 
+<li/>		HTML Colors <a href="https://htmlcolorcodes.com/">	HTML Color Codes	</a>
 
-<hr><!----------------------------------------------------------->
+<!---------------------------------------------------------------------------->
 <br/><h2>	Videos	</h2>
 
 <li/>		<a href="https://www.youtube.com/user/teamrework/videos">	Re-Work	</a>
 <li/>		<a href="https://www.youtube.com/c/K%C3%A1rolyZsolnai/videos">	Two Minute Papers	</a>
 
-<hr><!----------------------------------------------------------->
+<!---------------------------------------------------------------------------->
 <br/><h2>	Datasets </h2>
 <li/>		<a href="https://waxy.org/2022/08/exploring-12-million-of-the-images-used-to-train-stable-diffusions-image-generator/">	Exploring 12 Million of the 2.3 Billion Images Used to Train Stable Diffusion's Image Generator	</a>,
 		<a href="https://simonwillison.net/2022/Sep/5/laion-aesthetics-weeknotes/">	Exploring the training data behind Stable Diffusion	</a>
