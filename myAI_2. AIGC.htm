@@ -1,0 +1,974 @@
+<html>
+<head>
+<title>
+	GenAI_1. ToolBox
+</title>
+
+
+<style>
+body {
+	margin-top   : 2pt;
+	margin-left  : 2pt;
+	margin-right : 2pt;
+
+	scrollbar-face-color       : gray;
+	font-size                  : 20pt;
+	scrollbar-highlight-color  : white;
+	scrollbar-shadow-color     : black;
+	color                      : black;
+	scrollbar-3dlight-color    : black;
+	scrollbar-arrow-color      : black;
+	scrollbar-track-color      : silver;
+      font-family                : Consolas,monaco,monospace;
+	scrollbar-darkshadow-color : white;
+	text-align                 : left
+}
+
+table {
+	font-size      : 12pt;
+	border-spacing : 5px;
+	table-layout   : fixed;
+	margin-left    : auto;
+	margin-right   : auto;
+}
+
+th {
+	color  : green;
+	border : 1px solid black;
+}
+
+td {
+	word-wrap : break-word;
+}
+
+
+mark {
+	background-color : #DAF7A6;
+	color            : black;
+}
+
+pre {
+    background  : #f4f4f4;
+    border      : 1px solid #ddd;
+    border-left : 3px solid #f36d33;
+    color       : #666;
+    page-break-inside: avoid;
+    font-family   : monospace;
+    font-size     : 15px;
+    line-height   : 1.6;
+    margin-bottom : 1.6em;
+    max-width     : 95%;
+    overflow      : auto;
+    padding       : 1em 1.5em;
+    display       : block;
+//    word-wrap     : break-word;
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+/*---Title-------------------------------------------------------------------*/
+H1 {
+	border-left-width:  "20pt";
+	border-left-style:  solid;
+	border-left-color : black;
+	border	: sunken;
+	background-color : #FFC300;
+	color	           : #FFFFFF;
+	font-size        : "30px";
+	text-align       : left;
+
+	padding-top      : 5pt;
+	padding-left     : 5pt;
+	padding-bottom   : 5pt;
+	padding-right    : 5pt;
+	margin           : 0pt;
+}
+
+A:link    { color: #2F4F4F; } /* unvisited link daa520 */
+A:visited { color: #405888; } /* visited links */
+
+/*---Header------------------------------------------------------------*/
+H2 {
+	background-color : #FF5733;
+	color            : #FFFFFF;
+	font-size        : 30px;
+
+	padding-top    : 5pt;
+	padding-left   : 5pt;
+	padding-bottom : 5pt;
+	padding-right  : 5pt;
+	margin         : 0pt;
+}
+
+H3 {
+	background-color : #C70039;
+	color        : #FFFFFF;
+	font-size    : 20px;
+
+	padding-top    : 5pt;
+	padding-left   : 5pt;
+	padding-bottom : 5pt;
+	padding-right  : 5pt;
+	margin         : 0pt;
+}
+
+H4 {
+	background-color : #CD7F32;
+	color          : #FFFFFF;
+	font-size      : 15px;
+
+	padding-top    :  8pt;
+	padding-left   :  8pt;
+	padding-bottom :  8pt;
+	padding-right  :  8pt;
+}
+
+mark {
+	background-color : #DAF7A6;
+	color            : black;
+}
+
+/*---3D boxes------------------------------------------------------------------*/
+.GreyList {
+	background-color : #dddddd;
+	border-width   : 0px;
+	padding-top    : 20px;
+	padding-bottom : 5px;
+	border-bottom-width : 2px;
+}
+
+.LightGreyList {
+	background     : #eeeeee;
+	border-width   : 0px;
+	padding-top    : 20px;
+	padding-bottom : 5px;
+	border-bottom-width : 2px;
+	padding-left        : 10px;
+	padding-right       : 5px;
+}
+
+.CodeExample{
+	background  : #eeeeee;
+	font-family : Courier, Helvetica, Arial;
+}
+
+/*---Now Tags------------------------------------------------------------------*/
+.tagBlue {
+	background  : #3377ff;
+	color       : #FFFFFF;
+	href        : #FFFFFF;
+	anchor      : #FFFFFF;
+}
+
+/*---------------------------------------------------------------------------*/
+/* menu header */
+  .tblBlueHeader {font-size: 12px; font-weight: bold;
+                  background: #333399; border-top: solid 1px #394CB8; border-left: solid 1px #394CB8;}
+  .tblBlueBody {font-size: 12px; color: #ffffff; background: #333366;
+                border-top: solid 1px #434376; border-left: solid 1px #434376; border-bottom: solid 1px #232356; border-right: solid 1px #232356;}
+
+  .tblGreenHeader {font-size: 12px; font-weight: bold; background: #4D9933;
+                   border-top: solid 1px #437643; border-left: solid 1px #437643; border-bottom: solid 1px #235623; border-right: solid 1px #235623;}
+  .tblGreenBody {font-size: 12px; background: #1B3D29;
+                 border-top: solid 1px #437643; border-left: solid 1px #437643; border-bottom: solid 1px #235623; border-right: solid 1px #235623;}
+  a.tblGreenLink {text-decoration: none; color: #000000; linkColor:#000000; alinkColor:#000000; vlinkColor :#000000;}
+  a.tblGreenLink.link {color:#000000; }
+  a.tblGreenLink.visited {color:#000000; }
+
+/*---------------------------------------------------------------------------*/
+</style>
+
+
+</head>
+<body>
+
+
+
+<p/>
+
+<table width="100%">
+<tr valign="top"><td width="30%"><!----------------------------------------------------------->
+
+<!----------------------------------------------------------->
+<h3>	Companies			</h3><ol start=1 type=1>
+
+<li/> Overview	<a href="https://www.aimodels.fyi/models">	AIModels.fyi	</a>
+
+<li/> AixonLab <a href="https://www.aixonlab.com/">		AixonLab	</a>,
+	<a href="https://huggingface.co/aixonlab">		HuggingFace - AixonLab	</a>,
+	<a href="https://huggingface.co/aixonlab/flux.1-lumiere-alpha/blob/main/comfy/lumiere_alpha_workflow.json">		lumiere_alpha	</a>
+
+<li/>	Alibaba  <a href="https://github.com/alibaba/Tora">	Alibaba 	</a>,	
+	<a href="https://huggingface.co/alibaba-pai">		Alibaba PAI (Platform for AI)	</a>, 
+	<a href="https://github.com/ali-vilab/">		Alibaba TongYi Vision Intelligence Lab	</a>,
+	<a href="https://qwenlm.github.io">		Qwen	</a>,
+	<a href="https://github.com/QwenLM/Qwen2-VL">		Qwen2-VL	</a>,
+	<a href="https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct/tree/main">		Qwen2-VL-7B-Instruct	</a>,
+	<a href="https://github.com/ali-vilab/ACE_plus">		ACE++	</a>,
+	<a href="https://ali-vilab.github.io/In-Context-LoRA-Page/">		In-Context-LoRA	</a>,
+	<a href="https://lucaria-academy.github.io/Animate-X/">	Animate-X	</a>,
+	<a href="https://huggingface.co/ali-vilab/ACE_Plus/">	ACE Plus ++	</a>,
+
+<li/> Alimama  <a href="https://github.com/orgs/alimama-creative/repositories">		Github- Alimama Creative	</a>,
+	<a href="https://huggingface.co/alimama-creative">		HuggingFace - alimama-creative	</a>
+
+<li/> AllenAI <a href="https://huggingface.co/allenai">		AllenAI	</a>,
+	<a href="https://allenai.org/olmo">	Molml Olmo </a>,
+	<a href="https://molmo.allenai.org/">	Molml Demo </a>,
+	<a href="https://cychenyue.com/28204.html">	AllenAI Molmo 7B D		</a>,
+	<a href="https://github.com/SeanScripts/ComfyUI-PixtralLlamaMolmoVision">	Pixtral Llama Molmo Vision	</a>
+
+<li/> ANT <a href="https://github.com/antgroup/">		ANT	</a>,
+	<a href="https://github.com/antgroup/echomimic_v2">		EchoMimic	</a>, 
+	<a href="https://huggingface.co/spaces/BadToBest/EchoMimic">		EchoMimic - Lifelike Audio-Driven Portrait Animations through Editable Landmark Conditioning	</a>
+
+<li/>	DeepSeek 
+	<a href="https://huggingface.co/deepseek-ai">	HuggingFace - DeepSeek 	</a>,
+	<a href="https://huggingface.co/blog/open-r1">	HuggingFace - Open R1	</a>,
+	<a href="https://github.com/huggingface/open-r1">	GitHub - Open R1	</a>, 
+	<a href="https://huggingface.co/collections/unsloth/deepseek-v3-all-versions-677cf5cfd7df8b7815fc723c">	unsloth/deepseek-v3	</a>,
+
+<li/> BRIA <a href="https://huggingface.co/briaai/RMBG-2.0">		BRIA Background Removal v2.0	</a>
+
+<li/> Appple  <a href="https://huggingface.co/apple/DepthPro">	Appple DepthPro	</a>,
+	<a href="https://github.com/spacepxl/ComfyUI-Depth-Pro">	ComfyUI-Depth-Pro	</a>
+
+<li/> Black Forest Labs <a href="https://huggingface.co/black-forest-labs">	Black Forest Labs	</a>
+
+<li/> ByteDance <a href="https://huggingface.co/ByteDance">	ByteDance	</a>,
+	<a href="https://chenglin-yang.github.io/1.58bit.flux.github.io/">	1.58-bit FLUX	</a>,
+	<a href="https://byteaigc.github.io/X-Portrait2/">	X-Portrait2	</a>,
+	<a href="https://omnihuman-lab.github.io/">	OmniHuman-1	</a>,
+	<a href="https://github.com/bytedance/LatentSync">	GitHub - LipSync - LatentSync </a>
+
+<li/> Facebook META  <a href="https://ai.meta.com/sam2/">	Facebook META SAM2(Segment Anything 2) </a>,
+	<a href="https://github.com/kijai/ComfyUI-segment-anything-2">	ComfyUI-segment-anything-2	</a>,
+	<a href="https://github.com/neverbiasu/ComfyUI-SAM2">	ComfyUI-SAM2	</a>,
+	<a href="https://openart.ai/workflows/cgtips/comfyui---segment-anything-2-sam2---method-2/GTbSSKbVl6KpGu6uh4Lj">	OpenArt - SAM2	</a>,
+	<a href="https://huggingface.co/city96/DiT/tree/main">	DiT	</a>,
+	<a href="https://github.com/facebookresearch/DiT">	Facebook Research Scalable Diffusion Models with Transformers (DiT)	</a>,
+	<a href="https://github.com/facebookresearch/seamless_communication">	Seamless4MT	</a>,
+	<a href="https://seamless.metademolab.com/demo">	Seamless4MT Demo	</a>,
+
+<li/>	FAL <a href="https://huggingface.co/fal">	fal	</a>
+<li/> FreePik <a href="https://huggingface.co/Freepik/flux.1-lite-8B-alpha/tree/main">		FreePik (Flux 16Gb - faster)	</a>
+
+<li/> Genmo	<a href="https://www.genmo.ai/">	Genmo	</a>
+	<a href="https://github.com/genmoai/mochi">	Mochi	</a>,
+	<a href="https://github.com/kijai/ComfyUI-MochiWrapper">	ComfyUI-MochiWrapper	</a>
+
+<li/> Google <a href="https://github.com/google-deepmind/graphcast">		Google-deepmind	</a>,
+	<a href="https://deepbrainai-research.github.io/float/">	Google DeepBrain - Generative Motion Latent FlOw MAtching for Audio-driven Talking Portrait (FLOAT)	</a>,
+	<a href="https://deepmind.google/discover/blog/gencast-predicts-weather-and-the-risks-of-extreme-conditions-with-sota-accuracy/">	GraphCast / GenCast	</a>
+
+<li/> HelloVision <a href="https://github.com/HelloVision/">		HelloVision	</a>,
+	<a href="https://github.com/HelloVision/ComfyUI_HelloMeme">		HelloMeme	</a>
+
+<li/> HongKong University of Science & Technology (HKUST) <a href="https://huggingface.co/spaces/srinivasbilla/llasa-3b-tts">	Llasa-3B	</a>,
+	<a href="https://huggingface.co/HKUSTAudio/Llasa-3B">	HKUSTAudio/Llasa-3B	</a>,
+	<a href="https://replicate.com/kjjk10/llasa-3b-long">	Replicate - kjjk10/llasa-3b-long	</a>
+
+<li/> HuggingFace 
+	<a href="https://huggingface.co/HuggingFaceTB">		HuggingFace	</a>,
+	<a href="https://huggingface.co/spaces">		HuggingFace	Spaces </a>,
+	<a href="https://huggingface.co/latent-consistency">		Latent Consistency (LCM)	</a>, 
+	<a href="https://huggingface.co/spaces/HuggingFaceTB/SmolVLM-500M-Instruct-WebGPU">		Vision Language Model - SmolVLM-500M-Instruct-WebGPU	</a>,
+
+<li/> International Digital Economy Academy (IDEA-Research) <a href="https://github.com/IDEA-Research">	International Digital Economy Academy (IDEA-Research)	</a>,
+	<a href="https://github.com/IDEA-Research/Grounded-Segment-Anything">	IDEA-Research/Grounded-Segment-Anything	</a>,
+	<a href="https://deepdataspace.com/blog">	Dino-X blog	</a>,
+	<a href="https://deepdataspace.com/playground/ivp">	TREX-2 - object counting </a>,
+	<a href="https://deepdataspace.com/playground/grounding_dino">	Grounding Dino - Object ID </a>,
+	<a href="https://deepdataspace.com/playground/ivp_video">	Video - Object Tracking </a>,
+
+<li/> Kuaishou  <a href="https://github.com/KwaiVGI">		Kuaishou Visual Generation and Interaction Center </a>,
+	<a href="https://huggingface.co/Kwai-Kolors">		Kwai-Kolors	</a>,
+	<a href="https://github.com/orgs/Kwai-Kolors/repositories">		Kwai-Kolors	</a>,
+	<a href="https://github.com/kijai/ComfyUI-KwaiKolorsWrapper">	kijai/ComfyUI-KwaiKolorsWrapper	</a>,
+	<a href="https://github.com/KwaiVGI/LivePortrait">		LivePortrait	</a>,
+	<a href="https://github.com/KwaiVGI/3DTrajMaster">		3DTrajMaster	</a>,
+
+<li/> Lightricks <a href="https://huggingface.co/Lightricks/LTX-Video">		Lightricks - LTX-Video	</a>,
+	<a href="https://github.com/Lightricks/ComfyUI-LTXVideo">		ComfyUI-LTXVideo	</a>,
+	<a href="https://openart.ai/workflows/cat_untimely_42/ltx-video-enhance-stg/wMIwpeYhc372cOtpiiNo">	OpenArt - cat_untimely_42/ltx-video-enhance-stg	</a>,
+	<a href="https://openart.ai/workflows/cat_untimely_42/ltx-video-video-to-video/kqyFkoCU8s16hsjdqZRu">	OpenArt - cat_untimely_42/ltx-video-video-to-video	</a>,
+	<a href="https://openart.ai/workflows/monkey_hard-to-find_14/comfyui-ltx-video/NNBGp1H777pvivzDjFwa">		OpenArt - monkey_hard-to-find_14/comfyui-ltx-video	</a>,
+	<a href="https://openart.ai/workflows/toucan_chilly_4/ltx/CvRMMGcKETGECx59xZFX">		OpenArt - toucan_chilly_4/ltx	</a>,
+	<a href="https://civitai.com/models/995093?modelVersionId=1191358">	CivitAI - LTX IMAGE to VIDEO with STG, CAPTION & CLIP EXTEND workflow	</a>
+	<a href="https://github.com/logtd/ComfyUI-LTXTricks">		GitHub - logtd/ComfyUI-LTXTricks	</a>,
+
+<li/> <a href="https://felixtaubner.github.io/cap4d/">		LG - CAP4D: Creating Animatable 4D Portrait Avatars with Morphable Multi-View Diffusion Models	</a>
+
+<li/>	MiaoshouAI <a href="https://www.miaoshouai.com/">	MiaoshouAI	</a>,
+	<a href="https://huggingface.co/MiaoshouAI">	HuggingFace - Florence-2-base-PromptGen-v2.0 / Florence-2-large-PromptGen-v2.0	</a>
+	<a href="https://huggingface.co/MiaoshouAI/Florence-2-large-PromptGen-v1.5">	Florence-2-large-PromptGen-v1.5	</a>
+	<a href="https://github.com/miaoshouai/ComfyUI-Miaoshouai-Tagger">	ComfyUI-Miaoshouai-Tagger	</a>
+
+<li/>	Microsoft <a href="https://huggingface.co/microsoft">	Microsoft (Florence2, Phi 3.5, Phi 4) </a>,
+	<a href="https://github.com/microsoft/MoGe">	MoGe - Monocular 2D->3D </a>,
+	<a href="https://github.com/kijai/ComfyUI-MoGe">	kijai/ComfyUI-MoGe </a>
+
+<li/> MiniMaxi <a href="https://www.minimaxi.com/en">	MiniMaxi	</a>,
+	<a href="https://hailuoai.video/">		HailuoAI	</a>,
+
+<li/>	Mistral  <a href="https://huggingface.co/mistralai">	Mistral  </a>,
+	<a href="https://mistral.ai/news/mistral-small-3/">	Mistral small-3  </a>
+
+<li/> <a href="https://huggingface.co/mikeyandfriends/PixelWave_FLUX.1-dev_03/tree/main">		mikeyandfriends - PixelWave	</a>,
+	<a href="https://civitai.com/user/humblemikey/models">		CivitAI - user - humblemikey (Art Style, PixelWave)	</a>
+
+<li/> MoonshotAI 	<a href="https://github.com/MoonshotAI">	MoonshotAI </a>,
+	<a href="https://github.com/MoonshotAI/Kimi-k1.5">	Kimi k1.5: Scaling Reinforcement Learning with LLMs	</a>
+
+<li/> NuMind <a href="https://huggingface.co/numind">	NuMind</a>,
+	<a href="https://huggingface.co/spaces/numind/NuExtract-1.5">	NuMind NuExtract-1.5</a>,
+
+<li/> Nvidia  <a href="https://huggingface.co/nvidia">	Nvidia </a>,
+	<a href="https://github.com/NVlabs">		Nvidia Labs (NVlabs)	</a>,
+	<a href="https://github.com/NVlabs/Sana">		GitHub - NVlabs/Sana	</a>,
+	<a href="https://github.com/Efficient-Large-Model/ComfyUI_ExtraModels">		GitHub - ComfyUI_ExtraModels	</a>,
+	<a href="https://research.nvidia.com/labs/toronto-ai/DiffusionRenderer/">		DiffusionRenderer: Video Diffusion Models	</a>
+
+<li/> NTU S-Lab <a href="https://github.com/yuvraj108c/ComfyUI_InvSR">	Inverse Super Resolution (InvSR)	</a>
+
+<li/> OpenAI  <a href="https://huggingface.co/openai">	OpenAI </a>,
+	<a href="https://huggingface.co/spaces/openai/whisper">	OpenAI Whisper (transcribe / translate) </a>,
+
+<li/> OpenXLab  <a href="https://openxlab.org.cn/models?lang=en-US">	OpenXLab </a>,
+	<a href="https://openxlab.org.cn/models">		Models </a>,
+
+<li/> Ostris <a href="https://huggingface.co/ostris">	Ostris </a>,
+	<a href="https://huggingface.co/ostris/OpenFLUX.1">	ostris/OpenFLUX.1 </a>,
+
+<li/> <a href="https://github.com/salesforce">		SalesForce	</a>,
+	<a href="https://github.com/salesforce/LAVIS/tree/xgen-mm">		xGen-MM (BLIP-3): A Family of Open Large Multimodal Models	</a>
+
+<li/> Shakker-Labs <a href="https://huggingface.co/Shakker-Labs">		Shakker-Labs	</a>,
+	<a href="https://openart.ai/workflows/reverentelusarca/flux-filmportrait-lora-by-shakkerlabs/Wp7nyj9LHcogIaHfMvAc">	flux-filmportrait-lora	</a>,
+	<a href="https://huggingface.co/Shakker-Labs/FLUX.1-dev-ControlNet-Union-Pro/tree/main">	FLUX.1-dev-ControlNet-Union-Pro	</a>
+
+<li/> StabilityAI<a href="https://huggingface.co/stabilityai">		StabilityAI	</a>
+
+<li/>	Tencent <a href="https://github.com/Tencent/">	Tencent	</a>,
+ 	<a href="https://huggingface.co/spaces/TencentARC/PhotoMaker-V2">	PhotoMaker	</a>,
+	<a href="https://github.com/Tencent/MimicMotion">	MimicMotion	</a>,
+	<a href="https://github.com/Tencent/HunyuanDiT/tree/main/comfyui-hydit">	ComfyUI - HunYuan	</a>,
+	<a href="https://github.com/kijai/ComfyUI-HunyuanVideoWrapper">	HunYuan	</a>,
+	<a href="https://dit.hunyuan.tencent.com/">	HunYuan	</a>,
+	<a href="https://openart.ai/workflows/datou/hunyuan-video-720p/FCYqXugi8pVi3aqgeNZA">		OpenArt - datou/hunyuan-video-720p	</a>,
+	<a href="https://openart.ai/workflows/cat_untimely_42/huanyuanvideo-video-to-video/25oGJWr3RYWRrtmaHkRV">		OpenArt - cat_untimely_42/huanyuanvideo-video-to-video	</a>,
+
+<li/>	Tsinghua <a href="https://huggingface.co/THUDM">	Tsinghua University Knowledge Engineering Group (KEG) & Data Mining 	</a>,
+	<a href="https://huggingface.co/THUDM/CogVideoX-5b">	CogVideoX-5b	</a>,
+	<a href="https://docs.google.com/spreadsheets/d/16eA6mSL8XkTcu9fSWkPSHfRIqyAKJbR1O99xnuGdCKY/edit?gid=0#gid=0">	CogVideoX models	</a>,
+	<a href="https://huggingface.co/spaces/Ruicheng/MoGe">	MoGe: Unlocking Accurate Monocular Geometry Estimation for Open-Domain Images with Optimal Training Supervision	</a>
+
+<li/>	VisionATrix <a href="https://visionatrix.github.io/">	VisionATrix	</a>,
+	<a href="https://github.com/Visionatrix/ComfyUI-PhotoMaker-Plus">	PhotoMaker-Plus	</a>
+
+<li/>	vision-xl <a href="https://vision-xl.github.io/supple/">		vision-xl	</a>,
+
+<li/>	Xiaohongshu  <a href="https://github.com/instantX-research">	Xiaohongshu Instant ID Research	</a>,
+	<a href="https://github.com/instantX-research/Regional-Prompting-FLUX">	Regional-Prompting-FLUX		</a>
+
+<li/>	XLabs-AI <a href="https://huggingface.co/XLabs-AI">	XLabs-AI	</a>,
+	<a href="https://huggingface.co/XLabs-AI/flux-controlnet-collections">	flux-controlnet-collections	</a>,
+	<a href="https://github.com/XLabs-AI/x-flux-comfyui">	GitHub - XLabs-AI/x-flux-comfyui	</a>
+
+</ol>
+<hr><!----------------------------------------------------------->
+<h3>	GenAI - ComfyUI - Platforms	</h3><ol start=1 type=1>
+<li/>	<a href="https://medium.com/@dminhk/3-easy-steps-to-run-comfyui-on-amazon-sagemaker-notebook-c9bdb226c15e">	Amazon SageMaker	</a>
+<li/>	<a href="https://animemaker.graydient.ai/concepts">	animemaker	</a>
+<li/>	<a href="https://www.baseten.co/blog/how-to-serve-your-comfyui-model-behind-an-api-endpoint/">	baseten	</a>
+<li/>	<a href="https://www.mage.space/">	mage.space	</a>
+
+
+
+<li/>	<a href="https://nexa.ai/models">	nexa.ai (on-device models & inference	</a>
+	<a href="https://nexa.ai/models">	Supported Models	</a>
+
+<li/>	<a href="https://openart.ai/pricing">	openart	</a>
+<li/>	<a href="https://rendernet.ai/">	RenderNet.ai	</a>
+
+<li/>	<a href="https://replicate.com/explore">	Replicate	</a>
+	<a href="https://github.com/replicate/comfyui-replicate/blob/main/supported_models.json">	supported models	</a>
+	<a href="https://github.com/replicate/comfyui-replicate/tree/main">	comfyui-replicate	</a>
+
+<li/>	<a href="https://www.runcomfy.com/">	RunComfy	</a>
+<li/>	<a href="https://www.runninghub.ai/">	RunningHub	</a>
+<li/>	<a href="https://blog.runpod.io/how-to-get-stable-diffusion-set-up-with-comfyui-on-runpod/">	runpod.ai	</a>
+
+<li/>	<a href="https://www.segmind.com/pixelflow/templates">	SegMind - PixelFlow	</a>
+<li/>	<a href="https://www.shakker.ai/online-comfyui">	Shakker.ai	</a>
+<li/>	<a href="https://sinkin.ai/?models=1">	sinkin	</a>
+
+<li/>	<a href="https://tensor.art/">	tensor.art	</a>
+<li/>	<a href="https://www.thinkdiffusion.com/#apps-comfyui">	ThinkDiffusion	</a>,
+	<a href="https://civitai.com/articles/3244/comfyui-workflows-and-what-you-need-to-know-by-thinkdiffusion">	thinkdiffusion	</a>
+<li/>	<a href="https://vast.ai/article/getting-started-with-comfy-UI">	vast.ai	</a>
+
+<li/>	<a href="https://magicquill.art/demo/">	MagicQuill	</a>,
+	<a href="https://github.com/magic-quill">	GitHub - MagicQuill	</a>,
+	<a href="https://huggingface.co/spaces/AI4Editing/MagicQuill">	Demo	</a>,
+	<a href="https://github.com/magic-quill/ComfyUI_MagicQuill/">	ComfyUI_MagicQuill	</a>
+
+</ol>
+
+</td><td width="30%"><!----------------------------------------------------------->
+<h3>	Face Restoration / Realistic Faces			</h3>
+<li/>	Keywords: <a href="https://openart.ai/workflows/all?keyword=FaceSwap">	OpenArt - FaceSwap	</a>,
+	<a href="https://openart.ai/workflows/all?keyword=Realistic">	OpenArt - Realistic	</a>,
+	<a href="https://www.1ai.net/en/tag/ai%e6%8d%a2%e8%84%b8">	1ai	</a>
+	<br/><ol start=1 type=1>
+
+<li/> <a href="https://github.com/Gourieff/comfyui-reactor-node">		GitHub - Gourieff (ReActor Node for ComfyUI)	</a>,
+	<a href="https://github.com/somanchiu/ReSwapper">	somanchiu/ReSwapper	</a>,
+	<a href="https://civitai.com/models/256399/face-swap-for-2-people-with-faceid-and-reactor">		faceswap	</a>
+
+<li/>	<a href="https://openart.ai/workflows/grinlau/change-face-v23/4RJFsFp9oXdlP9rty2cI">	OpenArt - grinlau/change-face-v23	</a>
+
+<li/>	<a href="https://huggingface.co/GuijiAI/ReHiFace-S">	HuggingFace - GuijiAI/ReHiFace-S	</a>
+
+<li/>	<a href="https://openart.ai/workflows/myaiforce/face-swapping-ecomid-vs-flux-pulid-vs-instantid/2ATyK62dutoPVCevX8o5">	OpenArt - myaiforce/face-swapping-ecomid-vs-flux-pulid-vs-instantid	</a>
+
+<li/>	<a href="https://github.com/sipie800/ComfyUI-PuLID-Flux-Enhanced">	GitHub - sipie800/ComfyUI-PuLID-Flux-Enhanced	</a>
+
+<li/>	<a href="https://openart.ai/workflows/JakazCfWF9UWi2mOZTlf">	OpenArt - Andrea Baioni - Plastic Skin Solver 	</a>,
+	<a href="https://www.youtube.com/watch?v=Ta8GpvgmJMo">	YouTube	</a>
+
+<li/>	<a href="https://github.com/cubiq/ComfyUI_FaceAnalysis">	GitHub - cubiq/ComfyUI_FaceAnalysis	</a>,
+	<a href="https://github.com/jordoh/ComfyUI-Deepface/">	GitHub - jordoh/ComfyUI-Deepface/	</a>
+
+<li/>	<a href="https://github.com/djbielejeski/a-person-mask-generator">	GitHub - Person Mask Generator	</a>
+
+<li/> <a href="https://huggingface.co/alexgenovese/facerestore/tree/main">	alexgenovese/facerestore	</a>
+<li/>	<a href="https://github.com/modelscope/facechain">	modelscope/facechain	</a>
+
+<li/>	Face Restoration <a href="https://github.com/Hillobar/Rope">	Pearl Rope	</a>,
+	<a href="https://github.com/s0md3v/roop">	Roop </a>,
+	<a href="https://github.com/iperov/DeepFaceLive">	DeepFaceLive	</a>,
+	<a href="https://github.com/neuralchen/SimSwap">	SimSwap	</a>,
+	<a href="https://github.com/deepfakes/faceswap">	deepfakes/faceswap	</a>
+
+<li/>	<a href="https://huggingface.co/facefusion">	FaceFusion	</a>,
+	<a href="https://huggingface.co/datasets/dimanchkek/Deepfacelive-DFM-Models">	Deepfacelive-DFM-Models	</a>
+
+<li/>	<a href="https://github.com/Gourieff/comfyui-reactor-node">	Gourieff - comfyui-reactor-node	</a>
+
+<li/>	<a href="https://github.com/djbielejeski/a-person-mask-generator">	GitHub - Person Mask Generator	</a>
+
+</ol>
+<!----------------------------------------------------------->
+<h3>	Image-To-Text (i2t) Captioning		</h3>
+<li/>	Keywords: <a href="https://openart.ai/workflows/all?keyword=Caption">	OpenArt - Caption 	</a><br/><ol start=1 type=1>
+
+<li/>	<a href="https://cychenyue.com/28204.html">	AllenAI Molmo 7B D		</a>
+<li/>	<a href="https://github.com/StartHua/Comfyui_CXH_joy_caption">	Joy Caption	</a>
+	<a href="https://openart.ai/workflows/leeguandong/joy-caption-batch-caption/6btLPOJKoSBFmuM2kfRW">	Joy caption batch caption	</a>
+
+<li/>	<a href="https://huggingface.co/microsoft">	Microsoft 	</a>,
+	<a href="https://github.com/kijai/ComfyUI-Florence2">	Microsoft Florence2	</a>,
+	<a href="https://github.com/spacepxl/ComfyUI-Florence-2">	Florence-2	</a>,
+	<a href="https://huggingface.co/MiaoshouAI">	MiaoshouAI	</a>,
+	<a href="https://github.com/miaoshouai/ComfyUI-Miaoshouai-Tagger">	ComfyUI-Miaoshouai-Tagger	</a>,
+	<a href="https://openart.ai/workflows/toucan_chilly_4/florence-run-batch-capture-prompt-maker/tmkxPTDT7sL2EuZgaQJe">	OpenArt  - Florence Run Batch Capture Prompt Maker	</a>
+
+<li/> <a href="https://github.com/alexisrolland/ComfyUI-Phi">	 Microsoft Phi - alexisrolland/ComfyUI-Phi (Phi-3.5-mini-instruct, Phi-3.5-vision-instruct)	</a>,
+	<a href="https://github.com/StartHua/Comfyui_CXH_Phi_3.5">	Phi 3.5	</a>,
+
+<li/>	<a href="https://github.com/CY-CHENYUE/ComfyUI-MiniCPM-Plus">	MiniCPM-Plus	</a>,
+			<a href="https://github.com/pzc163/Comfyui_MiniCPMv2_6-prompt-generator">	MiniCPM v2.6 Prompt Generator	</a>
+
+<li/> <a href="https://moondream.ai/playground">	Moondream (Visual Q&A, Caption, Object Detection) </a>,
+	<a href="https://moondream.ai/blog/">		Moondream blog	</a>,
+	<a href="https://huggingface.co/vikhyatk/moondream2">		vikhyatk/moondream2	</a>,
+	<a href="https://github.com/vikhyat/moondream">		vikhyat/moondream	</a>,
+	<a href="https://github.com/kijai/ComfyUI-moondream">	kijai/ComfyUI-moondream </a>,
+	<a href="https://github.com/Hangover3832/ComfyUI-Hangover-Moondream">	Hangover3832/ComfyUI-Hangover-Moondream </a>
+
+<li/>	<a href="https://nexa.ai/blogs/OmniVLM">	OmniVLM-968M (no ComfyUI)	</a>
+<li/>	<a href="https://github.com/SeanScripts/ComfyUI-PixtralLlamaMolmoVision">	Pixtral Llama Molmo Vision	</a>
+
+<li/>	<a href="https://github.com/ZHO-ZHO-ZHO/ComfyUI-Qwen">	Qwen 2.5	</a>,
+
+<li/> <a href="https://github.com/IuvenisSapiens/ComfyUI_Qwen2-VL-Instruct">		Qwen2-VL-Instruct	</a>,
+	<a href="https://openart.ai/workflows/leeguandong/qwen2-vlchat_with_multiple_images/qTFHeJbzMRcwYJKK4Qwb">	QWEN multiple images	</a>,
+	<a href="https://openart.ai/workflows/leeguandong/qwen2-vl-chat_with_single_image/AEgiUMjzw9H580CXgrXD">	QWEN single_image 	</a>,
+	<a href="https://openart.ai/workflows/comfyuiblog/convert-video-and-images-to-text-using-qwen2-vl-model/OdlbuCnxVfjgD4MVsaMR">	vi2t	</a>
+
+<li/>	<a href="https://github.com/SeargeDP/ComfyUI_Searge_LLM">	Searge-LLM </a>
+<li/>	<a href="https://github.com/pythongosssss/ComfyUI-WD14-Tagger">	WD14-Tagger	</a>
+
+<li/>	<a href="https://huggingface.co/spaces/gokaygokay/FLUX-Prompt-Generator">	gokaygokay/Flux Prompt Generator	 </a>,
+	<a href="https://huggingface.co/spaces/gokaygokay/Flux-Florence-2">	Flux-Florence-2	 </a>,
+	<a href="https://github.com/fairy-root/Flux-Prompt-Generator/tree/main">	fairy-root	</a>,
+
+<li/> <a href="https://github.com/IuvenisSapiens">		IuvenisSapiens (miniCPM, QWEN, QWEN Audio)	</a>
+
+<li/>	<a href="https://open.bigmodel.cn/">	Zhipu GLM	</a>,
+	<a href="https://github.com/JcandZero/ComfyUI_GLM4Node">	GitHub - JcandZero/ComfyUI_GLM4Node </a>,
+	<a href="https://github.com/Nojahhh/ComfyUI_GLM4_Wrapper">	GitHub - Nojahhh/ComfyUI_GLM4_Wrapper </a>,
+
+<li/>	Workflows : <a href="https://openart.ai/workflows/cxh/recommended-based-on-comfyui-node-picturesjoy_caption-minicpmv2_6-prompt-generator-florence2/rUVWkZB5zGOkjXGhsrON">	joy_caption-minicpmv2_6-prompt-generator-florence2	</a>
+	<a href="https://openart.ai/workflows/owl_glaring_95/flux_img2img-flux-florence-auto-prompt-generator/3aLDgY2oScWNSDZUvNVn">	florence	</a>
+
+
+<li/>	<a href="https://openart.ai/workflows/comfyui_llm_party/llm_party-for-local-models/UkynnzaQxhuSwPDTFub7">	llm_party-for-local-models (QWEN)	</a>
+
+
+</ol>
+<!----------------------------------------------------------->
+<h3>	Leaderboard			</h3><ol start=1 type=1>
+
+<li/>	<a href="https://huggingface.co/spaces/ArtificialAnalysis/LLM-Performance-Leaderboard">	LLM-Performance-Leaderboard	</a>
+<li/>	<a href="https://huggingface.co/spaces/ArtificialAnalysis/Text-to-Image-Leaderboard">	Text-to-Image-Leaderboard	</a>
+<li/>	<a href="https://huggingface.co/spaces/ArtificialAnalysis/Video-Generation-Arena-Leaderboard">		Video-Generation-Arena-Leaderboard	</a>
+
+</ol>
+<!----------------------------------------------------------->
+<h3>	Models			</h3><ol start=1 type=1>
+
+<li/>	<a href="https://huggingface.co/alexgenovese/checkpoint/tree/main">	alexgenovese/checkpoint	</a>
+<li/>	<a href="https://huggingface.co/alexgenovese/clip/tree/main">	alexgenovese/clip	</a>
+<li/>	<a href="https://huggingface.co/alexgenovese/clip_vision/tree/main">	alexgenovese/clip_vision	</a>
+
+<li/>	<a href="https://huggingface.co/alexgenovese/controlnet/tree/main">	alexgenovese/controlnet	</a>
+<li/>	<a href="https://huggingface.co/alexgenovese/facerestore/tree/main">	alexgenovese/facerestore	</a>
+
+<li/>	<a href="https://huggingface.co/models?pipeline_tag=image-to-video&p=0&sort=trending">	image-to-video	</a>
+<li/>	<a href="https://huggingface.co/impactframes">	impactframes	</a>
+<li/>	<a href="https://huggingface.co/jasperai">	jasperai	</a>
+
+<li/>	<a href="https://huggingface.co/alexgenovese/ipadapters/tree/main">	alexgenovese/ipadapters	</a>
+<li/>	<a href="https://huggingface.co/alexgenovese/loras/tree/main">	alexgenovese/loras	</a>
+
+<li/>	<a href="https://huggingface.co/alexgenovese/sams/tree/main">	alexgenovese/sams	</a>
+
+<li/>	<a href="https://huggingface.co/alexgenovese/ultralytics/tree/main">	alexgenovese/ultralytics	</a>
+<li/>	<a href="https://huggingface.co/alexgenovese/upscalers/tree/main">	alexgenovese/upscalers (4x_UniversalUpscalerV2-Sharp_101000_G.pth)	</a>
+<li/>	<a href="https://huggingface.co/Phips">	Phips/upscalers </a>,
+	<a href="https://huggingface.co/spaces/Phips/Upscaler">	demo	</a>
+
+<li/>	<a href="https://huggingface.co/alexgenovese/vae/tree/main">	alexgenovese/vae	</a>
+
+<li/>	<a href="https://github.com/IamCreateAI/Ruyi-Models">	IamCreateAI/Ruyi	</a>,
+	<a href="https://openart.ai/workflows/leeguandong/ruyi-text2img/unHmvTTdC0QQoGUyWImz">	OpenArt - leeguandong/ruyi-text2img	</a>
+
+<li/>	<a href="https://chenglin-yang.github.io/1.58bit.flux.github.io/">	ByteDance - 1.58-bit FLUX	</a>
+
+<li/> unsloth <a href="https://huggingface.co/collections/unsloth/deepseek-v3-all-versions-677cf5cfd7df8b7815fc723c">	unsloth/deepseek-v3	</a>,
+	<a href="https://huggingface.co/collections/unsloth/phi-4-all-versions-677eecf93784e61afe762afa">	phi-4-all-versions	</a>
+
+<li/>	Malaysia LLM <a href="https://mesolitica.com/mallam">	mallam (>200)	</a>,
+	<a href="https://huggingface.co/mesolitica">	mesolitica (Malaysian-F5-TTS)	</a>
+
+<li/>	<a href="https://huggingface.co/TheBloke">	TheBloke (>4K)	</a>
+
+<li/>	<a href="https://huggingface.co/unsloth">	UnSloth (>300)	</a>
+
+</ol>
+<!----------------------------------------------------------->
+<h3>	Motion - Animation / LipSync			</h3>
+<li/>	Keywords: <a href="https://openart.ai/workflows/all?keyword=FaceSwap">	OpenArt - FaceSwap	</a>,
+	<br/><ol start=1 type=1>
+
+<li/> <a href="https://github.com/kijai/ComfyUI-LivePortraitKJ">	GitHub - ComfyUI-LivePortraitKJ	</a>,
+	<a href="https://openart.ai/workflows/datou/live-portrait/PMM4NSLnbhU08xvRqN2e">	OpenArt - datou/live-portrait	</a>,
+	<a href="https://github.com/PowerHouseMan/ComfyUI-AdvancedLivePortrait">	GitHub - ComfyUI-AdvancedLivePortrait	</a>,
+	<a href="https://www.youtube.com/watch?v=xGJ82MVOTcU">	YouTube	</a>
+
+<li/>	MimicMotion <a href="https://github.com/kijai/ComfyUI-MimicMotionWrapper">	GitHub - ComfyUI-MimicMotionWrapper	</a>
+	<a href="https://github.com/Tencent/MimicMotion">	MimicMotion	</a>,
+	<a href="https://github.com/TMElyralab/MusePose">	MusePose	</a>,
+
+<li/>	UniAnimate / Animate-X	<a href="https://lucaria-academy.github.io/Animate-X/">	Animate-X	</a>,"
+	<a href="https://unianimate.github.io/">		UniAnimate	</a>, 
+	<a href="https://github.com/Isi-dev/ComfyUI-UniAnimate-W">	Isi-dev/ComfyUI-UniAnimate-W (UniAnimate=humans, Animate-X=animals/cartoons)	</a>,
+	<a href="https://huggingface.co/Isi99999/UniAnimate_and_Animate-X_Models/tree/main">		UniAnimate/Animate-X models	</a>, 
+
+<li/>	<a href="https://github.com/SamKhoze/ComfyUI-DeepFuze">	GitHub - DeepFuze	</a>,
+	<a href="https://www.youtube.com/watch?v=elQzQo__kWI">	YouTube 	</a>, Facial transformations, lipsyncing, video generation, voice cloning, face swapping, and lipsync translation
+
+<li/>	<a href="https://github.com/jixiaozhong/Sonic">	Sonic: Shifting Focus to Global Audio Perception in Portrait Animation	</a>, 
+	<a href="https://huggingface.co/spaces/xiaozhongji/Sonic">	xiaozhongji/Sonic Demo	</a>
+	<a href="https://github.com/smthemex/ComfyUI_Sonic">	smthemex/ComfyUI_Sonic	</a>
+
+
+</ol>
+</td><td width="30%"><!----------------------------------------------------------->
+<h3>	Object Background Remover / Segmentation / InPaint / OutPaint		</h3>
+<li/>	Keywords: <a href="https://openart.ai/workflows/all?keyword=Segment">	OpenArt - Segment </a>,
+	<a href="https://openart.ai/workflows/all?keyword=Background">	OpenArt - Background</a><br/><ol start=1 type=1>
+
+<li/>	<a href="https://github.com/john-mnz/ComfyUI-Inspyrenet-Rembg">	GitHub - Inspyrenet-Rembg	</a>
+<li/>	<a href="https://github.com/1038lab/ComfyUI-RMBG">	GitHub - RMBG (BEN2, mask feather, dino object segmentation)	</a>,
+	<a href="https://openart.ai/workflows/ailab/comfyui-rmbg-v120-rmbg-20-inspyrenet-and-ben-precision-background-removal/FyG6ZL1q3Z8zjSB3GPxY">	OpenArt - rmbg-v120-rmbg-20-inspyrenet	</a>, 
+	<a href="https://github.com/PramaLLC/BEN2_ComfyUI">	PramaLLC/BEN2_ComfyUI	</a>
+
+<li/> <a href="https://huggingface.co/briaai/RMBG-2.0">		BRIA Background Removal v2.0	</a>
+
+<li/> <a href="https://github.com/plemeri/InSPyReNet">		Image Pyramid Structure for High Resolution Salient Object Detection (InSPyReNet)	</a>
+
+<li/> <a href="https://github.com/ZhengPeng7/BiRefNet">		Bilateral Reference for High-Resolution Dichotomous Image Segmentation (BiRefNet)	</a>,
+	<a href="https://github.com/Visionatrix/ComfyUI-BiRefNet">	ComfyUI-BiRefNet	</a>,
+	<a href="https://github.com/MoonHugo/ComfyUI-BiRefNet-Hugo">	MoonHugo/ComfyUI-BiRefNet-Hugo	</a>
+
+<li/> <a href="https://huggingface.co/PramaLLC/BEN">		Background Erase Network (BEN)	</a>
+	<a href="https://civitai.com/articles/8845/ben-background-erase-network-in-comfyui">		CivitAI ComfyUI </a>
+
+<li/>	<a href="https://github.com/Layer-norm/comfyui-lama-remover">	lama-remover	</a>,
+	<a href="https://civitai.com/articles/6255/using-comfy-to-batch-process-images-with-lama-cleaner">	batch-process-images-with-lama-cleaner	</a>
+
+<li/>	<a href="https://openart.ai/workflows/fish_intent_33/removeanything/guex9gtyTcSQMslwjvl8">	OpenArt - fish_intent_33/removeanything	</a> [GOOD]
+	<a href="https://huggingface.co/blog/OzzyGT/diffusers-image-fill">	Diffusers Image Fill Guide	</a>
+
+<li/>	<a href="https://openart.ai/workflows/emperor_rare_28/object-removal-workflow/346g2A7esW3lde8KZH5F">	OpenArt - emperor_rare_28/object-removal-workflow	</a>
+
+<li/> SAM2(Segment Anything 2) <a href="https://github.com/kijai/ComfyUI-segment-anything-2">	ComfyUI-segment-anything-2	</a>,
+	<a href="https://github.com/neverbiasu/ComfyUI-SAM2">	ComfyUI-SAM2	</a>,
+	<a href="https://openart.ai/workflows/cgtips/comfyui---segment-anything-2-sam2---method-2/GTbSSKbVl6KpGu6uh4Lj">	OpenArt - SAM2	</a>,
+	<a href="https://github.com/IDEA-Research/Grounded-Segment-Anything">	IDEA-Research/Grounded-Segment-Anything	</a>
+
+<li/>	<a href="https://mega-sam.github.io/#demo">	MegaSAM - Accurate, Fast and Robust Structure and Motion from Casual Dynamic Videos	</a>
+
+<li/>	<a href="https://github.com/magic-research/Sa2VA">	magic-research/Sa2VA	</a>, 
+	<a href="https://huggingface.co/spaces/fffiloni/Sa2VA-simple-demo">	Sa2VA-simple-demo	</a>
+
+</ol>
+<!----------------------------------------------------------->
+<h3>	Speech / Audio / Music			</h3>
+<li/>	Keywords: <a href="https://openart.ai/workflows/all?keyword=Speech">	OpenArt - Speech	</a>,
+	<a href="https://openart.ai/workflows/all?keyword=Audio">	OpenArt - Audio	</a>,
+	<a href="https://gist.github.com/0xdevalias/359f4265adf03b0142e4d0543c156a3e">	github - Awesome Audio	</a>
+	<br/><ol start=1 type=1>
+
+<li/>	<a href="https://funaudiollm.github.io/cosyvoice2/">	CosyVoice 2	</a>,
+	<a href="https://www.modelscope.cn/studios/iic/CosyVoice2-0.5B">	CosyVoice2-0.5B demo 	</a>, 
+	<a href="https://openart.ai/workflows/t8star/cosyvoice2latentsync/sW87AX7TU9Lq6t4uHySn">	t8star/cosyvoice2latentsync 	</a>
+
+
+<li/>	<a href="https://github.com/fishaudio/fish-speech">	FishAudio (No ComfyUI)	</a>
+	<a href="https://huggingface.co/fishaudio">	huggingface.co/fishaudio	</a>
+
+<li/>	<a href="https://github.com/IuvenisSapiens/ComfyUI_Qwen2-Audio-7B-Instruct-Int4">	Qwen2-Audio-7B-Instruct-Int4	</a>
+
+<li/>	<a href="https://huggingface.co/SWivid/F5-TTS">		HuggingFace - SWivid/F5-TTS	</a>,
+	<a href="https://github.com/niknah/ComfyUI-F5-TTS">	niknah/ComfyUI-F5-TTS	</a>
+
+<li/> <a href="https://github.com/AIFSH">		 AIFSH (XTTS, CosyVoice, OpenVoice)	</a>,
+	<a href="https://openart.ai/workflows/chenen_cc/make-anyone-say-anything-musetalk-cosyvoice/nDv9ZYVLc761Ix7scb3q">		 musetalk-cosyvoice	</a>
+
+<li/> <mark><a href="https://huggingface.co/spaces/srinivasbilla/llasa-3b-tts">	Llasa-3B	</a>, </mark>
+	<a href="https://huggingface.co/HKUSTAudio/Llasa-3B">	HKUSTAudio/Llasa-3B	</a>,
+	<a href="https://replicate.com/kjjk10/llasa-3b-long">	Replicate - kjjk10/llasa-3b-long	</a>
+
+<li/>	Text-To-Speech 
+	<a href="https://huggingface.co/spaces/innoai/Edge-TTS-Text-to-Speech">	Microsoft Edge-TTS-Text-to-Speech	</a>
+	<a href="https://github.com/1038lab/ComfyUI-EdgeTTS">	1038lab/ComfyUI-EdgeTTS	</a>,
+	
+<li/>	<a href="https://github.com/hkchengrex/MMAudio">	hkchengrex/MMAudio	</a>,
+	<a href="https://github.com/kijai/ComfyUI-MMAudio">	kijai/ComfyUI-MMAudio	</a>,
+	<a href="https://openart.ai/workflows/sneakyrobot/mmaudio-video-to-sound-audio-visual-workflow/zHLVMpwqHzqR9yHLzW06">		OpenArt - sneakyrobot/mmaudio-video-to-sound-audio-visual-workflow	</a>
+
+<li/>	Music <a href="https://map-yue.github.io/">	YuE: Open Music Foundation Models for Full-Song Generation	</a>
+
+</ol>
+<!----------------------------------------------------------->
+<h3>	Talking Head			</h3>
+<li/>	Keywords: <a href="https://openart.ai/workflows/all?keyword=talking">	OpenArt - Talking	</a>,
+	<br/><ol start=1 type=1>
+
+<li/>	<a href="https://github.com/antgroup/echomimic_v2">		EchoMimic	</a>
+
+<li/>	<a href="https://github.com/HelloVision/ComfyUI_HelloMeme">	HelloMeme	</a>
+
+<li/>	<a href="https://github.com/KwaiVGI/LivePortrait">		LivePortrait	</a>
+
+<li/>	<a href="https://memoavatar.github.io/">	MemoAvatar	</a>,
+	<a href="https://github.com/if-ai/ComfyUI-IF_MemoAvatar">	ComfyUI-IF_MemoAvatar	</a>,
+	<a href="https://openart.ai/workflows/dashen/memoavatar/2tsyggrYyZtWeHiyYagV">	OpenArt - dashen/memoavatar	</a>,
+	<a href="https://openart.ai/workflows/t8star/memoavatar/yH1rroH1nLA6O0Os4lh3">	OpenArt - t8star/memoavatar	</a>,
+	<a href="https://openart.ai/workflows/cat_untimely_42/memoavatar_photo-photo_talk/Dw9ZIG27X017M2DHwkSW">	cat_untimely_42/memoavatar_photo-photo_talk	</a>
+
+<li/>	<a href="https://github.com/akatz-ai/ComfyUI-X-Portrait-Nodes">		GitHub - akatz-ai/ComfyUI-X-Portrait	</a>
+
+</ol>
+<!----------------------------------------------------------->
+<h3>	Tool / Utility			</h3><ol start=1 type=1>
+
+<li/>	<a href="https://education.civitai.com/using-civitai-the-on-site-lora-trainer/">	CivitAI LORA Trainer	</a>,
+	<a href="https://education.civitai.com/quickstart-guide-to-flux-1/#rapid-flux-training">	CivitAI FLUX Trainer	</a>, 
+	<a href="https://openart.ai/workflows/tenofas/flux-lora-trainer-20/VmxcKxjxRoN2Lrs9ESU7">	tenofas/flux-lora-trainer-20	</a>
+
+<li/> <a href="https://github.com/crystian/ComfyUI-Crystools">		  Crystools (CPU, GPU, RAM, VRAM, GPU Temp and space) 	</a>
+
+<li/>	PixelPruner <a href="https://github.com/theallyprompts/PixelPruner">	theallyprompts	</a>,
+	<a href="https://civitai.com/models/465684/pixelpruner-crop-tool-for-data-set-prep">	civitai	</a>
+
+<li/> <a href="https://github.com/liusida/ComfyUI-AutoCropFaces">	GitHub - liusida/ComfyUI-AutoCropFaces	</a>
+
+<li/> <a href="https://github.com/daxcay/ComfyUI-JDCN">		GitHub - JDCN - Directory Path	</a>
+
+
+
+<li/>	<a href="https://github.com/MushroomFleet/DJZ-Workflows/tree/main/Foda_Flux/Captioning%20Tools">	Captioning	</a>
+<li/>	<a href="https://openart.ai/workflows/toucan_chilly_4/florence-run-batch-capture-prompt-maker/tmkxPTDT7sL2EuZgaQJe">	OpenArt  - Florence Run Batch Capture Prompt Maker	</a>
+
+<li/>	<a href="https://img-comparison-slider.sneas.io/examples.html">	HTML img-comparison-slider	</a>,
+	<a href="https://github.com/sneas/img-comparison-slider">	GitHub 	</a>,
+	<a href="https://demo.photo.gallery/examples/features/captions/">	demo.photo.gallery	</a>
+
+
+<li/>	<a href="https://github.com/choey/Comfy-Topaz">	choey/Comfy-Topaz	</a>,
+	<a href="https://openart.ai/workflows/t8star/gigapixel/e7l2FXI0D8qn0Bxa71Nb">	t8star/gigapixel	</a>
+
+<li/>	Prompt <a href="https://github.com/marduk191/ComfyUI-Fluxpromptenhancer">	marduk191/ComfyUI-Fluxpromptenhancer	</a>
+
+<li/>	<a href="https://odyssey.systems/introducing-explorer">	Odyssey (3D scene generation)	</a>
+
+<li/>	Prompt Lists <a href="https://prompter.fofr.ai/explore">	fofr	</a>,
+	<a href="https://github.com/ai-prompts/prompt-lists/">	ai-prompts/prompt-lists	</a>
+
+<li/>	<a href="https://github.com/chflame163/ComfyUI_LayerStyle_Advance">	chflame163/ComfyUI_LayerStyle_Advance (ZhiPu / SegmentAnything)	</a>
+
+<li/>	Detectors - NSFW <a href="https://huggingface.co/Falconsai/nsfw_image_detection">	Falconsai/nsfw_image_detection	</a>,
+	<a href="https://github.com/trumanwong/ComfyUI-NSFW-Detection">	ComfyUI-NSFW-Detection	</a>
+
+</ol>
+
+<!----------------------------------------------------------->
+<h3>	Tool - Benchmark / Metrics			</h3><ol start=1 type=1>
+
+<li/>	<a href="https://huggingface.co/spaces/TTS-AGI/TTS-Arena">	Text-To-Speech - TTS-AGI/TTS-Arena	</a>
+<li/>	<a href="https://huggingface.co/spaces/Vchitect/VBench_Leaderboard">	Text-To-Video - Vchitect/VBench_Leaderboard	</a>
+
+<li/>	Performance <a href="https://liewfeng.github.io/TeaCache/">	TeaCache </a>
+
+
+</ol>
+<!----------------------------------------------------------->
+<h3>	Tool - General			</h3><ol start=1 type=1>
+<li/>	TopazLabs <a href="https://openart.ai/workflows/t8star/-topaz-aigigapixel/nfK3ydWg8NYZIoYn9wwc">	PhotoAI GigaPixel	</a>, 
+	<a href="https://openart.ai/workflows/t8star/-topaz-video/XsQRrLpnfNfLqlg7emVz">	Video AI	</a>
+
+<li/>	<a href="https://matrix.tencent.com/ai-detect/ai_gen">	Tencent ai-detect	</a>
+<li/>	<a href="https://hivemoderation.com/ai-generated-content-detection">	Hive ai-generated-content-detection	</a>
+
+
+</ol>
+
+<!----------------------------------------------------------->
+<h3>	Tool - Training			</h3><ol start=1 type=1>
+
+<li/>	<a href="https://github.com/kijai/ComfyUI-FluxTrainer">	ComfyUI-FluxTrainer	</a>,
+	<a href="https://openart.ai/workflows/-/flux-lora-trainer-on-comfyui-v11/XQuqTMSGQCzsgWgkQ1MN">	flux-lora-trainer-on-comfyui-v11	</a>,
+
+<li/>	<a href="https://www.youtube.com/watch?v=bf8_mEvs9lE">	YouTube - Custom AI Digital Human with HeyGen's Lora Training	</a>
+
+<li/>	<a href="https://www.youtube.com/watch?v=ksUEu6c-ouc">	Training FLUX LORA 	</a>
+<li/>	<a href="https://civitai.com/articles/7131/flux-lora-trainer-on-comfyui-v10">	Training FLUX LORA	</a>
+<li/>	<a href="https://civitai.com/models/713258/flux-lora-trainer-on-comfyui">	Training FLUX LORA	</a>
+
+<li/>	<a href="https://www.youtube.com/watch?v=1DyfPhIkX78">	FluxGym 	</a>,
+	<a href="https://www.youtube.com/watch?v=gdEeceGYBu0">	Training FLUX LORA	</a>,
+	<a href="https://www.youtube.com/watch?v=nySGu12Y05k">	Training FLUX LORA	</a>
+
+<li/>	<a href="https://civitai.com/articles/9360/flux-guide-part-i-lora-training">	CivitAI - flux-guide-part-i-lora-training	</a>
+
+<li/>	<a href="https://github.com/LarryJane491/Lora-Training-in-Comfy">	Training LORA	</a>
+<li/>	<a href="https://civitai.com/articles/3406/lora-training-dataset-creation-comfyui-one-click-dataset">	Training lora-training-dataset-creation-comfyui-one-click-dataset	</a>
+
+<li/>	<a href="https://github.com/modelscope/data-juicer">	ModelScope/data-juicer	</a>
+</ol>
+<!----------------------------------------------------------->
+<h3>	Upscale SUPIR			</h3>
+<li/>	Keywords: <a href="https://openart.ai/workflows/all?keyword=upscale">	OpenArt - Upscale	</a>,
+	<a href="https://openart.ai/workflows/all?keyword=SUPIR">	OpenArt - SUPIR	</a><br/><ol start=1 type=1>
+
+<li/> <a href="https://huggingface.co/camenduru/SUPIR/tree/main">		SUPIR 	</a>
+
+<li/> <a href="https://openmodeldb.info/">		OpenModelDB	</a>,
+	<a href="https://openmodeldb.info/?q=Skin">		realistic skin	</a>
+
+<li/> <a href="https://huggingface.co/uwg/upscaler/tree/main/SwinIR">		HuggingFace - upscaler	</a>
+
+<li/>	<a href="https://openart.ai/workflows/comfyuiblog/upscale-flux1-dev-controlnet-union-pro/hY1q5HqEY8jDu2KrHUE3">	Flux ControlNet Upscale	</a>
+
+<li/>	<a href="https://openart.ai/workflows/crocodile_ruddy_19/supir-upscale/WdeLcIKRRaPNDnayUy49">	SUPIR	</a>,
+	<a href="https://openart.ai/workflows/meerkat_elliptical_71/supir-image-scale/elXpUhL9AN0UzHS5zRYh">		supir-image-scale	</a>
+
+<li/>	<a href="https://openart.ai/workflows/jerrydavos/ultimate-flux-upscaler---2k---4k---8k---16k---32k/viXz5ezmbAEcqORoN9iW">	OpenArt - jerrydavos/ultimate-flux-upscaler 2k, 4k, 8k, 16k	</a>
+
+<li/>	<a href="https://github.com/shiimizu/ComfyUI-TiledDiffusion">	GitHub - shiimizu/ComfyUI-TiledDiffusion	</a>
+<li/>	<a href="https://github.com/ssitu/ComfyUI_UltimateSDUpscale">	GitHub - ssitu/ComfyUI_UltimateSDUpscale	</a>
+
+<li/>	<a href="https://github.com/zsyOAOA/InvSR">	InvSR - Arbitrary-steps Image Super-resolution via Diffusion Inversion (No ComfyUI)	</a>,
+	<a href="https://huggingface.co/spaces/OAOA/InvSR">	OAOA/InvSR demo	</a>
+
+</ol>
+
+
+</td><td width="30%"><!----------------------------------------------------------->
+<h3>	Video			</h3><ol start=1 type=1>
+
+<li/>	<a href="https://www.genmo.ai/">	Genmo	</a>
+	<a href="https://github.com/genmoai/mochi">	Mochi	</a>,
+	<a href="https://github.com/kijai/ComfyUI-MochiWrapper">	ComfyUI-MochiWrapper	</a>
+	<a href="https://github.com/logtd/ComfyUI-MochiEdit">		GitHub - logtd/ComfyUI-MochiEdit	</a>,
+
+<li/>	<a href="https://github.com/logtd/ComfyUI-LTXTricks">		GitHub - logtd/ComfyUI-LTXTricks	</a>,
+	<a href="https://openart.ai/workflows/pika_creamy_57/ltx091-i2vgen-long-video/b8ftrZGQ76AN2JDl6chW">		pika_creamy_57/ltx091-i2vgen-long-video	</a>,
+	<a href="https://openart.ai/workflows/neofuturist/ltx-91-llm-movie-directors/YvlF3w9ndoUFYVchFc1x">	neofuturist/ltx-91-llm-movie-directors	</a>
+
+<li/>	<a href="https://xiaoyushi97.github.io/Motion-I2V/">	Motion-I2V (No ComfyUI)	</a>
+<li/>	<a href="https://deepmind.google/discover/blog/genie-2-a-large-scale-foundation-world-model/">	Google Genie-2 (No ComfyUI)	</a>
+<li/>	<a href="https://huggingface.co/THUDM">	Tsinghua University Knowledge Engineering Group (KEG) & Data Mining 	</a>
+	<a href="https://huggingface.co/THUDM/CogVideoX-5b">	CogVideoX-5b	</a>
+	<a href="https://docs.google.com/spreadsheets/d/16eA6mSL8XkTcu9fSWkPSHfRIqyAKJbR1O99xnuGdCKY/edit?gid=0#gid=0">	CogVideoX models	</a>
+
+<li/>	<a href="https://openart.ai/workflows/datou/cogvideo-tora/pfHf1wJRmxItzrqx6nHJ">	Alibaba TORA	</a>
+<li/>	<a href="https://aivideo.hunyuan.tencent.com/">	Tencent Hunyuan	</a>,
+	<a href="https://github.com/kijai/ComfyUI-HunyuanVideoWrapper">	ComfyUI-HunyuanVideoWrapper	</a>,
+	<a href="https://huggingface.co/Kijai/HunyuanVideo_comfy/tree/main">	HunyuanVideo_comfy models	</a>,
+	<a href="https://openart.ai/workflows/odam_ai/hunyuan-video-generation-face-swap/GyIn6sC02Pg0urjVDh7a">	hunyuan-video-generation-face-swap	</a>,
+	<a href="https://openart.ai/workflows/latent_dream/hunyuan-vid2vid-txt2vid-fast-test-bench-v1/dSo9BIpAbkaalNZjL5RI">	latent_dream/hunyuan-vid2vid-txt2vid-fast-test-bench-v1	</a>,
+	<a href="https://openart.ai/workflows/flounder_bowed_50/hunyuan-video-generation-large-model/VckyU6A9c7up0x2SvdL5">	flounder_bowed_50/hunyuan-video-generation-large-model	</a>
+
+<li/>	<a href="https://openart.ai/workflows/cat_untimely_42/ltx-video-enhance-stg/wMIwpeYhc372cOtpiiNo">		OpenArt - cat_untimely_42/ltx-video-enhance-stg	</a>
+
+<li/>	<a href="https://openart.ai/workflows/cat_untimely_42/gimmvfi-video/Z4OcbafEIPpppewJLn7V">		OpenArt - cat_untimely_42/gimmvfi-video (frame smoothen)	</a>
+
+<li/>	<a href="https://openart.ai/workflows/llama_gifted_48/basic-video-face-swap/brRQtSZeVrb4W62TL4Ln">	OpenArt - llama_gifted_48/basic-video-face-swap	</a>
+<li/>	<a href="https://openart.ai/workflows/cat_untimely_42/gimmvfi-video/Z4OcbafEIPpppewJLn7V">	OpenArt - cat_untimely_42/gimmvfi-video	</a>
+
+
+
+<li/>	Video Frame Interpolation <a href="https://github.com/kijai/ComfyUI-GIMM-VFI">	kijai/ComfyUI-GIMM-VFI 	</a>,
+	<a href="https://github.com/Fannovel16/ComfyUI-Frame-Interpolation">	Fannovel16/ComfyUI-Frame-Interpolation	</a>
+
+
+<li/>	<a href="https://matankleiner.github.io/flowedit/">	FlowEdit 	</a>,
+	<a href="https://www.youtube.com/watch?v=qJ21Vf0eHzg">	FlowEdit Image Editing (One-Click Text Modification)	</a>,
+	<a href="https://github.com/logtd/ComfyUI-Fluxtapoz">	https://github.com/logtd/ComfyUI-Fluxtapoz	</a>,
+	<a href="https://www.youtube.com/watch?v=s04W4tIyyKU">	FlowEdit Video Editing (No Masks, No Noise)	</a>,
+	<a href="https://github.com/logtd/ComfyUI-LTXTricks">	logtd/ComfyUI-LTXTricks	</a>,
+	<a href="https://github.com/logtd/ComfyUI-HunyuanLoom">	logtd/ComfyUI-HunyuanLoom	</a>,
+
+<li/>	<a href="https://github.com/Fannovel16/ComfyUI-MotionDiff">	GitHub - Fannovel16/ComfyUI-MotionDiff	</a>
+
+
+</ol>
+
+
+<hr><!----------------------------------------------------------->
+<h3>	3D OpenPose / PoseNet / DepthMap	</h3>
+<li/> Keyword:
+	<a href="https://civitai.com/tag/poses">			CivitAI - poses	</a>,
+	<a href="https://civitai.com/tag/openpose">		CivitAI - openpose	</a>,
+	<a href="https://openart.ai/workflows/all?keyword=OpenPose">		openart- OpenPose	</a>,
+	<a href="https://openart.ai/workflows/all?keyword=Depth">		openart- Depth	</a><br/><ol start=1 type=1>
+
+<li/>	<a href="https://github.com/ZHO-ZHO-ZHO/X-Pose-ZHO"> GitHub - ZHO-ZHO-ZHO/X-Pose-ZHO	</a>
+
+<li/>	<a href="https://openart.ai/workflows/pixeleasel/inpainting-pose-editor-color-match-composite/yqxeK0ENomLbCK8RLuXZ">	Inpainting Pose Editor, Color Match, Composite	</a>,
+	<a href="https://github.com/hinablue/ComfyUI_3dPoseEditor"> GitHub - hinablue/ComfyUI_3dPoseEditor	</a>
+
+<li/>	Data <a href="https://www.posemaniacs.com/poses"> PoseManiacs </a>,
+	<a href="https://github.com/BandaiNamcoResearchInc/Bandai-Namco-Research-Motiondataset/tree/master"> Bandai-Namco  </a>,
+	<a href="https://github.com/a-lgil/pose-depot">	Pose-Depot  </a>,
+	<a href="https://civitai.com/models/157187/poses-bundle-aio-collection-over-20000-poses-controlnet">	CivitAI (>5Gb)	    </a>,
+	<a href="https://posemy.art/angry-poses/">	PoseMyArt 	</a>,
+	<a href="https://app.anything.world/">	AppAnything 1       </a>,
+	<a href="https://app.anything.world/gallery/m/pieter_adams%230000">	AppAnything 2       </a>,
+	<a href="https://app.anything.world/gallery/m/casual_winter_clothes_man%230000">	AppAnything 3       </a>,
+	<a href="https://humandataset.com/">	HumanDataset 1   </a>,
+	<a href="https://humandataset.com/individuals/">	HumanDataset 2   </a>,
+	<a href="https://www.3dscanstore.com/blog">	3DScanStore   </a>,
+	<a href="https://renderpeople.com/3d-people/?_product=rigged-people%2Canimated-people&_type=bundles">	RenderPeople   </a>,
+
+<li/> <a href="https://github.com/DepthAnything/Depth-Anything-V2">		GitHub - Depth-Anything-V2	</a>,
+	<a href="https://huggingface.co/spaces/depth-anything/Depth-Anything-V2">		HuggingFace - Demo	</a>
+
+<li/> <a href="https://huggingface.co/apple/DepthPro">	Appple DepthPro	</a>,
+	<a href="https://github.com/spacepxl/ComfyUI-Depth-Pro">	ComfyUI-Depth-Pro	</a>,
+	<a href="https://openart.ai/workflows/ailab/depthflow-with-comfyui-depth-pro/4TQF8VyJgkCY4RuHYA79">	depthflow-with-comfyui-depth-pro	</a>
+
+<li/> <a href="https://openart.ai/workflows/amr_sha/flux-controlnet-depth-v3-canny-v3/RbbioFRM8vM3lPsH1U6a">	OpenArt - amr_sha/flux-controlnet-depth-canny	</a>
+
+<li/> <a href="https://github.com/Fannovel16/comfyui_controlnet_aux">	ComfyUI-Midas, Zoe Depth	</a>
+
+<li/> <a href="https://github.com/kijai/ComfyUI-Marigold">	ComfyUI-Marigold	</a>
+
+<li/>	MarketPlace	 <a href="https://www.deviantart.com/tag/poses">	DevianArt	</a>,
+	<a href="https://www.proko.com/@stan/tools">	Proko  	</a>
+
+<li/>	<a href="https://github.com/if-ai/ComfyUI-IF_Trellis">	GitHub - if-ai/ComfyUI-IF_Trellis	</a>,
+	<a href="https://www.youtube.com/watch?v=-vEpuYL9I3g">	YouTube	</a>
+
+<li/>	<a href="https://github.com/jtydhr88/ComfyUI-InstantMesh">	GitHub - jtydhr88/ComfyUI-InstantMesh	</a>
+
+<li/>	<a href="https://huggingface.co/alexgenovese/sams/tree/main">	alexgenovese/sams	</a>
+<li/>	<a href="https://huggingface.co/alexgenovese/controlnet/tree/main">	alexgenovese/controlnet	</a>
+
+<li/>	<a href="https://github.com/TMElyralab/Comfyui-MusePose">	TMElyralab/Comfyui-MusePose	</a>
+
+<li/>	<a href="https://github.com/akatz-ai/ComfyUI-DepthCrafter-Nodes">	Tencent akatz-ai/ComfyUI-DepthCrafter-Nodes	</a>
+
+<li/>	<a href="https://github.com/microsoft/MoGe">	MoGe - Monocular 2D->3D </a>,
+	<a href="https://github.com/kijai/ComfyUI-MoGe">	kijai/ComfyUI-MoGe </a>
+
+<li/>	<a href="https://github.com/fkryan/gazelle">	Gaze-LLE: Gaze Target Estimation via Large-Scale Learned Encoders </a>,
+	<a href="https://huggingface.co/spaces/fffiloni/Gaze-LLE">		HuggingFace - fffiloni/Gaze-LLE </a>
+
+<li/>	<a href="https://silent-chen.github.io/PartGen/">	PartGen - Part-level 3D Generation and Reconstruction	</a>
+<li/>	<a href="https://articulate-anything.github.io/">	Articulate-Anything - Automatic Modeling of Articulated Objects	</a>
+
+<li/>	<a href="https://www.wlyu.me/FaceLift/">	FaceLift: Single Image to 3D Head	</a>
+<li/>	<a href="https://muelea.github.io/hsfm/">	Humans and Structure from Motion (HSfM) - Reconstructing People, Places, and Cameras	</a>
+<li/>	<a href="https://huggingface.co/spaces/lemonaddie/geowizard">	GeoWizard 2D->3D	</a>,
+	<a href="https://github.com/fuxiao0719/GeoWizard">	GitHub - fuxiao0719/GeoWizard	</a>,
+	<a href="https://github.com/kijai/ComfyUI-Geowizard">	kijai/ComfyUI-Geowizard	</a>
+
+
+<li/>	Pose Estimation <a href="https://shubham-goel.github.io/4dhumans/">	4DHumans	</a>,
+	<a href="https://github.com/shubham-goel/4D-Humans">	shubham-goel/4D-Humans	</a>,
+	<a href="https://github.com/open-mmlab/mmpose">	open-mmlab/mmpose	</a>,
+	<a href="https://github.com/TMElyralab/Comfyui-MusePose">	TMElyralab/Comfyui-MusePose	</a>,
+	<a href="https://github.com/logtd/ComfyUI-4DHumans">	logtd/ComfyUI-4DHumans	</a>
+
+
+
+<li/>	<a href="https://trellis3d.github.io/">	Trellis3d - Structured 3D Latents - for Scalable and Versatile 3D Generation	</a>,
+	<a href="https://github.com/smthemex/ComfyUI_TRELLIS">	smthemex/ComfyUI_TRELLIS	</a>,
+	<a href="https://github.com/if-ai/ComfyUI-IF_Trellis">	ComfyUI-IF_Trellis	</a>
+
+<li/>	<a href="https://francis-rings.github.io/StableAnimator/">	StableAnimator: High-Quality Identity-Preserving Human Image Animation	</a>
+
+</ol>
+<hr><!----------------------------------------------------------->
+<h3>	Lighting	</h3>
+<li/> Keyword:
+	<a href="https://civitai.com/search/models?sortBy=models_v9&query=lighting">			CivitAI - lighting	</a>,
+	<a href="https://openart.ai/workflows/all?keyword=lighting">		openart- lighting	</a><br/><ol start=1 type=1>
+
+<li/>	IC-Light <a href="https://openart.ai/workflows/risunobushi/relight-with-ic-light-and-background-as-lighting-source/UPKc0ak0YJibwbDff85i">	risunobushi/relight-with-ic-light-and-background-as-lighting-source	</a>,
+	<a href="https://openart.ai/workflows/quhan/ic-light-custom-lighting-ic-light/6LWfdnkUyoNmkeXdrlcm">	quhan/ic-light-custom-lighting-ic-light	</a>,
+	<a href="https://openart.ai/workflows/risunobushi/relight-people-preserve-colors-and-details/W50hRGaBRUlBT1ReD4EF">	risunobushi/relight-people-preserve-colors-and-details	</a>,
+
+<li/>	<a href="https://github.com/LAOGOU-666/Comfyui-LG_Relight">	GitHub - LAOGOU-666/Comfyui-LG_Relight	</a>
+
+<li/>	<a href="https://github.com/kijai/ComfyUI-Geowizard">	GitHub - kijai/ComfyUI-Geowizard	</a>
+<li/>	<a href="https://github.com/kijai/ComfyUI-Lotus">	GitHub - kijai/ComfyUI-Lotus	</a>
+
+<li/>	<a href="https://openart.ai/workflows/profile/risunobushi?sort=latest">	risunobushi (IC Lighting workflows)	</a>
+
+</ol>
+</td>
+
+</tr>
+</table>
+
+
+</body>
+</html>
