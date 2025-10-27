@@ -1,7 +1,7 @@
 <html>
 <head>
 <title>
-	AIGC Awesome List (Sep 2025)
+	AIGC Awesome List (Oct 2025)
 </title>
 
 
@@ -12,7 +12,7 @@ body {
 	margin-right : 2pt;
 
 	scrollbar-face-color       : gray;
-	font-size                  : 20pt;
+	font-size                  : 12pt;
 	scrollbar-highlight-color  : white;
 	scrollbar-shadow-color     : black;
 	color                      : black;
@@ -39,12 +39,6 @@ th {
 
 td {
 	word-wrap : break-word;
-}
-
-
-mark {
-	background-color : #DAF7A6;
-	color            : black;
 }
 
 pre {
@@ -124,31 +118,6 @@ H4 {
 	padding-right  :  8pt;
 }
 
-mark {
-	background-color : #DAF7A6;
-	color            : black;
-}
-
-markBLUE {
-	background-color : #A6DAF7;
-	color            : black;
-}
-
-markGRAY {
-	background-color : #C0C0C0;
-	color            : black;
-}
-
-markORANGE {
-	background-color : #F7C610;
-	color            : black;
-}
-
-markRED {
-	background-color : #F7A6DA;
-	color            : black;
-}
-
 /*---3D boxes------------------------------------------------------------------*/
 .GreyList {
 	background-color : #dddddd;
@@ -196,6 +165,33 @@ markRED {
   a.tblGreenLink.link {color:#000000; }
   a.tblGreenLink.visited {color:#000000; }
 
+
+/*---------------------------------------------------------------------------*/
+/* Styling using ID tag */
+#mark {
+	background-color : #DAF7A6;
+	color            : black;
+}
+
+#markBLUE {
+	background-color : #A6DAF7;
+	color            : black;
+}
+
+#markGRAY {
+	background-color : #C0C0C0;
+	color            : black;
+}
+
+#markORANGE {
+	background-color : #F7C610;
+	color            : black;
+}
+
+#markRED {
+	background-color : #F7A6DA;
+	color            : black;
+}
 /*---------------------------------------------------------------------------*/
 </style>
 
@@ -203,11 +199,35 @@ markRED {
 </head>
 <body>
 
-
-
 <p/>
 
-<h2>	TechScan - Artificial Intelligence Generated Content (AIGC) - Sep 2025	</h2>
+<h2>	TechScan - Artificial Intelligence Generated Content (AIGC) - Oct 2025	</h2>
+
+&#183	<a href="#tag3D">	3D	</a>
+&#183	<a href="#tagAgent">	Agent	</a>	
+&#183	<a href="#tagBenchmark">	Benchmark	</a>
+	
+&#183	<a href="#tagData">	Datasets	</a>
+&#183	<a href="#tagCompany">	Company	</a>
+
+&#183	<a href="#tagFaces">	FaceSwap	</a>
+&#183	<a href="#tagCaption">	Image Captioning	</a>
+&#183	<a href="#tagLighting">	Lighting	</a>
+&#183	<a href="#tagModel">	Models	</a>
+&#183	<a href="#tagMusic">	Music	</a>
+&#183	<a href="#tagPlatform">	Platforms	</a>
+&#183	<a href="#tagPerformance">	Performance	</a>
+&#183	<a href="#tagRead">	Read	</a>
+&#183	<a href="#tagRemove">	Segmentation	</a>	
+
+&#183	<a href="#tagTalkingHead">	TalkingHead	</a>
+
+&#183	<a href="#tagTraining">	Training	</a>	
+&#183	<a href="#tagTechScan">	TechScan	</a>
+&#183	<a href="#tagTTS">	TTS	</a>
+&#183	<a href="#tagUpscale">	Upscale	</a>
+&#183	<a href="#tagVideo">	Video	</a>
+
 
 <table width="100%">
 <tr valign="top">
@@ -217,7 +237,7 @@ markRED {
 <!----------------------------------------------------------------------------->
 <td width="30%"><!------------------------------------------------------------->
 <!----------------------------------------------------------------------------->
-<h3 name="tagCompany">	Companies			</h3><ol start=1 type=1>
+<h3 id="tagCompany">	Companies			</h3><ol start=1 type=1>
 
 <li/> AIMageLab <a href="https://github.com/orgs/aimagelab/repositories">	aimagelab/repositories	</a>
 
@@ -225,8 +245,7 @@ markRED {
 	<a href="https://huggingface.co/aixonlab">		HuggingFace - AixonLab	</a>,
 	<a href="https://huggingface.co/aixonlab/flux.1-lumiere-alpha/blob/main/comfy/lumiere_alpha_workflow.json">		lumiere_alpha	</a>
 
-<li/>	
-	<mark>
+<li id="mark"/>
 	Alibaba  <a href="https://github.com/alibaba/Tora">	Alibaba 	</a>,	
 	<a href="https://huggingface.co/alibaba-pai">		Alibaba PAI (Platform for AI)	</a>, 
 	<a href="https://github.com/ali-vilab/">		Alibaba TongYi Vision Intelligence Lab	</a>,
@@ -237,18 +256,17 @@ markRED {
 	<a href="https://ali-vilab.github.io/In-Context-LoRA-Page/">		In-Context-LoRA	</a>,
 	<a href="https://lucaria-academy.github.io/Animate-X/">	Animate-X	</a>,
 	<a href="https://huggingface.co/ali-vilab/ACE_Plus/">	ACE Plus ++	</a>,
-	<a href="https://humanaigc.github.io/omnitalker/">	Alibaba - OmniTalker	</a>, 
+
 	<a href="https://github.com/Wan-Video/Wan2.1">	Wan: Open Large-Scale Video Generative Models </a>
 	<a href="https://huggingface.co/Kijai/WanVideo_comfy/tree/main">	Models - Kijai/WanVideo_comfy </a>, 
 	<a href="https://github.com/ali-vilab/UniAnimate-DiT">	UniAnimate-DiT	</a>,
 	<a href="https://humanaigc.github.io/SwapAnyHead/">	SwapAnyHead (no code)	</a>, 
 	<a href="https://github.com/QwenLM/Qwen-Image">	GitHub - Qwen-Image (Chinese text)	</a>, 
-	<a href="https://huggingface.co/Qwen/Qwen-Image">	HuggingFace - Qwen-Image </a>, 
+	<a href="https://github.com/PKU-YuanGroup/Edit-R1">	Edit-R1: Reinforce Image Editing with Diffusion Negative-Aware Finetuning and MLLM Implicit Feedback	</a>, 
 	<a href="https://qwenlm.github.io/blog/qwen-tts/">	Qwen-TTS - Dialects </a>
-	</mark>
-
-
-
+	<a href="https://humanaigc.github.io/omnitalker/">	OmniTalker	</a>, 
+	<a href="https://humanaigc.github.io/wan-animate/">	Wan-Animate: Unified Character Animation and Replacement with Holistic Replication </a>,
+	<a href="https://huggingface.co/spaces/Qwen/Qwen3-ASR-Demo"	>	Spaces/Qwen3-ASR-Demo (Speech-To-Text)	</a>	
 
 <li/> Alimama  <a href="https://github.com/orgs/alimama-creative/repositories">		Github- Alimama Creative	</a>,
 	<a href="https://huggingface.co/alimama-creative">		HuggingFace - alimama-creative	</a>
@@ -269,52 +287,51 @@ markRED {
 	<a href="https://huggingface.co/spaces/allenai/WildBench">	WildBench: Benchmarking LLMs with Challenging Tasks from Real Users in the Wild	</a>, 
 
 
-<li/> Alpha-VLLM <a href="https://github.com/Alpha-VLLM/Lumina-mGPT-2.0">	Lumina-mGPT 2.0: Stand-alone Autoregressive Image Modeling	</a>
+<li/> Alpha-VLLM <a href="https://github.com/Alpha-VLLM/Lumina-mGPT-2.0">	Lumina-mGPT 2.0: Stand-alone Autoregressive Image Modeling	</a>, 
+	<a href="https://github.com/Alpha-VLLM/Lumina-DiMOO">		Lumina-DiMOO: An Omni Diffusion Large Language Model for Multi-Modal Generation and Understanding	</a>
 
 <li/> ANT <a href="https://github.com/antgroup/">		ANT	</a>,
 	<a href="https://github.com/antgroup/echomimic_v2">		EchoMimic	</a>, 
 	<a href="https://huggingface.co/spaces/BadToBest/EchoMimic">		EchoMimic - Lifelike Audio-Driven Portrait Animations through Editable Landmark Conditioning	</a>
 
 <li/> Apple  <a href="https://huggingface.co/apple/DepthPro">	Apple DepthPro	</a>,
-	<a href="https://github.com/spacepxl/ComfyUI-Depth-Pro">	ComfyUI-Depth-Pro	</a>
+	<a href="https://github.com/spacepxl/ComfyUI-Depth-Pro">	ComfyUI-Depth-Pro	</a>, 
+	<a href="https://huggingface.co/collections/apple/fastvlm-68ac97b9cd5cacefdd04872e">	FastVLM: Efficient Vision Encoding for Vision Language Models	</a>
 
-<li/> 
-	<mark>
+<li id="mark"/>
 	Bilibili 
 	<a href="https://index-tts.github.io/index-tts2.github.io/">	IndexTTS2: A Breakthrough in Emotionally Expressive and Duration-Controlled Auto-Regressive Zero-Shot Text-to-Speech	</a>,
-	<a href="https://github.com/index-tts/index-tts">	IndexTTS: An Industrial-Level Controllable and Efficient Zero-Shot Text-To-Speech System (based on Tortise/XTTS)	</a>,
+	<a href="https://github.com/index-tts">	IndexTTS: An Industrial-Level Controllable and Efficient Zero-Shot Text-To-Speech System (based on Tortise/XTTS)	</a>,
 	<a href="https://arxiv.org/abs/2502.05512">	IndexTTS Paper	</a>,
 	<a href="https://index-tts.github.io/">	IndexTTS Samples	</a>,
 	<a href="https://huggingface.co/spaces/IndexTeam/IndexTTS">	IndexTTS demo	</a>,
 
 	<a href="https://github.com/billwuhao/ComfyUI_IndexTTS">	billwuhao/ComfyUI_IndexTTS	</a>, 
-	</mark>
 
-<li/> Black Forest Labs (BFL)
+
+<li id="mark"/>
+	Black Forest Labs (BFL)
 	<a href="https://huggingface.co/black-forest-labs">	BlackForestLabs	</a>,
-	<mark>
 	<a href="https://arxiv.org/html/2506.15742v2">	FLUX.1 Kontext: Flow Matching for In-Context Image Generation and Editing in Latent Space	</a>, 
 	<a href="https://huggingface.co/black-forest-labs/FLUX.1-Krea-dev">	black-forest-labs/FLUX.1-Krea-dev	</a>,
 	<a href="https://www.krea.ai/apps/image/flux-krea">	Krea online tool	</a>, 
 	<a href="https://blog.comfy.org/p/flux1-kontext-dev-day-0-support">	ComfyUI - flux1-kontext-dev-day-0-support	</a>,
 	<a href="https://huggingface.co/bullerwins/FLUX.1-Kontext-dev-GGUF/tree/main">	bullerwins/FLUX.1-Kontext-dev-GGUF	</a>,
 	<a href="https://github.com/ZenAI-Vietnam/ComfyUI-Kontext-Inpainting">	ZenAI-Vietnam/ComfyUI-Kontext-Inpainting </a>
-	</mark>
 
 <li/>	Boson.AI	<a href="https://www.boson.ai/blog/higgs-audio-v2">	Higgs Audio	</a>, 
-	<a href="https://github.com/boson-ai/emergenttts-eval-public">	EmergentTTS-Eval ("Emotions" and "Questions")	</a>
-
+	<a href="https://github.com/boson-ai/emergenttts-eval-public">	EmergentTTS-Eval ("Emotions" and "Questions")	</a>, 
+	<a href="https://huggingface.co/spaces/smola/higgs_audio_v2">	spaces/smola/higgs_audio_v2	</a>
 
 <li/> BRIA <a href="https://huggingface.co/briaai/RMBG-2.0">		BRIA Background Removal v2.0	</a>
 
-<li/> 
-	<mark>
+<li id="mark"/>
 	ByteDance <a href="https://huggingface.co/ByteDance">	ByteDance	</a>,
 	<a href="https://opensource.bytedance.com/project">	ByteDance Research </a>,
 	<a href="https://chenglin-yang.github.io/1.58bit.flux.github.io/">	1.58-bit FLUX	</a>,
 	<a href="https://github.com/bytedance/LatentSync">	GitHub - LipSync - LatentSync </a>,
 	<a href="https://byteaigc.github.io/X-Portrait2/">	X-Portrait2	</a>,
-	<mark><a href="https://omnihuman-lab.github.io/">	OmniHuman-1	</a></mark>,
+	<mark><a href="https://omnihuman-lab.github.io/v1_5/">	OmniHuman-1.5 </a></mark>,
 	<mark><a href="https://grisoon.github.io/DreamActor-M1/">	DreamActor-M1	</a></mark>,
 	<a href="https://github.com/Saiyan-World/goku">	GitHub - goku - Flow Based Video Generative Foundation Models </a>,
 
@@ -325,18 +342,27 @@ markRED {
 	<a href="https://github.com/bytedance/UNO">	UNO (e2i)	</a>, 
 	<a href="https://github.com/bytedance/RealCustom">	RealCustom	</a>, 
 	<a href="https://github.com/bytedance/InfiniteYou">	InfiniteYou	</a>, 
-	<a href="https://github.com/bytedance/DreamO">	DreamO		</a>, 
 	<a href="https://github.com/bytedance/DreamFit">	DreamFit		</a>, 
 	<a href="https://github.com/bytedance-seed/BAGEL">	BAGEL (ByteDance Adaptive Generative Language Model) 		</a>, 
-	<a href="https://bytedance.github.io/USO/">	USO: Unified Style and Subject Driven Generation via Disentangled and Reward Learning		</a>
-	</mark>
+	<a href="https://bytedance.github.io/USO/">	USO: Unified Style and Subject Driven Generation via Disentangled and Reward Learning		</a>, 
+	<a href="https://arxiv.org/html/2508.21066v1">	OneReward: Unified Mask-Guided Image Generation via Multi-Task Human Preference Learning		</a>,
+	<a href="https://huggingface.co/bytedance-research/OneReward/tree/main">	bytedance-research/OneReward		</a>,
+	<a href="https://phantom-video.github.io/HuMo/">	HuMo: Human-Centric Video Generation via Collaborative Multi-Modal Conditioning	</a>,
+	<a href="https://pbihao.github.io/projects/DreamOmni2/index.html">	DreamOmni2: Multimodal Instruction-based Editing and Generation	</a>, 
+	<a href="https://github.com/dvlab-research/DreamOmni2">	dvlab-research/DreamOmni2		</a>, 
 
 <li/> CanopyLabs.ai <a href="https://canopylabs.ai/model-releases">	Voice Cloning - Natural intonation, emotion, and rhythm that is superior to SOTA closed source models (giggle, gasp, angry, happy) 	</a>,
 	<a href="https://github.com/canopyai/Orpheus-TTS">	Orpheus-TTS	</a>, 
 	<a href="https://huggingface.co/spaces/MohamedRashad/Orpheus-TTS">	Orpheus-TTS demo	</a>, 
 	<a href="https://github.com/canopyai/Orpheus-TTS/tree/main/additional_inference_options/watermark_audio">	watermark_audio	</a>, 
-	<a href="https://github.com/ShmuelRonen/ComfyUI-Orpheus-TTS">	ShmuelRonen/ComfyUI-Orpheus-TTS	</a>
+	<a href="https://github.com/ShmuelRonen/ComfyUI-Orpheus-TTS">	ShmuelRonen/ComfyUI-Orpheus-TTS	</a>,
+	<a href="https://byteaigc.github.io/Lynx/">	Lynx: Towards High-Fidelity Personalized Video Generation	</a>,
 
+
+<li/> Character.AI	<a href="https://aaxwaz.github.io/Ovi/">	Ovi - Twin backbone cross-modal fusion for audio-video generation	</a>,
+	<a href="https://github.com/character-ai/Ovi">	character-ai/Ovi	</a>,
+	<a href="https://github.com/snicolast/ComfyUI-Ovi">	snicolast/ComfyUI-Ovi	</a>
+		
 <li/> Cohere  <a href="https://cohere.com/blog/command-r7b-arabic">	r7b-arabic	</a>,
 	<a href="https://huggingface.co/CohereForAI">	HuggingFace - CohereForAI		</a>,
 	<a href="https://huggingface.co/CohereForAI/c4ai-command-r7b-arabic-02-2025">	HuggingFace - r7b-arabic		</a>,
@@ -382,8 +408,7 @@ markRED {
  	<a href="https://deepmind.google/discover/blog/genie-2-a-large-scale-foundation-world-model/">	Google Genie2: Generative Interactive Environments	</a>
 
 <li/> HelloVision <a href="https://github.com/HelloVision/">		HelloVision	</a>,
-	<a href="https://github.com/HelloVision/ComfyUI_HelloMeme">		HelloMeme	</a>
-https://github.com/HelloVision/ComfyUI_HelloMeme
+	<a href="https://github.com/HelloVision/ComfyUI_HelloMeme">	HelloVision/ComfyUI_HelloMeme	</a>
 
 <li/> HongKong University of Science & Technology (HKUST) <a href="https://huggingface.co/spaces/srinivasbilla/llasa-3b-tts">	Llasa-3B	</a>,
 	<a href="https://huggingface.co/HKUSTAudio/Llasa-3B">	HKUSTAudio/Llasa-3B	</a>,
@@ -393,13 +418,22 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://meigen-ai.github.io/multi-talk/">	MultiTalk: Let Them Talk: Audio-Driven Multi-Person Conversational Video Generation	</a>, 
 	<a href="https://github.com/MeiGen-AI/MultiTalk">	MeiGen-AI/MultiTalk	</a>, 
 	<a href="https://github.com/MeiGen-AI/InfiniteTalk">	InfiniteTalk: Audio-driven Video Generation for Sparse-Frame Video Dubbing	</a>, 
+	<a href="https://zcai0612.github.io/UP2You/">	UP2You: Fast Reconstruction of Yourself from Unconstrained Photo Collections	</a>, 
 
+<li/> HuaWei - Computing Systems Lab (CSL)
+	<a href="https://github.com/huawei-csl/SINQ">	SINQ: Sinkhorn-Normalized Quantization for Calibration-Free Low-Precision LLMs	</a>
 
 <li/> HuggingFace 
 	<a href="https://huggingface.co/HuggingFaceTB">		HuggingFace	</a>,
 	<a href="https://huggingface.co/spaces">		HuggingFace	Spaces </a>,
 	<a href="https://huggingface.co/latent-consistency">		Latent Consistency (LCM)	</a>, 
 	<a href="https://huggingface.co/spaces/HuggingFaceTB/SmolVLM-500M-Instruct-WebGPU">		Vision Language Model - SmolVLM-500M-Instruct-WebGPU	</a>,
+
+<li/> Intel
+	<a href="https://github.com/NYU-ICL/image-gs">		Image-GS: Content-Adaptive Image Representation via 2D Gaussians	</a>,
+	<a href="https://www.immersivecomputinglab.org/publication/image-gs-content-adaptive-image-representation-via-2d-gaussians/">	Paper	</a>, 
+	<a href="https://www.youtube.com/watch?v=_WjU5d26Cc4">	2-minute paper	</a>,
+
 
 <li/> International Digital Economy Academy (IDEA-Research) <a href="https://github.com/IDEA-Research">	International Digital Economy Academy (IDEA-Research)	</a>,
 	<a href="https://github.com/IDEA-Research/Grounded-Segment-Anything">	IDEA-Research/Grounded-Segment-Anything	</a>,
@@ -409,6 +443,8 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://cloud.deepdataspace.com/playground/dino-x">	dino-x - Detection - Segmentation -  Keypoints - Generative Understanding </a>,
 	<a href="https://deepdataspace.com/playground/ivp_video">	Video - Object Tracking </a>,
 	<a href="https://huggingface.co/blog/smollm">	SmolLM (135M, 360M, 1.7B)	</a>
+
+<li/>	Korea	<a href="https://cgrhyu.github.io/4-showcase.html">	CGR Lab HanYang	</a>
 
 <li/> Kuaishou  <a href="https://github.com/KwaiVGI">		Kuaishou Visual Generation and Interaction Center </a>,
 	<a href="https://huggingface.co/Kwai-Kolors">		Kwai-Kolors	</a>,
@@ -423,8 +459,7 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 <li/> Liblib AI <a href="https://github.com/Xiaojiu-z/EasyControl">		EasyControl: Adding Efficient and Flexible Control for Diffusion Transformer 	</a>,
 	<a href="https://github.com/jax-explorer/ComfyUI-easycontrol">		ComfyUI-easycontrol (40Gb VRAM)	</a>
 
-<li/> 
-	<mark>
+<li id="mark"/>
 	Lightricks 
 	<a href="https://www.lightricks.com/">	Lightricks 	</a>, 
 	<a href="https://github.com/Lightricks/LTX-Video">	Lightricks/LTX-Video </a>, 
@@ -437,10 +472,12 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://civitai.com/models/995093?modelVersionId=1191358">	CivitAI - LTX IMAGE to VIDEO with STG, CAPTION & CLIP EXTEND workflow	</a>
 	<a href="https://github.com/logtd/ComfyUI-LTXTricks">		GitHub - logtd/ComfyUI-LTXTricks	</a>,
 	<a href="https://civitai.com/models/995093/ltx-image-to-video-with-stg-caption-and-clip-extend-workflow">	LTX IMAGE to VIDEO with STG, CAPTION & CLIP EXTEND workflow	</a>
-	</mark>
 
-<li/> 	LG <a href="https://felixtaubner.github.io/cap4d/">		LG - CAP4D: Creating Animatable 4D Portrait Avatars with Morphable Multi-View Diffusion Models	</a>
+<li/> LG <a href="https://felixtaubner.github.io/cap4d/">		LG - CAP4D: Creating Animatable 4D Portrait Avatars with Morphable Multi-View Diffusion Models	</a>
+	<a href="https://github.com/felixtaubner/cap4d">	felixtaubner/cap4d		</a>
 
+<li/> Marvis-AI	<a href="https://huggingface.co/Marvis-AI">	Marvis-TTS-250m (Sesame CSM-1B, Kyutai mimi codec)	</a>, 
+	<a href="https://github.com/Marvis-Labs/marvis-tts">		Marvis-Labs/marvis-tts	</a>
 
 <li/> Meituan	<a href="https://github.com/MeiGen-AI/MultiTalk">	MeiGen-AI/MultiTalk	</a>, 
 	<a href="https://github.com/MeiGen-AI/InfiniteTalk">	InfiniteTalk: Audio-driven Video Generation for Sparse-Frame Video Dubbing	</a>, 
@@ -454,7 +491,7 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 <li/>	Microsoft <a href="https://huggingface.co/microsoft">	Microsoft (Florence2, Phi 3.5, Phi 4) </a>,
 	<a href="https://huggingface.co/microsoft/Phi-4-multimodal-instruct">	Phi-4-multimodal-instruct	</a>, 
 	<a href="https://wangrc.site/MoGePage/">	MoGe - Monocular 2D->3D </a>,
-	<a href="https://github.com/microsoft/MoGe">	MoGe - Monocular 2D->3D </a>,
+	<a href="https://github.com/microsoft/MoGe">	MoGe (Monocular 2D->3D) </a>,
 	<a href="https://github.com/kijai/ComfyUI-MoGe">	kijai/ComfyUI-MoGe </a>,
 	<a href="https://huggingface.co/spaces/Ruicheng/MoGe">	MoGe demo	</a>, 
 	<a href="https://www.microsoft.com/en-us/research/articles/magma-a-foundation-model-for-multimodal-ai-agents/">	Magma multimodal agents </a>,
@@ -471,12 +508,31 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://mistral.ai/news/mistral-small-3/">	Mistral small-3  </a>
 
 <li/> MoonshotAI 	<a href="https://github.com/MoonshotAI">	MoonshotAI </a>,
-	<a href="https://github.com/MoonshotAI/Kimi-k1.5">	Kimi k1.5: Scaling Reinforcement Learning with LLMs	</a>
+	<a href="https://moonshotai.github.io/Kimi-K2/">	Kimi K2: Open Agentic Intelligence	</a>
 
 <li/> 	MoonValley	<a href="https://www.moonvalley.com/">	moonvalley	</a>,
 	<a href="https://blog.comfy.org/p/marey-realism-v15-in-comfyui-built">	Marey Realism v1.5 in ComfyUI API	</a>,
 
 <li/> NetEase Fuxi Lab	<a href="https://github.com/NetEase-FuXi?tab=repositories">	GitHub </a>
+
+<li/> NTU
+	<a href="https://github.com/yuvraj108c/ComfyUI_InvSR">	Inverse Super Resolution (InvSR)	</a>, 
+	<a href="https://github.com/facebookresearch/EdgeTAM">	EdgeTAM: On-Device Track Anything Model </a>,
+	<a href="https://github.com/lizhihao6/Sparc3D">	Sparc3D: Sparse Representation and Construction for High-Resolution 3D Shapes Modeling (Math Magic)	</a>, 
+	<a href="https://huggingface.co/spaces/ilcve21/Sparc3D">	ilcve21/Sparc3D (Math Magic)	</a>,
+	<a href="https://www.hitem3d.ai/">	Hitem3D (use Sparc3D) </a>, 
+	<a href="https://buaacyw.github.io/ultra3d/">	 Ultra3D: Ultra3D: Efficient and High-Fidelity 3D Generation with Part Attention (Math Magic)	</a>,
+	<a href="https://github.com/zjx0101/ObjectClear">	ObjectClear: Complete Object Removal via Object-Effect Attention	</a>,
+	<a href="https://github.com/Eyeline-Labs/CineScale">	CineScale: High-Resolution Cinematic Visual Generation </a>, 
+	<a href="https://amap-ml.github.io/FE2E/">	FE2E: From Editor to Dense Geometry Estimator	</a>,
+	<a href="https://fenghora.github.io/DiT360-Page/">	DiT360: High-Fidelity Panoramic Image Generation via Hybrid Training	</a>, 
+	<a href="https://kangliao929.github.io/projects/puffin/">	Thinking with Camera: A Unified Multimodal Model for Camera-Centric Understanding and Generation	</a>, 
+
+<li/> NUS <a href="https://github.com/Yuanshi9815/OminiControl">	OminiControl: Minimal and Universal Control for Diffusion Transformer	</a>, 
+	<a href="https://github.com/Xiaojiu-z/EasyControl">	EasyControl: Adding Efficient and Flexible Control for Diffusion Transformer (Liblib AI)	</a>,
+	<a href="https://github.com/showlab/OmniConsistency">	OmniConsistency: Learning Style-Agnostic Consistency from Paired Stylization Data </a>, 
+	<a href="https://arxiv.org/html/2507.23268v2">	PixNerd: Pixel Neural Field Diffusion (pixel-space diffusion transformer for image generation without VAE)	</a>, 
+	<a href="https://huggingface.co/lodestones/Chroma1-Radiance">		Chroma1-Radiance (based on PixNerd)	</a>
 
 <li/> NuMind <a href="https://huggingface.co/numind">	NuMind</a>,
 	<a href="https://huggingface.co/spaces/numind/NuExtract-1.5">	NuMind NuExtract-1.5</a>,
@@ -488,28 +544,20 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://research.nvidia.com/labs/toronto-ai/DiffusionRenderer/">	DiffusionRenderer: Video Diffusion Models	</a>, 
 	<a href="https://gaussiantracer.github.io/">	3D Gaussian Ray Tracing: Fast Tracing of Particle Scenes	</a>, 
 	<a href="https://github.com/nv-tlabs/3dgrut">	3D Gaussian Ray Tracing (3DGRT)	</a>, 
-
-<li/> NTU
-	<a href="https://github.com/yuvraj108c/ComfyUI_InvSR">	Inverse Super Resolution (InvSR)	</a>, 
-	<a href="https://github.com/facebookresearch/EdgeTAM">	EdgeTAM: On-Device Track Anything Model </a>,
-	<a href="https://github.com/lizhihao6/Sparc3D">	Sparc3D: Sparse Representation and Construction for High-Resolution 3D Shapes Modeling (Math Magic)	</a>, 
-	<a href="https://huggingface.co/spaces/ilcve21/Sparc3D">	ilcve21/Sparc3D (Math Magic)	</a>,
-	<a href="https://buaacyw.github.io/ultra3d/">	 Ultra3D: Ultra3D: Efficient and High-Fidelity 3D Generation with Part Attention (Math Magic)	</a>,
-	<a href="https://github.com/zjx0101/ObjectClear">	ObjectClear: Complete Object Removal via Object-Effect Attention	</a>,
-	<a href="https://github.com/Eyeline-Labs/CineScale">	CineScale: High-Resolution Cinematic Visual Generation </a>, 
-
-<li/> NUS <a href="https://github.com/Yuanshi9815/OminiControl">	OminiControl: Minimal and Universal Control for Diffusion Transformer	</a>, 
-	<a href="https://github.com/Xiaojiu-z/EasyControl">	EasyControl: Adding Efficient and Flexible Control for Diffusion Transformer (Liblib AI)	</a>,
-	<a href="https://github.com/showlab/OmniConsistency">	OmniConsistency: Learning Style-Agnostic Consistency from Paired Stylization Data </a>
+	<a href="https://huggingface.co/nvidia/GEN3C-Cosmos-7B">	GEN3C: 3D-Informed World-Consistent Video Generation with Precise Camera Control	(Monocular 2D->3D)	</a>,
+	<a href="https://research.nvidia.com/labs/toronto-ai/vipe/">	ViPE: Video Pose Engine for 3D Geometric Perception	</a>
 
 <li/> OpenAI  <a href="https://huggingface.co/openai">	OpenAI </a>,
 	<a href="https://huggingface.co/spaces/openai/whisper">	OpenAI Whisper (transcribe / translate) </a>,
 
 <li/> OpenBMB  
 	<a href="https://github.com/OpenBMB/MiniCPM-V">	MiniCPM-V: GPT-4o Level MLLM for Single Image, Multi Image and High-FPS Video Understanding on Your Phone	</a>, 
+	<a href="https://github.com/1038lab/ComfyUI-MiniCPM">	1038lab/ComfyUI-MiniCPM	</a>, 
 	<a href="https://huggingface.co/openbmb/MiniCPM4-8B">	MiniCPM4-8B	</a>, 
-	<a href="https://openbmb.notion.site/MiniCPM-o-2-6-A-GPT-4o-Level-MLLM-for-Vision-Speech-and-Multimodal-Live-Streaming-on-Your-Phone-185ede1b7a558042b5d5e45e6b237da9"> MiniCPM-o </a>, 
+	<a href="https://openbmb.notion.site/MiniCPM-o-2-6-A-GPT-4o-Level-MLLM-for-Vision-Speech-and-Multimodal-Live-Streaming-on-Your-Phone-185ede1b7a558042b5d5e45e6b237da9"> 
+MiniCPM-o </a>, 
 	<a href="https://minicpm-omni-webdemo.internetofagents.net/">	MiniCPM-o demo </a>,
+	<a href="https://github.com/OpenBMB/VoxCPM">	VoxCPM: Tokenizer-Free TTS for Context-Aware Speech Generation and True-to-Life Voice Cloning	</a>
 
 <li/> OpenXLab  <a href="https://openxlab.org.cn/models?lang=en-US">	OpenXLab </a>,
 	<a href="https://openxlab.org.cn/models">		Models </a>,
@@ -517,13 +565,13 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 <li/> Ostris <a href="https://huggingface.co/ostris">	Ostris </a>,
 	<a href="https://huggingface.co/ostris/OpenFLUX.1">	ostris/OpenFLUX.1 </a>,
 
-<li/> 
-	<mark>
+<li id="mark"/>
 	Rednote XiaoHongShu 
 	<a href="https://github.com/rednote-hilab">	rednote-hilab </a>,
 	<a href="https://huggingface.co/rednote-hilab">	 rednote-hilab  </a>,
 	<a href="https://github.com/rednote-hilab/dots.llm1">	 Dots LLM </a>,
-	</mark>
+	<a href="https://fireredteam.github.io/demos/firered_tts_2/">	FireRedTTS-2: Towards Long Conversational Speech Generation for Podcast and Chatbot	</a>, 
+	<a href="https://github.com/FireRedTeam/FireRedTTS2">	FireRedTeam/FireRedTTS2 (multilingual)		</a>, 
 
 <li/> PixelWave <a href="https://huggingface.co/mikeyandfriends/PixelWave_FLUX.1-dev_03/tree/main">		mikeyandfriends - PixelWave	</a>,
 	<a href="https://civitai.com/user/humblemikey/models">		CivitAI - user - humblemikey (Art Style, PixelWave)	</a>
@@ -539,14 +587,16 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://github.com/wildminder/ComfyUI-Chatterbox">	ComfyUI-Chatterbox	</a>,
 	<a href="https://github.com/resemble-ai/perth">	Perth is a comprehensive Python library for audio watermarking and detection </a>
 
-<li/> <a href="https://github.com/salesforce">		SalesForce	</a>,
+<li/> SalesForce
 	<a href="https://github.com/salesforce/LAVIS/tree/xgen-mm">		xGen-MM (BLIP-3): A Family of Open Large Multimodal Models	</a>
+
+<li/> ServiceNow
+	<a href="https://github.com/ServiceNow/drbench">		DrBench Enterprise Research Benchmark	</a>
 
 <li/> Shakker-Labs <a href="https://huggingface.co/Shakker-Labs">		Shakker-Labs	</a>,
 	<a href="https://openart.ai/workflows/reverentelusarca/flux-filmportrait-lora-by-shakkerlabs/Wp7nyj9LHcogIaHfMvAc">	flux-filmportrait-lora	</a>,
 	<a href="https://huggingface.co/Shakker-Labs/FLUX.1-dev-ControlNet-Union-Pro-2.0">	FLUX.1-dev-ControlNet-Union-Pro 2	</a>,
 	<a href="https://huggingface.co/spaces/Shakker-Labs/FLUX-LoRA-Gallery">	FLUX-LoRA-Gallery	</a>
-
 
 <li/> SkyworkAI <a href="https://github.com/SkyworkAI/SkyReels-V1">	SkyworkAI/SkyReels-V1 </a>,
 	<a href="https://huggingface.co/Kijai/SkyReels-V1-Hunyuan_comfy">	Kijai/SkyReels-V1-Hunyuan_comfy </a>,
@@ -563,9 +613,11 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://github.com/stepfun-ai/Step1X-Edit">	stepfun-ai/Step1X-Edit	</a>, 
 	<a href="https://ace-step.github.io/">	ACE-Step: A Step Towards Music Generation Foundation Model </a>, 
 	<a href="https://github.com/stepfun-ai/Step1X-3D">	Step1X-3D: Towards High-Fidelity and Controllable Generation of Textured 3D Assets </a>, 
+	<a href="https://github.com/stepfun-ai/Step-Audio2">	StepAudio2: Speech and Audio Understanding & Conversation </a>, 
+	<a href="https://stepfun.ai/chats/new">	StepAudio Demo </a>, 
+	<a href="https://huggingface.co/stepfun-ai/Step-Audio-2-mini">	Step-Audio-2-mini </a>, 
 
-<li/>	
-	<mark>
+<li id="mark"/>
 	Tencent <a href="https://github.com/Tencent/">	Tencent	</a>,
 	<a href="https://github.com/orgs/Tencent-Hunyuan/repositories">	Tencent-Hunyuan	</a>,
  	<a href="https://huggingface.co/spaces/TencentARC/PhotoMaker-V2">	PhotoMaker	</a>,
@@ -588,14 +640,13 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://x-omni-team.github.io/">	X-Omni: Reinforcement Learning Makes Discrete Autoregressive Image Generative Models Great Again (==GPT4o)	</a>, 
 	<a href="https://github.com/Francis-Rings/StableAvatar">	StableAvatar: Infinite-Length Audio-Driven Avatar Video Generation	</a>, 
 	<a href="https://github.com/smthemex/ComfyUI_StableAvatar">	smthemex/ComfyUI_StableAvatar		</a>, 
-	<a href="https://hunyuan-gamecraft.github.io/">		GameCraft: High-dynamic Interactive Game Video Generation with Hybrid History Condition	</a>, 
-	</mark>
+	<a href="https://github.com/Tencent-Hunyuan/SRPO">	SRPO: Directly Aligning the Full Diffusion Trajectory with Fine-Grained Human Preference (realism)	</a>,
+	<a href="https://huggingface.co/wikeeyang/SRPO-for-ComfyUI">		wikeeyang/SRPO-for-ComfyUI	</a>
 
 <li/>	Tsinghua <a href="https://huggingface.co/THUDM">	Tsinghua University Knowledge Engineering Group (KEG) & Data Mining 	</a>,
 	<a href="https://huggingface.co/THUDM/CogVideoX-5b">	CogVideoX-5b	</a>,
 	<a href="https://docs.google.com/spreadsheets/d/16eA6mSL8XkTcu9fSWkPSHfRIqyAKJbR1O99xnuGdCKY/edit?gid=0#gid=0">	CogVideoX models	</a>,
 	<a href="https://www.stand-in.tech/">	Stand-In: A Lightweight and Plug-and-Play Identity Control for Video Generation	</a>,
-
 
 <li/>	VAST-AI-Research 
 	<a href="https://www.tripo3d.ai/">	tripo3d.AI	</a>,
@@ -629,7 +680,8 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 
 <li/>	Vision-xl <a href="https://vision-xl.github.io/supple/">		vision-xl	</a>
 
-<li/>	XiaoMi <a href="https://huggingface.co/XiaomiMiMo">		XiaomiMiMo	</a>
+<li/>	XiaoMi <a href="https://huggingface.co/XiaomiMiMo">	MiMo Audio: Audio Language Models are Few-Shot Learners	</a>, 
+	<a href="https://github.com/XiaomiMiMo/MiMo-Audio">	XiaomiMiMo/MiMo-Audio	</a>
 
 <li/>	XLabs-AI <a href="https://huggingface.co/XLabs-AI">	XLabs-AI	</a>,
 	<a href="https://huggingface.co/XLabs-AI/flux-controlnet-collections">	flux-controlnet-collections	</a>,
@@ -645,16 +697,22 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://chat.z.ai/s/f8c2f383-51d4-40b8-82e5-63529eaa00db">	Pokemon webapp - Pokédex	</a>,
 	<a href="https://huggingface.co/collections/zai-org/glm-45-687c621d34bda8c9e4bf503b">	zai-org	</a>,
 
+<li/>	<a href="https://werewolf.foaster.ai/">	Probing LLM Social Intelligence via Werewolf	</a>, 
+	<a href="https://arxiv.org/html/2407.13943v1">	Werewolf Arena: A Case Study in LLM Evaluation via Social Deduction	</a>
+
 </ol>
 <!----------------------------------------------------------------------------->
 <!------------------------------------COLUMN 2--------------------------------->
 <!----------------------------------------------------------------------------->
 </td><td width="30%"><!-------------------------------------------------------->
-<h3 name="tagBenchmark">	Benchmarks & Leaderboards		</h3>
+<h3 id="tagBenchmark">	Benchmarks & Leaderboards		</h3>
 <li/>	Keywords: <a href="https://www.inoreader.com/stream/user/1005506540/tag/Benchmarking%20%E2%9C%85/view/html?cs=m">	InoReader - Benchmarking	</a>,
 	<br/><ol start=1 type=1>
 
 <li/>	<a href="https://www.confident-ai.com/blog/the-current-state-of-benchmarking-llms">	Intro to LLM Benchmarking	</a>
+
+<li/>	<a href="https://arxiv.org/html/2506.01061v1">	AceVFI: A Comprehensive Survey of Advances in Video Frame Interpolation	 (VFI)	</a>,
+	<a href="https://github.com/CMLab-Korea/Awesome-Video-Frame-Interpolation">	Awesome-Video-Frame-Interpolation	</a>
 
 <li/>	<a href="https://huggingface.co/spaces/galileo-ai/agent-leaderboard">	Agent Leaderboard	</a>
 
@@ -668,26 +726,51 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://huggingface.co/spaces/allenai/ZeroEval">	ZeroEval: Benchmarking LLMs for Reasoning	</a>, 
 	<a href="https://huggingface.co/spaces/allenai/WildBench">	WildBench: Benchmarking LLMs with Challenging Tasks from Real Users in the Wild	</a>, 
 
-<li/>	Artificial Analysis <a href="https://huggingface.co/spaces/ArtificialAnalysis/LLM-Performance-Leaderboard">	LLM-Performance-Leaderboard	</a>
+<li/>	Artificial Analysis 
+	<a href="https://artificialanalysis.ai/text-to-image/arena/leaderboard-text">	Text to Image Leaderboard	</a>, 
+	<a href="https://huggingface.co/spaces/ArtificialAnalysis/LLM-Performance-Leaderboard">	LLM-Performance-Leaderboard	</a>
+
 
 <li/>	Arize <a href="https://docs.arize.com/phoenix/evaluation/how-to-evals/running-pre-tested-evals/summarization-eval">		Text - Arize Phoenix </a>
 
 <li/>	Audio	<a href="https://github.com/MoonshotAI/Kimi-Audio-Evalkit/blob/master/LEADERBOARD.md">	Audio - Kimi-Audio-Evalkit	</a>
 
-<li/>	Awesome List <a href="https://github.com/and-mill/Awesome-GenAI-Watermarking">	Awesome-GenAI-Watermarking	</a>
+<li/>	<a href="https://github.com/and-mill/Awesome-GenAI-Watermarking">	Awesome-GenAI-Watermarking	</a>
 
 <li/>	<a href="https://github.com/xxyQwQ/ComfyBench">	ComfyBench: Benchmarking LLM-based Agents in ComfyUI for Autonomously Designing Collaborative AI Systems	</a>
 	
 <li/>	<a href="https://huggingface.co/spaces/gaia-benchmark/leaderboard">	GAIA General Agent Leaderboard (e.g. Manus)	</a>
 	<a href="https://openreview.net/forum?id=fibxvahvs3">	GAIA: a benchmark for General AI Assistants	</a>
 
-<li/>	<a href="https://huggingface.co/spaces/philschmid/llm-pricing">	LLM Pricing	</a>
+<li/>	
+	ImagenWorld
+	<a href="https://tiger-ai-lab.github.io/ImagenWorld/">	ImagenWorld: Stress-Testing Image Generation Models with Explainable Human Evaluation on Open-ended Real-World Tasks		</a>,
+	<a href="https://blog.comfy.org/p/introducing-imagenworld">		Introducing ImagenWorld: A Real World Benchmark for Image Generation and Editing	</a>, 
+	<a href="https://huggingface.co/spaces/TIGER-Lab/ImagenWorld-Visualizer">	TIGER-Lab/ImagenWorld-Visualizer	</a>, 
+	<a href="https://huggingface.co/datasets/TIGER-Lab/ImagenWorld">	TIGER-Lab/ImagenWorld	</a>
+
+
+<li/>	Inferless <a href="https://huggingface.co/spaces/Inferless/Open-Source-TTS-Gallary">	Open-Source Text-to-Speech Model Gallery	</a>
+
+<li/>	<a href="https://lmarena.ai/leaderboard/search ">	LMArena.ai/leaderboard	</a>
+
+<li/>	OpenLLM	<a href="https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard">	Open LLM Leaderboard	</a>
+
+<li/>	OpenCompass <a href=https://opencompass.org.cn/leaderboard-llm">	OpenCompass LLM Leaderboard	</a>, 
+	<a href="https://opencompass.org.cn/leaderboard-multimodal">	OpenCompass multi-modal Leaderboard	</a>
+
+<li/>	<a href="https://huggingface.co/spaces/philschmid/llm-pricing">	philschmid/LLM Pricing	</a>
 
 <li/>	<a href="https://arxiv.org/html/2410.21311v1">	MMDocBench: benchmarking large vision-language models for fine-grained visual document understanding	</a>
 
 <li/>	<a href="https://arena.hume.ai/">	Speech - Hume - Expressive TTS Arena	</a>
 
-<li/>	<a href="https://huggingface.co/spaces/TTS-AGI/TTS-Arena">	Speech - TTS-Arena	</a>
+<li/>	<a href="https://au-harness.github.io/">	Speech - ServiceNow: AU-Harness: An Open-Source Toolkit for Holistic Evaluation of Audio LLMs	</a>
+
+<li/>	<a href="https://huggingface.co/spaces/TTS-AGI/TTS-Arena-V2">	Speech - TTS-Arena	</a>
+
+<li/>	Stanford	<a href="https://crfm.stanford.edu/fmti/">	Foundation Model Transparency Index	</a>, 
+		<a href="https://crfm.stanford.edu/helm/latest/?models=1">	Stanford Holistic Evaluation of Language Models (HELM)	</a>
 
 <li/>	<a href="https://huggingface.co/spaces/ArtificialAnalysis/Text-to-Image-Leaderboard">	Text-to-Image-Leaderboard	</a>
 <li/>	<a href="https://huggingface.co/spaces/ArtificialAnalysis/Video-Generation-Arena-Leaderboard">		Video-Generation-Arena-Leaderboard	</a>
@@ -705,22 +788,30 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 <li/>	<a href="https://mmsearch.github.io/">	MMSearch	</a>
 <li/>	<a href="https://huggingface.co/spaces/Vchitect/VBench_Leaderboard">	VBench : Comprehensive Benchmark Suite for Video Generative Models	</a>
 
+<li/>	<a href="https://github.com/Tencent-Hunyuan/ArtifactsBenchmark">		Tencent-Hunyuan/ArtifactsBench: Bridging the Visual-Interactive Gap in LLM Code Generation Evaluation	</a>
+
+
+
+
+
+
 
 <li/>	Detection <a href="https://matrix.tencent.com/ai-detect/ai_gen">	Tencent ai-detect	</a>,
 	<a href="https://hivemoderation.com/ai-generated-content-detection">	Hive ai-generated-content-detection	</a>
 
 <li/>	<a href="https://github.com/bytedance/comfyui-lumi-batcher">	ComfyUI-Lumi-Batcher tool like XYZ Plot in WebUI	</a>
 
-
 </ol>
 <!----------------------------------------------------------->
-<h3 name="tagFaces">	Face Restoration / Realistic Faces			</h3>
+<h3 id="tagFaces">	Face Restoration & Realism			</h3>
 <li/>	Keywords: <a href="https://openart.ai/workflows/all?keyword=FaceSwap">	OpenArt - FaceSwap	</a>,
 	<a href="https://openart.ai/workflows/all?keyword=Realistic">	OpenArt - Realistic	</a>,
 	<a href="https://www.1ai.net/en/tag/ai%e6%8d%a2%e8%84%b8">	1ai	</a>
 	<br/><ol start=1 type=1>
 
-<li/>	<a href="https://medium.com/design-bootcamp/ai-face-swap-battle-pulid-vs-instantid-vs-faceid-2f08db230509">	Comapre PuLID vs InstantID vs FaceID	</a>
+<li/>	<a href="https://luoxyhappy.github.io/CanonSwap/">	CanonSwap: High-Fidelity and Consistent Video Face Swapping via Canonical Space Modulation	</a>
+
+<li/>	<a href="https://medium.com/design-bootcamp/ai-face-swap-battle-pulid-vs-instantid-vs-faceid-2f08db230509">	Compare PuLID vs InstantID vs FaceID	</a>
 
 <li/> <a href="https://github.com/Gourieff/comfyui-reactor-node">		GitHub - Gourieff (ReActor Node for ComfyUI)	</a>,
 	<a href="https://github.com/somanchiu/ReSwapper">	somanchiu/ReSwapper	</a>,
@@ -762,7 +853,7 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 
 </ol>
 <!----------------------------------------------------------->
-<h3 name="tagCaptioning">	Image-To-Text (i2t) Captioning		</h3>
+<h3 id="tagCaption">	Image-To-Text (i2t) Captioning		</h3>
 <li/>	Keywords: <a href="https://openart.ai/workflows/all?keyword=Caption">	OpenArt - Caption 	</a><br/><ol start=1 type=1>
 
 <li/>	<a href="https://cychenyue.com/28204.html">	AllenAI Molmo 7B D		</a>
@@ -780,7 +871,7 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://github.com/StartHua/Comfyui_CXH_Phi_3.5">	Phi 3.5	</a>,
 
 <li/>	<a href="https://github.com/CY-CHENYUE/ComfyUI-MiniCPM-Plus">	MiniCPM-Plus	</a>,
-			<a href="https://github.com/pzc163/Comfyui_MiniCPMv2_6-prompt-generator">	MiniCPM v2.6 Prompt Generator	</a>
+	<a href="https://github.com/pzc163/Comfyui_MiniCPMv2_6-prompt-generator">	MiniCPM v2.6 Prompt Generator	</a>
 
 <li/> <a href="https://moondream.ai/playground">	Moondream (Visual Q&A, Caption, Object Detection) </a>,
 	<a href="https://moondream.ai/blog/">		Moondream blog	</a>,
@@ -792,9 +883,9 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 <li/>	<a href="https://nexa.ai/blogs/OmniVLM">	OmniVLM-968M (no ComfyUI)	</a>
 <li/>	<a href="https://github.com/SeanScripts/ComfyUI-PixtralLlamaMolmoVision">	Pixtral Llama Molmo Vision	</a>
 
-<li/>	<a href="https://github.com/ZHO-ZHO-ZHO/ComfyUI-Qwen">	Qwen 2.5	</a>,
-
-<li/> <a href="https://github.com/IuvenisSapiens/ComfyUI_Qwen2-VL-Instruct">		Qwen2-VL-Instruct	</a>,
+<li/> 
+	<a href="https://github.com/1038lab/ComfyUI-QwenVL">		QwenVL for ComfyUI (image & video)		</a>,
+	<a href="https://github.com/IuvenisSapiens/ComfyUI_Qwen2-VL-Instruct">		Qwen2-VL-Instruct	</a>,
 	<a href="https://openart.ai/workflows/leeguandong/qwen2-vlchat_with_multiple_images/qTFHeJbzMRcwYJKK4Qwb">	QWEN multiple images	</a>,
 	<a href="https://openart.ai/workflows/leeguandong/qwen2-vl-chat_with_single_image/AEgiUMjzw9H580CXgrXD">	QWEN single_image 	</a>,
 	<a href="https://openart.ai/workflows/comfyuiblog/convert-video-and-images-to-text-using-qwen2-vl-model/OdlbuCnxVfjgD4MVsaMR">	vi2t	</a>
@@ -820,7 +911,7 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 
 </ol>
 <!----------------------------------------------------------->
-<h3 name="tagModel">	Models			</h3>
+<h3 id="tagModel">	Models			</h3>
 <li/>	Keywords: <a href="https://huggingface.co/models?pipeline_tag=text-generation&sort=trending">	HuggingFace - text-generation	</a>,
 	<a href="https://www.inoreader.com/stream/user/1005506540/tag/GenAI%20-%20Algorithm%20%2B%20Model%20%E2%9C%85/view/html?cs=m">	InoReader - Algorithm	</a>,
 	<br/><ol start=1 type=1>
@@ -848,6 +939,9 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://huggingface.co/city96/LTX-Video-0.9.6-distilled-gguf">	LTX	</a>,
 	<a href="https://huggingface.co/city96/HunyuanVideo-I2V-gguf">	HunyuanVideo-I2V	</a>
 
+<li/>	<a href="https://github.com/River-Zhang/ICEdit">	In-Context Edit: Enabling Instructional Image Editing with In-Context Generation in Large Scale Diffusion Transformer	</a>,
+	<a href="https://huggingface.co/spaces/RiverZ/ICEdit">	spaces/RiverZ/ICEdit	</a>
+
 <li/>	<a href="https://huggingface.co/models?pipeline_tag=image-to-video&p=0&sort=trending">	image-to-video	</a>
 <li/>	<a href="https://huggingface.co/impactframes">	impactframes	</a>
 <li/>	<a href="https://huggingface.co/jasperai">	jasperai	</a>
@@ -869,6 +963,18 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://huggingface.co/Kijai/LTXV/tree/main">	LTXV	</a>,
 	<a href="https://huggingface.co/Kijai/HunyuanVideo_comfy/tree/main">	HunyuanVideo	</a>,
 
+<li/>	MonsterMMORPG	<a href="https://huggingface.co/MonsterMMORPG/Wan_GGUF/tree/main">	Wan - GGUF	</a>,
+	<a href="https://huggingface.co/MonsterMMORPG/BestImageUpscalers/tree/main">	Upscale	</a>,
+	<a href="https://huggingface.co/MonsterMMORPG/FaceSegments/tree/main">	FaceSegments`			</a>,
+	<a href="https://huggingface.co/MonsterMMORPG/YoloModels/tree/main">	Yolo	</a>
+
+<li/>	Mohamed bin Zayed University of Artificial Intelligence (MBZUAI) , UAE	<a href="https://ifm.mbzuai.ac.ae/">		Institute of Foundation Models (IFM)	</a>, 
+	<a href="https://huggingface.co/inceptionai/Llama-3.1-Sherkala-8B-Chat">	Sherkala (English, Russian, and Turkish)	</a>, 
+	<a href="https://www.k2think.ai/k2think">		K2-Think	</a>, 
+
+
+<li/>	Ostris	<a href="https://huggingface.co/ostris/qwen_image_edit_inpainting">	qwen_edit_inpainting		</a>
+
 <li/>	PowerInfer	<a href="https://huggingface.co/PowerInfer">	</a>,
 	<a href="https://github.com/SJTU-IPADS/SmallThinker">	SmallThinker: A Family of Efficient Large Language Models Natively Trained for Local	</a>, 
 	<a href="https://arxiv.org/abs/2507.20984">	Paper	</a>
@@ -879,13 +985,21 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://huggingface.co/QuantStack/LTXV-13B-0.9.8-distilled-GGUF">	LTXV-13B-0.9.8-distilled	</a>,
 	<a href="https://huggingface.co/QuantStack/Wan2.1_I2V_14B_FusionX-GGUF">	Wan2.1_I2V_14B_FusionX	</a>
 
-
 <li/>	Reaslim <a href="https://tensor.art/models/808406540089546518/Extra-Realistic-Flux-v1">	TensorArt - Extra-Realistic-Flux	</a>,
 	<a href="https://tensor.art/u/614170213247779888/models">	TensorArt - kg_09	</a>
 
 <li/>	StrangerZone <a href="https://huggingface.co/strangerzonehf">	StrangerZone LORA (Flux-Super-Realism-LoRA, Super 3D - Engine) 	</a>
 
+<li/>	<a href="https://huggingface.co/swiss-ai">	Swiss-AI - Apertus	</a>.
+	<a href="https://www.swiss-ai.org/about-1">	Swiss-AI - Projects	</a>
+
+<li/>	<a href="https://huggingface.co/collections/mit-han-lab/svdquant-67493c2c2e62a1fc6e93f45c">	SVDQuant	</a>, 
+	<a href="https://github.com/mit-han-lab/ComfyUI-nunchaku">	mit-han-lab/ComfyUI-nunchaku	</a>
+
 <li/>	<a href="https://huggingface.co/TheBloke">	TheBloke (>4K)	</a>
+
+<li/>	<a href="https://tilde.ai/tildeopen-llm/">	TildeOpen LLM: Europe’s Sovereign Multilingual AITildeOpen LLM: Europe’s Sovereign Multilingual AI	</a>, 
+	<a href="https://huggingface.co/TildeAI/TildeOpen-30b">	TildeAI/TildeOpen-30b	</a>
 
 <li/>	Unsloth 
 	<a href="https://unsloth.ai/blog">	Unsloth.ai </a>, 
@@ -894,87 +1008,23 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://huggingface.co/collections/unsloth/deepseek-v3-all-versions-677cf5cfd7df8b7815fc723c">	unsloth/deepseek-v3	</a>,
 	<a href="https://huggingface.co/collections/unsloth/phi-4-all-versions-677eecf93784e61afe762afa">	phi-4-all-versions	</a>, 
 
-<li/>	<a href="https://huggingface.co/collections/mit-han-lab/svdquant-67493c2c2e62a1fc6e93f45c">	SVDQuant	</a>, 
-	<a href="https://github.com/mit-han-lab/ComfyUI-nunchaku">	mit-han-lab/ComfyUI-nunchaku	</a>
-
-<li/>	<a href="https://github.com/River-Zhang/ICEdit">	In-Context Edit: Enabling Instructional Image Editing with In-Context Generation in Large Scale Diffusion Transformer	</a>,
-	<a href="https://huggingface.co/spaces/RiverZ/ICEdit">	spaces/RiverZ/ICEdit	</a>,
-
-<li/>	MonsterMMORPG	<a href="https://huggingface.co/MonsterMMORPG/Wan_GGUF/tree/main">	Wan - GGUF	</a>,
-	<a href="https://huggingface.co/MonsterMMORPG/BestImageUpscalers/tree/main">	Upscale	</a>,
-	<a href="https://huggingface.co/MonsterMMORPG/FaceSegments/tree/main">	FaceSegments`			</a>,
-	<a href="https://huggingface.co/MonsterMMORPG/YoloModels/tree/main">	Yolo	</a>,
-
-<li/>	QuantStack <a href="https://huggingface.co/QuantStack/Wan2.1_14B_VACE-GGUF/tree/main">	Wan2.1 - GGUF	</a>
-
-</ol>
-<!----------------------------------------------------------->
-<h3 name="tagLipSync">	Motion - Animation / LipSync			</h3>
-<li/>	Keywords: <a href="https://openart.ai/workflows/all?keyword=FaceSwap">	OpenArt - FaceSwap	</a>,
-	<br/><ol start=1 type=1>
-
-<li/> <a href="https://github.com/kijai/ComfyUI-LivePortraitKJ">	GitHub - ComfyUI-LivePortraitKJ	</a>,
-	<a href="https://openart.ai/workflows/datou/live-portrait/PMM4NSLnbhU08xvRqN2e">	OpenArt - datou/live-portrait	</a>,
-	<a href="https://github.com/PowerHouseMan/ComfyUI-AdvancedLivePortrait">	GitHub - ComfyUI-AdvancedLivePortrait	</a>,
-	<a href="https://www.youtube.com/watch?v=xGJ82MVOTcU">	YouTube	</a>
-
-<li/>	MimicMotion <a href="https://github.com/kijai/ComfyUI-MimicMotionWrapper">	GitHub - ComfyUI-MimicMotionWrapper	</a>
-	<a href="https://github.com/Tencent/MimicMotion">	MimicMotion	</a>,
-	<a href="https://github.com/TMElyralab/MusePose">	MusePose	</a>,
-
-<li/>	UniAnimate / Animate-X	<a href="https://lucaria-academy.github.io/Animate-X/">	Animate-X	</a>,"
-	<a href="https://unianimate.github.io/">		UniAnimate	</a>, 
-	<a href="https://github.com/ali-vilab/UniAnimate">		ali-vilab/UniAnimate	</a>, 
-	<a href="https://github.com/Isi-dev/ComfyUI-UniAnimate-W">	Isi-dev/ComfyUI-UniAnimate-W (UniAnimate=humans, Animate-X=animals/cartoons)	</a>,
-	<a href="https://huggingface.co/Isi99999/UniAnimate_and_Animate-X_Models/tree/main">		UniAnimate/Animate-X models	</a>, 
-
-<li/>	<a href="https://github.com/SamKhoze/ComfyUI-DeepFuze">	GitHub - DeepFuze	</a>,
-	<a href="https://www.youtube.com/watch?v=elQzQo__kWI">	YouTube 	</a>, Facial transformations, lipsyncing, video generation, voice cloning, face swapping, and lipsync translation
-
-<li/>	<a href="https://jixiaozhong.github.io/Sonic/">	Sonic: Shifting Focus to Global Audio Perception in Portrait Animation	</a>, 
-	<a href="https://huggingface.co/spaces/xiaozhongji/Sonic">	xiaozhongji/Sonic Demo	</a>
-	<a href="https://github.com/smthemex/ComfyUI_Sonic">	smthemex/ComfyUI_Sonic	</a>
-
-
-<li/>	<a href="https://humanaigc.github.io/animate-anyone-2/">	animate-anyone-2 - High-Fidelity Character Image Animation with Environment Affordance	</a>, 
-	<a href="https://github.com/HumanAIGC/AnimateAnyone">	AnimateAnyone </a>
-
-<li/>	<mark><a href="https://lingtengqiu.github.io/LHM/">	LHM: Large Animatable Human Reconstruction Model for Single Image to 3D in Seconds	</a></mark>, 
-	<a href="https://huggingface.co/spaces/DyrusQZ/LHM">	spaces/DyrusQZ/LHM demo	</a>, 
-	<a href="https://github.com/aigc3d/LHM/tree/feat/comfyui">	LHM ComfyUI	</a>
-
-<li/>	<a href="https://github.com/menyifang/MIMO">	MIMO: Controllable Character Video Synthesis with Spatial Decomposed Modeling	</a>
-
-<li/>	KwaiVGI <a href="https://github.com/KwaiVGI/ReCamMaster">	ReCamMaster: Camera-Controlled Generative Rendering from A Single Video 	</a>, 
-	<a href="https://jianhongbai.github.io/ReCamMaster/">	jianhongbai.github.io/ReCamMaster	</a>, 
-	<a href="https://arxiv.org/abs/2503.11647">	Paper	</a>, 
-	<mark><a href="https://github.com/kijai/ComfyUI-WanVideoWrapper">	kijai/ComfyUI-WanVideoWrapper	</a>, </mark>
-
-<li/>	<a href="https://bytedance.github.io/InfiniteYou/">	InfiniteYou - Flexible Photo Recrafting While Preserving Your Identity	</a>,
-	<a href="https://arxiv.org/html/2503.16418v1">	Paper </a>,
-	<a href="https://github.com/bytedance/InfiniteYou">	bytedance/InfiniteYou	</a>,
-	<a href="https://huggingface.co/spaces/ByteDance/InfiniteYou-FLUX">	InfiniteYou-FLUX demo	</a>, 
-	<a href="https://openart.ai/workflows/t8star/infiniteyou/0BGujVa1yfZzispihLjU">	t8star/infiniteyou 	</a>, 
-	<a href="https://openart.ai/workflows/bulldog_fruitful_46/flux_infiniteyou/OXicXXXSB1V4KIF0wXdz">	bulldog_fruitful_46/flux_infiniteyou	</a>, 
-	<a href="https://github.com/ZenAI-Vietnam/ComfyUI_InfiniteYou">	ZenAI-Vietnam/ComfyUI_InfiniteYou 	</a>
-
-<li/>	<mark>
-	<a href="https://ewrfcas.github.io/Uni3C/">	Unifying Precisely 3D-Enhanced Camera and Human Motion Controls for Video Generation(Camera + Video Motion) 	</a>,
-	<a href="https://github.com/alibaba-damo-academy/Uni3C">	alibaba-damo-academy/Uni3C	</a>
-	</mark>
-
 </ol>
 <hr><!----------------------------------------------------------->
-<h3 name="tagPlatform">	GenAI - ComfyUI - Platforms	</h3><ol start=1 type=1>
+<h3 id="tagPlatform">	GenAI - Platforms	</h3><ol start=1 type=1>
 
 <li/>	<a href="https://wan.video/">	Alibaba GenAI Platform	</a>
-<li/>	<a href="https://dreamina.capcut.com/ai-tool/explore">	ByteDance GenAI Platform	</a>
-<li/>	<a href="https://aivideo.hunyuan.tencent.com/">	Tencent GenAI Platform	</a>
+
+
+<li/>	<a href="https://www.argil.ai/ai-influencers">	argil.ai: AI influencers	</a>,
+	<a href="https://fal.ai/models/argil/avatars/text-to-video">	fal.ai: argil/avatars	</a>
 
 <li/>	<a href="https://medium.com/@dminhk/3-easy-steps-to-run-comfyui-on-amazon-sagemaker-notebook-c9bdb226c15e">	Amazon SageMaker	</a>
 <li/>	<a href="https://animemaker.graydient.ai/concepts">	animemaker	</a>
 
 <li/>	<a href="https://www.baseten.co/blog/how-to-serve-your-comfyui-model-behind-an-api-endpoint/">	baseten	</a>
+
+<li/>	<a href="https://dreamina.capcut.com/ai-tool/explore">	ByteDance GenAI Platform	</a>
+
 
 <li/>	<a href="https://datacrunch.io/managed-endpoints/flux-kontext">	DataCrunch.io	</a>
 
@@ -989,6 +1039,8 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://nexa.ai/models">	Supported Models	</a>
 
 <li/>	<a href="https://openart.ai/pricing">	openart	</a>
+
+<li/>	<a href="https://openrouter.ai/alibaba/tongyi-deepresearch-30b-a3b">	OpenRouter (who use & how much)	</a>
 
 <li/>	Perplexity <a href="https://huggingface.co/perplexity-ai/r1-1776">	DeepSeek R1 1776	</a>
 
@@ -1013,7 +1065,9 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 <li/>	<a href="https://tensor.art/">	tensor.art	</a>
 
 <li/>	<a href="https://www.thinkdiffusion.com/#apps-comfyui">	ThinkDiffusion	</a>,
-	<a href="https://civitai.com/articles/3244/comfyui-workflows-and-what-you-need-to-know-by-thinkdiffusion">	thinkdiffusion	</a>
+	<a href="https://civitai.com/articles/3244/comfyui-workflows-and-what-you-need-to-know-by-thinkdiffusion">	thinkdiffusion	</a>,
+	<a href="https://www.floyo.ai/workflows">	Floyo		</a>, 
+	<a href="https://learn.thinkdiffusion.com/tag/comfyui/">	tag/comfyui	</a>
 
 <li/>	<a href="https://www.together.ai/models/flux-1-kontext-dev">	Together.AI	</a>
 
@@ -1030,11 +1084,14 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://github.com/smthemex/ComfyUI_PhotoDoodle">	smthemex/ComfyUI_PhotoDoodle	</a>, 
 	<a href="https://huggingface.co/spaces/ameerazam08/PhotoDoodle-Image-Edit-GPU">	HuggingFace - PhotoDoodle-Image-Edit-GPU </a>
 
-<li/> <mark><a href="https://civitai.com/user/UmeAiRT/models">		CivitAI - user - UmeAiRT (ComfyUI workflow 101)	</a></mark>
+<li/>	<a href="https://aivideo.hunyuan.tencent.com/">	Tencent GenAI Platform	</a>
+
+<li/> ComfyUI workflows <a href="https://civitai.com/user/UmeAiRT/models">		CivitAI - user - UmeAiRT </a>,
+	<a href="https://civitai.com/user/yorgash/models">		CivitAI - user - yorgash (ComfyUI workflows)	</a>
 
 </ol>
 <hr><!------------------------------------------------------------------------>
-<h3 name="tagRead">	GenAI - Reading Material	</h3>
+<h3 id="tagRead">	GenAI - Reading Material	</h3>
 <ol start=1 type=1>
 <li/>	<a href="https://github.com/anthropics/anthropic-cookbook/tree/main">	Anthropic Cookbook	</a>,
 
@@ -1044,25 +1101,43 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 
 <li/>	<a href="https://arxiv.org/abs/2409.01392">	ArXiv - ComfyBench: Benchmarking LLM-based Agents in ComfyUI for Autonomously Designing Collaborative AI Systems	</a>
 
-<br/>
+<li/>	<a href="https://www.skills.google/">	Google Skills	</a>
+
 <li/>	<a href="https://jhave.substack.com/archive?sort=new">	Xtending Digital Narrative (Jhave's Ai links)	</a>
 <li/>	<a href="https://comfyorg.notion.site/ComfyUI-Desktop-User-Guide-1146d73d365080a49058e8d629772f0a#aab1bb6f65b64b0d82a85a947781cd60">	ComfyUI Desktop User Guide 	</a>
 
-<li/>	<a href="https://openart.ai/blog">	OpeArt - Prompts 	</a>
+<li/>	<a href="https://openart.ai/blog">	OpenArt - Prompts 	</a>
+
 
 <li/>	<a href="https://collections.unu.edu/eserv/UNU:10175/Working_Paper_AI_Agents.pdf">	Does the United Nations Need Agents? (Amina, Abdalla)	</a>,
 	<a href="https://www.404media.co/the-un-made-ai-generated-refugees/">		The UN Made AI-Generated Refugees (404media)	</a>,
+
+<li/>	<a href="https://blog.segmind.com/">	SegMind Blog	</a>, 
+	<a href="https://blog.segmind.com/qwen-image-prompt-parameter-guide/">	Qwen-Image: Prompt & Parameter Guide	</a>
 
 </ol>
 <!----------------------------------------------------------------------------->
 <!------------------------------------COLUMN 3--------------------------------->
 <!----------------------------------------------------------------------------->
 </td><td width="30%"><!-------------------------------------------------------->
-<h3 name="tagBRemover">	Object Background Remover / Segmentation / InPaint / OutPaint		</h3>
+<h3 id="tagRemove">	Object Background Remover / Segmentation / InPaint / OutPaint		</h3>
 <li/>	Keywords: <a href="https://openart.ai/workflows/all?keyword=Segment">	OpenArt - Segment </a>,
 	<a href="https://openart.ai/workflows/all?keyword=Background">	OpenArt - Background</a><br/><ol start=1 type=1>
 
+
+
+<li/> <a href="https://huggingface.co/apple/DepthPro">	Appple DepthPro	</a>,
+	<a href="https://github.com/spacepxl/ComfyUI-Depth-Pro">	ComfyUI-Depth-Pro	</a>,
+	<a href="https://openart.ai/workflows/ailab/depthflow-with-comfyui-depth-pro/4TQF8VyJgkCY4RuHYA79">	depthflow-with-comfyui-depth-pro	</a>
+
+<li/>	<a href="https://articulate-anything.github.io/">	Articulate-Anything - Automatic Modeling of Articulated Objects	</a>
+
+<li/>	<a href="https://depth-anything-v2.github.io/">	Depth Anything v2	</a>, 
+	<a href="https://github.com/DepthAnything/Depth-Anything-V2">		GitHub - Depth-Anything-V2	</a>,
+	<a href="https://huggingface.co/spaces/depth-anything/Depth-Anything-V2">	spaces/depth-anything - demo	</a>
+
 <li/>	<a href="https://github.com/john-mnz/ComfyUI-Inspyrenet-Rembg">	GitHub - Inspyrenet-Rembg	</a>
+
 <li/>	<a href="https://github.com/1038lab/ComfyUI-RMBG">	GitHub - RMBG (BEN2, mask feather, dino object segmentation)	</a>,
 	<a href="https://openart.ai/workflows/ailab/comfyui-rmbg-v120-rmbg-20-inspyrenet-and-ben-precision-background-removal/FyG6ZL1q3Z8zjSB3GPxY">	OpenArt - rmbg-v120-rmbg-20-inspyrenet	</a>, 
 	<a href="https://github.com/PramaLLC/BEN2_ComfyUI">	PramaLLC/BEN2_ComfyUI	</a>
@@ -1077,6 +1152,8 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 
 <li/> <a href="https://huggingface.co/PramaLLC/BEN">		Background Erase Network (BEN)	</a>
 	<a href="https://civitai.com/articles/8845/ben-background-erase-network-in-comfyui">		CivitAI ComfyUI </a>
+
+<li/> <a href="https://amap-ml.github.io/FE2E/">	FE2E: From Editor to Dense Geometry Estimator	</a>
 
 <li/>	<a href="https://github.com/Layer-norm/comfyui-lama-remover">	lama-remover	</a>,
 	<a href="https://civitai.com/articles/6255/using-comfy-to-batch-process-images-with-lama-cleaner">	batch-process-images-with-lama-cleaner	</a>
@@ -1098,16 +1175,21 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 <li/>	<a href="https://pq-yang.github.io/projects/MatAnyone/">	MatAnyone (NTU, SenseTime)	</a>,
 	<a href="https://huggingface.co/spaces/PeiqingYang/MatAnyone">	HuggingFace demo	</a>
 
+<li/>	<a href="https://rose2025-inpaint.github.io/">	ROSE: Remove Objects with Side Effects in Videos	</a>
+
+<li/>	<a href="https://github.com/roboflow/rf-detr">	RF-DETR: SOTA Real-Time Object Detection Model	</a>, 
+	<a href="https://huggingface.co/spaces/SkalskiP/RF-DETR">	RF-DETR demo	</a>
+
+
 <li/> SAM2(Segment Anything 2) <a href="https://github.com/kijai/ComfyUI-segment-anything-2">	ComfyUI-segment-anything-2	</a>,
 	<a href="https://github.com/neverbiasu/ComfyUI-SAM2">	ComfyUI-SAM2	</a>,
 	<a href="https://openart.ai/workflows/cgtips/comfyui---segment-anything-2-sam2---method-2/GTbSSKbVl6KpGu6uh4Lj">	OpenArt - SAM2	</a>,
 	<a href="https://github.com/IDEA-Research/Grounded-Segment-Anything">	IDEA-Research/Grounded-Segment-Anything	</a>
 
 <li/> <a href="https://rookiexiong7.github.io/projects/SeC/">	SeC: Advancing Complex Video Object Segmentation via Progressive Concept Construction	</a>, 
-	<a href="https://huggingface.co/OpenIXCLab/SeC-4B">	OpenIXCLab/SeC-4B	</a>
+	<a href="https://huggingface.co/OpenIXCLab/SeC-4B">	OpenIXCLab/SeC-4B	</a>, 
+	<a href="https://github.com/9nate-drake/Comfyui-SecNodes">	9nate-drake/Comfyui-SecNodes	</a>
 
-<li/>	<a href="https://github.com/roboflow/rf-detr">	RF-DETR: SOTA Real-Time Object Detection Model	</a>, 
-	<a href="https://huggingface.co/spaces/SkalskiP/RF-DETR">	RF-DETR demo	</a>
 
 <li/>	<a href="https://teleport.varjo.com/">	Vargo Teleport - 3D from iPhone Video	</a>
 
@@ -1115,7 +1197,7 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 
 </ol>
 <!----------------------------------------------------------->
-<h3 name="tagMusic">	Speech - Music 			</h3>
+<h3 id="tagMusic">	Speech - Music 			</h3>
 <li/>	Keywords: 
 	<a href="https://openart.ai/workflows/all?keyword=Audio">	OpenArt - Audio	</a>,
 	<a href="https://gist.github.com/0xdevalias/359f4265adf03b0142e4d0543c156a3e">	github - Awesome Audio	</a>
@@ -1154,7 +1236,7 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 
 </ol>
 <!----------------------------------------------------------->
-<h3 name="tagTTS">	Speech - Text-2-Speech (TTS) 			</h3>
+<h3 id="tagTTS">	Speech - Text-2-Speech (TTS) 			</h3>
 <li/>	Keywords: 
 	<a href="https://huggingface.co/papers?q=Speech%20Token">	HuggingFace - Speech	</a>,
 	<a href="https://openart.ai/workflows/all?keyword=Audio">	OpenArt - Audio	</a>,
@@ -1173,6 +1255,8 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://openart.ai/workflows/t8star/cosyvoice2latentsync/sW87AX7TU9Lq6t4uHySn">	t8star/cosyvoice2latentsync 	</a>
 	<a href="https://github.com/muxueChen/ComfyUI_NTCosyVoice">	muxueChen/ComfyUI_NTCosyVoice	</a>
 	<a href="https://github.com/touge/ComfyUI-NCE_CosyVoice">	touge/ComfyUI-NCE_CosyVoice	</a>
+
+<li/>	DiodioGod <a href="https://github.com/diodiogod/TTS-Audio-Suite">		TTS Audio Suite	</a>
 
 <li/>	Data 
 	<a href="AI Audio Datasets (AI-ADS)">	AI Audio Datasets (AI-ADS)	</a>, 
@@ -1195,20 +1279,28 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 <li/>	TTS - FreeVC <a href="https://olawod.github.io/FreeVC-demo/">	Github - FreeVC - One-Shot Voice Conversion 	</a>, 
 	<a href="https://github.com/ShmuelRonen/ComfyUI-FreeVC_wrapper">	ShmuelRonen/ComfyUI-FreeVC_wrapper	</a>
 
+<li/>	TTS - KaniTTS 
+	<a href="https://huggingface.co/nineninesix/kani-tts-370m">	KaniTTS: Fast and Expressive Speech Generation Model	</a>,
+	<a href="https://github.com/wildminder/ComfyUI-KaniTTS">	wildminder/ComfyUI-KaniTTS	</a>, 
+
 <li/>	TTS - Kokoro <a href="https://huggingface.co/spaces/ysharma/Make_Custom_Voices_With_KokoroTTS">	Voice Mixer Studio	</a>, 
-	<a href="https://github.com/MushroomFleet/DJZ-KokoroTTS">	MushroomFleet/DJZ-KokoroTTS	</a>, 
-	<a href="https://huggingface.co/spaces/ysharma/Make_Custom_Voices_With_KokoroTTS"> Make_Custom_Voices_With_KokoroTTS demo	</a>
+	<a href="https://github.com/MushroomFleet/DJZ-KokoroTTS">	MushroomFleet/DJZ-KokoroTTS	</a>
 
 <li/> TTS = Llasa-3B <a href="https://huggingface.co/spaces/srinivasbilla/llasa-3b-tts">	Llasa-3B	</a>, 
 	<a href="https://huggingface.co/HKUSTAudio/Llasa-3B">	HKUSTAudio/Llasa-3B	</a>,
 	<a href="https://replicate.com/kjjk10/llasa-3b-long">	Replicate - kjjk10/llasa-3b-long	</a>
+
+<li/> TTS - Marvis-AI	<a href="https://huggingface.co/Marvis-AI">	Marvis-TTS-250m (Sesame CSM-1B, Kyutai mimi codec)	</a>, 
+	<a href="https://github.com/Marvis-Labs/marvis-tts">		Marvis-Labs/marvis-tts	</a>
 
 <li/> TTS - MegaTTS3 	<a href="https://github.com/bytedance/MegaTTS3">	bytedance - MegaTTS3 (voice cloning)	</a>, 
 	<a href="https://huggingface.co/spaces/ByteDance/MegaTTS3">	MegaTTS3 Demo	</a>, 
 	<a href="https://openart.ai/workflows/ailab/comfyui-megatts/K0urCR510JCn2FAcYxoW">	ailab/comfyui-megatts	</a>
 
 <li/>	TTS - Microsoft VibeVoice <a href="https://huggingface.co/microsoft/VibeVoice-1.5B">		microsoft/VibeVoice-1.5B	</a>,
-	<a href="https://86636c494bbddc69c7.gradio.live/">	Demo	</a>
+	<a href="https://github.com/Enemyx-net/VibeVoice-ComfyUI">	Enemyx-net/VibeVoice-ComfyUI	</a>,
+	<a href="https://86636c494bbddc69c7.gradio.live/">	Demo	</a>, 
+	<a href="https://github.com/voicepowered-ai/VibeVoice-finetuning">	Fine-Tuning	</a>
 
 <li/>	TTS - Microsoft EdgeTTS 
 	<a href="https://huggingface.co/spaces/innoai/Edge-TTS-Text-to-Speech">	Microsoft Edge-TTS-Text-to-Speech	</a>
@@ -1233,11 +1325,14 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://github.com/tuanh123789/Spark-TTS-finetune">	Spark-TTS-finetune	</a>, 
 	<a href="https://github.com/SparkAudio/Spark-TTS">	SparkAudio/Spark-TTS (NTU)	</a>
 
-<li/>	TTS - Seed-VC	
-	<a href="https://plachtaa.github.io/seed-vc/">	Zero Shot Voice Conversion	</a>, 
+<li/>	TTS - Seed-VC 
+	<a href="https://plachtaa.github.io/seed-vc/">	Zero Shot Voice Conversion (Singing VoiceOver)	</a>, 
 	<a href="https://github.com/Plachtaa/seed-vc">	Plachtaa/seed-vc	</a>
 
-<li/>	TTS - StepAudioTTS  <a href="https://github.com/billwuhao/ComfyUI_StepAudioTTS ">	billwuhao/ComfyUI_StepAudioTTS 	</a> 
+<li/> TTS - StepFun.AI	
+	<a href="https://github.com/stepfun-ai/Step-Audio2">	StepAudio2: Speech and Audio Understanding & Conversation </a>, 
+	<a href="https://stepfun.ai/chats/new">	StepAudio Demo </a>, 
+	<a href="https://github.com/billwuhao/ComfyUI_StepAudioTTS ">	billwuhao/ComfyUI_StepAudioTTS 	</a> 
 
 <li/>	TTS - Zonos <a href="https://www.zyphra.com/post/beta-release-of-zonos-v0-1">	Zyphra	</a>, 
 	<a href="https://playground.zyphra.com/">	Zyphra playground	</a>, 
@@ -1245,7 +1340,7 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 
 </ol>
 <!----------------------------------------------------------->
-<h3 name="tagTalkingHead">	Talking Head			</h3>
+<h3 id="tagTalkingHead">	Talking Head			</h3>
 <li/>	Keywords: 
 	<a href="https://openart.ai/workflows/all?keyword=talking">	OpenArt - Talking	</a>,
 	<a href="https://github.com/harlanhong/awesome-talking-head-generation">	harlanhong/awesome-talking-head-generation	</a>,
@@ -1262,16 +1357,45 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<br/>
 	<ol start=1 type=1>
 
+<li/>	Alibaba <a href="https://fantasy-amap.github.io/fantasy-talking/">		Fantasy Talking	</a>, 
+	<a href="https://github.com/kijai/ComfyUI-WanVideoWrapper">	kijai/ComfyUI-WanVideoWrapper	</a>, 
+	<a href="https://openart.ai/workflows/pix_studio/fantasy-talking/dy5O3i4qKYaTns7ZgUVF">	pix_studio/fantasy-talking	</a>, 
+	<a href="https://omni-avatar.github.io/">	Alibaba - OmniAvatar	</a>, 
+	<a href="https://github.com/Omni-Avatar/OmniAvatar">	OmniAvatar	</a>, 
+	<a href="https://humanaigc.github.io/omnitalker/">	OmniTalker	</a>
+	<a href="https://www.youtube.com/watch?v=bSssQdqXy9A&t=538s">	YouTube	</a>, 
+	<a href="https://fantasy-amap.github.io/fantasy-portrait/">	FantasyPortrait: Enhancing Multi-Character Portrait Animation with Expression-Augmented Diffusion Transformers </a>,
+	<a href="https://johnneywang.github.io/EchoShot-webpage/">	EchoShot: Multi-Shot Portrait Video Generation	</a>, 
+	<a href="https://github.com/JoHnneyWang/EchoShot">	JoHnneyWang/EchoShot	</a>, 
+	<a href="https://arxiv.org/html/2506.15838v1">	Paper	</a>
+
 <li/>	<a href="https://github.com/harlanhong/ACTalker">	ACTalker	</a>, 
 	<a href="https://harlanhong.github.io/publications/actalker/index.html">	Paper 	</a>
 
 <li/>	<a href="https://github.com/oneThousand1000/AnimPortrait3D">	AnimPortrait3D - text to 3D animation	</a>
 
-<li/>	<a href="https://arxiv.org/abs/2502.20220?ref=uploadvr.com">	Avat3r: Large Animatable Gaussian Reconstruction Model for High-fidelity 3D Head Avatars	</a>
+<li/>	<a href="https://humanaigc.github.io/animate-anyone-2/">	animate-anyone-2 - High-Fidelity Character Image Animation with Environment Affordance	</a>, 
+	<a href="https://github.com/HumanAIGC/AnimateAnyone">	AnimateAnyone </a>
+
+<li/>	<a href="https://arxiv.org/abs/2502.20220?ref=uploadvr.com">	Avat3r: Large Animatable Gaussian Reconstruction Model for High-fidelity 3D Head Avatars	</a>,
+	<a href="https://tobias-kirschstein.github.io/avat3r/">	tobias-kirschstein.github.io/avat3r	</a>
+
+<li/>	ByteDance <a href="https://bytedance.github.io/InfiniteYou/">	InfiniteYou - Flexible Photo Recrafting While Preserving Your Identity	</a>,
+	<a href="https://arxiv.org/html/2503.16418v1">	Paper </a>,
+	<a href="https://github.com/bytedance/InfiniteYou">	bytedance/InfiniteYou	</a>,
+	<a href="https://huggingface.co/spaces/ByteDance/InfiniteYou-FLUX">	InfiniteYou-FLUX demo	</a>, 
+	<a href="https://openart.ai/workflows/t8star/infiniteyou/0BGujVa1yfZzispihLjU">	t8star/infiniteyou 	</a>, 
+	<a href="https://openart.ai/workflows/bulldog_fruitful_46/flux_infiniteyou/OXicXXXSB1V4KIF0wXdz">	bulldog_fruitful_46/flux_infiniteyou	</a>, 
+	<a href="https://github.com/ZenAI-Vietnam/ComfyUI_InfiniteYou">	ZenAI-Vietnam/ComfyUI_InfiniteYou 	</a>
+	<a href="https://github.com/bytedance/LatentSync">	LatentSync </a>
 
 <li/> <a href="https://character-ai.github.io/avatar-fx/">	Character.AI avatar-fx	</a>
 
 <li/> <a href="https://murray-wang.github.io/CharaConsist/">	CharaConsist: Fine-Grained Consistent Character Generation	</a>
+
+
+<li/>	<a href="https://github.com/SamKhoze/ComfyUI-DeepFuze">	GitHub - DeepFuze	</a>,
+	<a href="https://www.youtube.com/watch?v=elQzQo__kWI">	YouTube 	</a>, Facial transformations, lipsyncing, video generation, voice cloning, face swapping, and lipsync translation
 
 <li/>	<a href="https://github.com/toto222/DICE-Talk">	DICE-Talk - Disentangle Identity, Cooperate Emotion: Correlation-Aware Emotional Talking Portrait Generation	</a>, 
 	<a href="https://github.com/smthemex/ComfyUI_DICE_Talk">	smthemex/ComfyUI_DICE_Talk	</a>
@@ -1286,17 +1410,6 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://github.com/yuvraj108c/ComfyUI-FLOAT">	yuvraj108c/ComfyUI-FLOAT	</a>, 
 	<a href="https://deepbrainai-research.github.io/float/">	deepbrainai-research.github.io/float	</a>
 
-<li/>	<a href="https://fantasy-amap.github.io/fantasy-talking/">		Alibaba - Fantasy Talking	</a>, 
-	<a href="https://github.com/kijai/ComfyUI-WanVideoWrapper">	kijai/ComfyUI-WanVideoWrapper	</a>, 
-	<a href="https://openart.ai/workflows/pix_studio/fantasy-talking/dy5O3i4qKYaTns7ZgUVF">	pix_studio/fantasy-talking	</a>, 
-	<a href="https://omni-avatar.github.io/">	Alibaba - OmniAvatar	</a>, 
-	<a href="https://github.com/Omni-Avatar/OmniAvatar">	Alibaba - OmniAvatar	</a>, 
-	<a href="https://www.youtube.com/watch?v=bSssQdqXy9A&t=538s">	YouTube	</a>, 
-	<a href="https://fantasy-amap.github.io/fantasy-portrait/">	FantasyPortrait: Enhancing Multi-Character Portrait Animation with Expression-Augmented Diffusion Transformers </a>,
-	<a href="https://johnneywang.github.io/EchoShot-webpage/">	EchoShot: Multi-Shot Portrait Video Generation	</a>, 
-	<a href="https://github.com/JoHnneyWang/EchoShot">	JoHnneyWang/EchoShot	</a>, 
-	<a href="https://arxiv.org/html/2506.15838v1">	Paper	</a>
-
 <li/>	<a href="https://lllyasviel.github.io/frame_pack_gitpage/">	FramePack - Packing Input Frame Context in Next-Frame Prediction Models for Video Generation </a>, 
 	<a href="https://github.com/lllyasviel/FramePack">	lllyasviel/FramePack	</a>, 
 	<a href="https://openart.ai/workflows/pix_studio/framepack6g/kZCYax19o8PgNs25y1Xr">	pix_studio/framepack6g	</a>
@@ -1305,11 +1418,31 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 
 <li/>	HumanMLLM <a href="https://github.com/HumanMLLM/HumanOmniV2">	HumanOmniV2: From Understanding to Omni-Modal Reasoning with Context	</a>
 
-<li/>	<a href="https://github.com/bytedance/LatentSync">	ByteDance - LatentSync </a>
+<li/>	KwaiVGI <a href="https://github.com/KwaiVGI/ReCamMaster">	ReCamMaster: Camera-Controlled Generative Rendering from A Single Video 	</a>, 
+	<a href="https://jianhongbai.github.io/ReCamMaster/">	jianhongbai.github.io/ReCamMaster	</a>, 
+	<a href="https://arxiv.org/abs/2503.11647">	Paper	</a>, 
+	<a href="https://github.com/kijai/ComfyUI-WanVideoWrapper">	kijai/ComfyUI-WanVideoWrapper	</a>,
+
+<li/>	<a href="https://aigc3d.github.io/projects/LAM/">	LAM: Large Avatar Model for One-shot Animatable Gaussian Head	</a>
 
 <li/>	<a href="https://github.com/KwaiVGI/LivePortrait">		LivePortrait	</a>
+	<a href="https://github.com/kijai/ComfyUI-LivePortraitKJ">	GitHub - ComfyUI-LivePortraitKJ	</a>,
+	<a href="https://openart.ai/workflows/datou/live-portrait/PMM4NSLnbhU08xvRqN2e">	OpenArt - datou/live-portrait	</a>,
+	<a href="https://github.com/PowerHouseMan/ComfyUI-AdvancedLivePortrait">	GitHub - ComfyUI-AdvancedLivePortrait	</a>,
+	<a href="https://www.youtube.com/watch?v=xGJ82MVOTcU">	YouTube	</a>
 
-
+
+<li/>	<a href="https://lingtengqiu.github.io/LHM/">	LHM: Large Animatable Human Reconstruction Model for Single Image to 3D in Seconds	</a>, 
+	<a href="https://huggingface.co/spaces/DyrusQZ/LHM">	spaces/DyrusQZ/LHM demo	</a>, 
+	<a href="https://github.com/aigc3d/LHM/tree/feat/comfyui">	LHM ComfyUI	</a>,
+	<a href="https://github.com/aigc3d/LAM">	LAM: Large Avatar Model for One-shot Animatable Gaussian Head	</a>, 
+	<a href="https://arxiv.org/html/2509.07552v1">	PanoLAM: Large Avatar Model for Gaussian Full-Head Synthesis from One-shot Unposed Image	</a>, 
+
+
+
+
+<li/>	<a href="https://github.com/menyifang/MIMO">	MIMO: Controllable Character Video Synthesis with Spatial Decomposed Modeling	</a>
+
 <li/>	<a href="https://arxiv.org/html/2506.18871v1">		OmniGen2: Exploration to Advanced Multimodal Generation	</a>,
 	<a href="https://github.com/VectorSpaceLab/OmniGen2">		VectorSpaceLab/OmniGen2		</a>,
 	<a href="https://github.com/neverbiasu/ComfyUI-OmniGen2">		ComfyUI-OmniGen2	</a>, 
@@ -1320,7 +1453,7 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://openart.ai/workflows/t8star/memoavatar/yH1rroH1nLA6O0Os4lh3">	OpenArt - t8star/memoavatar	</a>,
 	<a href="https://openart.ai/workflows/cat_untimely_42/memoavatar_photo-photo_talk/Dw9ZIG27X017M2DHwkSW">	cat_untimely_42/memoavatar_photo-photo_talk	</a>
 
-<li/>	<a href="https://humanaigc.github.io/omnitalker/">	Alibaba - OmniTalker	</a>
+<li/>	<a href="https://github.com/Orange-3DV-Team/MoCha">	MoCha: End-to-End Video Character Replacement without Structural Guidance	</a>, 
 
 <li/>	<a href="https://real3dportrait.github.io/">	Real3D-Portrait: One-shot Realistic 3D Talking Portrait Synthesis	</a>
 
@@ -1328,22 +1461,37 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 
 <li/>	<a href="https://skyworkai.github.io/skyreels-audio.github.io/">	SkyReels-Audio	</a>
 
+<li/>	<a href="https://jixiaozhong.github.io/Sonic/">	Sonic: Shifting Focus to Global Audio Perception in Portrait Animation	</a>, 
+	<a href="https://huggingface.co/spaces/xiaozhongji/Sonic">	xiaozhongji/Sonic Demo	</a>
+	<a href="https://github.com/smthemex/ComfyUI_Sonic">	smthemex/ComfyUI_Sonic	</a>
 
 <li/>	<a href="https://francis-rings.github.io/StableAvatar/">	StableAvatar: Infinite-Length Audio-Driven Avatar Video Generation	</a>	
-<li/>	<a href="https://github.com/Francis-Rings/StableAvatar">		</a>
+	<a href="https://github.com/Francis-Rings/StableAvatar">	Francis-Rings/StableAvatar	</a>
 
 <li/> TaoAvatar <a href="https://pixelai-team.github.io/TaoAvatar/">	pixelai-team.github.io/TaoAvatar	</a>, 
 	<a href="https://arxiv.org/abs/2503.17032">	TaoAvatar: Real-Time Lifelike Full-Body Talking Avatars for Augmented Reality via 3D Gaussian Splatting	</a>, 
 	<a href="https://medium.com/@nimritakoul01/taoavatar-a-full-body-talking-avatar-for-mobile-devices-using-3d-gaussian-splatting-and-smplx-247e48c42933">	Medium	</a>
 
+<li/>	Tencent <a href="https://github.com/kijai/ComfyUI-MimicMotionWrapper">	GitHub - ComfyUI-MimicMotionWrapper	</a>
+	<a href="https://github.com/Tencent/MimicMotion">	MimicMotion	</a>,
+	<a href="https://github.com/TMElyralab/MusePose">	MusePose	</a>,
+
+<li/>	UniAnimate / Animate-X	<a href="https://lucaria-academy.github.io/Animate-X/">	Animate-X	</a>,"
+	<a href="https://unianimate.github.io/">		UniAnimate	</a>, 
+	<a href="https://github.com/ali-vilab/UniAnimate">		ali-vilab/UniAnimate	</a>, 
+	<a href="https://github.com/Isi-dev/ComfyUI-UniAnimate-W">	Isi-dev/ComfyUI-UniAnimate-W (UniAnimate=humans, Animate-X=animals/cartoons)	</a>,
+	<a href="https://huggingface.co/Isi99999/UniAnimate_and_Animate-X_Models/tree/main">		UniAnimate/Animate-X models	</a>, 
+
+<li/>	<a href="https://ewrfcas.github.io/Uni3C/">	Unifying Precisely 3D-Enhanced Camera and Human Motion Controls for Video Generation(Camera + Video Motion) 	</a>,
+	<a href="https://github.com/alibaba-damo-academy/Uni3C">	alibaba-damo-academy/Uni3C	</a>
+
+<li/>	<a href="https://zcai0612.github.io/UP2You/">	UP2You: Fast Reconstruction of Yourself from Unconstrained Photo Collections	</a>
+
 <li/>	X-Portrait <a href="https://github.com/akatz-ai/ComfyUI-X-Portrait-Nodes">	GitHub - akatz-ai/ComfyUI-X-Portrait	</a>
-
-
-<li/>	<a href="https://aigc3d.github.io/projects/LAM/">	LAM: Large Avatar Model for One-shot Animatable Gaussian Head	</a>
 
 </ol>
 <!----------------------------------------------------------->
-<h3 name="tagPerformance">	Tool - Performance			</h3>
+<h3 id="tagPerformance">	Tool - Performance			</h3>
 <ol start=1 type=1>
 
 <li/>	DFloat11	<a href="https://github.com/LeanModels/DFloat11">	DFloat11: Lossless LLM Compression for Efficient GPU Inference	</a>,
@@ -1356,19 +1504,25 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 <li/>	<a href="https://zehong-ma.github.io/MagCache/">	MagCache	</a>,
 	<a href="https://github.com/Zehong-Ma/ComfyUI-MagCache">	Zehong-Ma/ComfyUI-MagCache	</a>, 
 
+<li/>	<a href="https://github.com/orgs/ModelTC/repositories">	ModelTC (Lightning)	</a>
+
 <li/>	<a href="https://liewfeng.github.io/TeaCache/">	TeaCache </a>
 <li/>	<a href="https://github.com/aejion/AccVideo">	AccVideo: Accelerating Video Diffusion Model with Synthetic Dataset	</a>
 <li/>	<a href="https://github.com/linkedin/Liger-Kernel">	Liger Kernel: Efficient Triton Kernels for LLM Training	</a>
 
+<li/>	<a href="https://huggingface.co/blog/zerogpu-aoti">	ZeroGPU ahead-of-time (AoT) on HuggingFace </a>
+
 </ol>
 <!----------------------------------------------------------->
-<h3 name="tagTraining">	Tool / Training / Utility			</h3>
+<h3 id="tagTraining">	Tool / Training / Utility			</h3>
 <ol start=1 type=1>
 
 <li/>	<a href="https://education.civitai.com/using-civitai-the-on-site-lora-trainer/">	CivitAI LORA Trainer	</a>,
 	<a href="https://education.civitai.com/quickstart-guide-to-flux-1/#rapid-flux-training">	CivitAI FLUX Trainer	</a>, 
 	<a href="https://openart.ai/workflows/tenofas/flux-lora-trainer-20/VmxcKxjxRoN2Lrs9ESU7">	tenofas/flux-lora-trainer-20	</a>
 	<a href="https://learn.thinkdiffusion.com/building-better-models-flux-loras-in-comfyui/">	ThinkDiffusion - building-better-models-flux-loras-in-comfyui	</a>
+
+
 
 <li/>	3D Tools <a href="https://www.autodesk.com/solutions/wonder-dynamics">	AutoDesk - Wonder Dynamics	</a>, 
 	<a href="https://www.deepmotion.com/animate-3d">	DeepMotion	</a>,
@@ -1382,11 +1536,15 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 <li/>	<a href="https://www.youtube.com/watch?v=bf8_mEvs9lE">	YouTube - Custom AI Digital Human with HeyGen's Lora Training	</a>
 	<a href="https://www.youtube.com/watch?v=V0orBtT7SYU">	YouTube - How to Replace Yourself on Zoom Calls with an AI Clone from HeyGen	</a>
 
+<li/>	Ostris.AI	<a href="https://www.youtube.com/@ostrisai/videos">	YouTube - ostrisai (LORA=Qwen-Edit, Wan2.1 i2v)	</a>
+
+
 <li/>	<a href="https://www.youtube.com/watch?v=ksUEu6c-ouc">	Training FLUX LORA 	</a>
 <li/>	<a href="https://civitai.com/articles/7131/flux-lora-trainer-on-comfyui-v10">	Training FLUX LORA	</a>
 <li/>	<a href="https://civitai.com/models/713258/flux-lora-trainer-on-comfyui">	Training FLUX LORA	</a>
 
-<li/>	<a href="https://www.youtube.com/watch?v=1DyfPhIkX78">	FluxGym 	</a>,
+<li/>	FlyMyAI	<a href="https://github.com/FlyMyAI/flymyai-lora-trainer">		flymyai-lora-trainer	</a>, 
+	<a href="https://www.youtube.com/watch?v=1DyfPhIkX78">	FluxGym 	</a>,
 	<a href="https://www.youtube.com/watch?v=gdEeceGYBu0">	Training FLUX LORA	</a>,
 	<a href="https://www.youtube.com/watch?v=nySGu12Y05k">	Training FLUX LORA	</a>
 
@@ -1403,11 +1561,9 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 <li/>	Unsloth.ai <a href="https://unsloth.ai/blog/qwen3"> Fine-tune & Run Qwen3	</a>, 
 	<a href="https://unsloth.ai/blog/tts">	Fine-tuning TTS models (Sesame's CSM, Orpheus)	</a>
 
-<li/>	
-	<mark>
+<li id="mark"/>
 	<a href="https://arxiv.org/html/2506.05010v1">	ComfyUI-Copilot: An Intelligent Assistant for Automated Workflow Development	</a>,
 	<a href="https://github.com/AIDC-AI/ComfyUI-Copilot">	AIDC-AI/ComfyUI-Copilot	</a>
-	</mark>
 
 <li/> <a href="https://github.com/crystian/ComfyUI-Crystools">		  Crystools (CPU, GPU, RAM, VRAM, GPU Temp and space) 	</a>
 
@@ -1456,7 +1612,6 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 
 <li/>	<a href="https://github.com/FlyMyAI/flymyai-lora-trainer">	Qwen-Image & Qwen-Image-Edit LoRA Training	</a>
 
-
 </ol>
 <!----------------------------------------------------------->
 <h3>	Tool - Prompt Engineering			</h3><ol start=1 type=1>
@@ -1468,18 +1623,23 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 
 </ol>
 <!----------------------------------------------------------->
-<h3 name="tagTechScan">	Tool - General / TechScan / Research / DeepResearch	</h3><ol start=1 type=1>
+<h3 id="tagTechScan">	Tool - General / TechScan / Research / DeepResearch	</h3><ol start=1 type=1>
 
-<li/>	<mark>
+<li id="mark"/>
 	<a href="https://huggingface.co/papers">	HuggingFace - Daily Papers	</a>, 
 	<a href="https://blog.comfy.org/">	blog.comfy.org	</a>, 
 	<a href="https://docs.comfy.org/">	docs.comfy.org	</a>, 
 	<a href="https://github.com/ComfyUI-Workflow/awesome-comfyui">	awesome-comfyui </a>
-	</mark>
 
 <li/>	<a href="https://news.smol.ai/issues">	AI News	</a>
 
-<li/>	Alibaba	<a href="https://github.com/Alibaba-NLP/WebAgent">	WebAgent for Information Seeking (WebShaper, WebSailor, WebDancer, WebWalker)	</a>
+<li/>	<a href="https://ai-4-research.github.io/">	AI4Research: A Survey of Artificial Intelligence for Scientific Research	</a>,
+	<a href="https://arxiv.org/html/2507.01903v1">	Paper	</a>
+
+<li/>	Alibaba	
+	<a href="https://github.com/Alibaba-NLP/WebAgent">	WebAgent for Information Seeking (WebShaper, WebSailor, WebDancer, WebWalker)	</a>
+	<a href="https://github.com/Alibaba-NLP/DeepResearch">	Alibaba-NLP/DeepResearch	</a>, 
+
 
 <li/>	<a href="https://fireplexity.org/">	Fireplexity: Open Source Perplexity AI Clone	</a>
 
@@ -1489,8 +1649,9 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 <li/> Research Assistant 	<a href="https://github.com/bytedance/pasa">	ByteDance PaSa: An LLM Agent for Comprehensive Academic Paper Search </a>,
 	<a href="https://storm.genie.stanford.edu/">	Stanford STORM </a>,
 	<a href="https://github.com/dzhng/deep-research">	Github - Deep Research 	</a>,
-	<a href="https://github.com/masterFoad/NanoSage">	NanoSage - Advanced Recursive Search & Report Generation	</a>
+	<a href="https://github.com/masterFoad/NanoSage">	NanoSage - Advanced Recursive Search & Report Generation	</a>, 
 	<a href="https://www.perplexity.ai/hub/blog/introducing-perplexity-deep-research">	Perplexity - Deep Research 	</a>,
+	<a href="https://github.com/MODSetter/SurfSense">	SurfSense	</a>
 
 	<a href="https://github.com/bytedance/deer-flow">	ByteDance - DeerFlow (Deep Exploration and Efficient Research Flow)	</a>
 
@@ -1503,9 +1664,7 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://foremost-beechnut-8ed.notion.site/WebThinker-Empowering-Large-Reasoning-Models-with-Deep-Research-Capability-d13158a27d924a4b9df7f9ab94066b64">	WebThinker 	</a>, 
 	<a href="https://github.com/RUC-NLPIR/WebThinker">	RUC-NLPIR/WebThinker	</a>, 
 
-<li/>	<a href="https://ai-4-research.github.io/">	AI4Research: A Survey of Artificial Intelligence for Scientific Research	</a>,
-	<a href="https://arxiv.org/html/2507.01903v1">	Paper	</a>
-
+<li/>	Nvidia <a href="https://research.nvidia.com/labs/lpr/udr/">	Universal Deep Research: Bring Your Own Model and Strategy	</a>
 
 
 </ol>
@@ -1514,7 +1673,7 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 <!----------------------------------------------------------------------------->
 </td><td width="30%"><!-------------------------------------------------------->
 <!----------------------------------------------------------->
-<h3 name="tagUpscale">	Upscale SUPIR			</h3>
+<h3 id="tagUpscale">	Upscale SUPIR			</h3>
 <li/>	Keywords: 
 	<a href="https://github.com/yjsunnn/Awesome-video-super-resolution-diffusion">	Awesome-video-super-resolution-diffusion	</a>,
 	<a href="https://github.com/yjsunnn/Awesome-video-super-resolution-diffusion">	Awesome Diffusion Models for Video Super-Resolution	</a>,
@@ -1527,7 +1686,8 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 
 <li/>	<a href="https://huggingface.co/ac-pill/upscale_models/tree/main">	ac-pill/upscale_models (e.g. RealESRGAN_x4plus_anime_6B.pth) 	</a>
 
-<li/>	<a href="https://bryanswkim.github.io/chain-of-zoom/">	Chain-of-Zoom: Extreme Super-Resolution via Scale Autoregression and Preference Alignment	 (No COmfyUI)	</a>
+<li/>	<a href="https://github.com/bryanswkim/Chain-of-Zoom">	Chain-of-Zoom: Extreme Super-Resolution via Scale Autoregression and Preference Alignment	 (No COmfyUI)	</a>, 
+	<a href="https://huggingface.co/spaces/alexnasa/Chain-of-Zoom">		</a>
 
 <li/>	<a href="https://github.com/Eyeline-Labs/CineScale">	CineScale: High-Resolution Cinematic Visual Generation </a>, 
 	<a href="https://github.com/ali-vilab/FreeScale">	ali-vilab/FreeScale	</a>
@@ -1539,6 +1699,8 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://openart.ai/workflows/crocodile_ruddy_19/supir-upscale/WdeLcIKRRaPNDnayUy49">	SUPIR	</a>,
 	<a href="https://openart.ai/workflows/meerkat_elliptical_71/supir-image-scale/elXpUhL9AN0UzHS5zRYh">		supir-image-scale	</a>,
 	<a href="https://openart.ai/workflows/jerrydavos/ultimate-flux-upscaler---2k---4k---8k---16k---32k/viXz5ezmbAEcqORoN9iW">	jerrydavos/ultimate-flux-upscaler 2k, 4k, 8k, 16k	</a>
+
+<li/> <a href="https://zhuang2002.github.io/FlashVSR/">	FLASHVSR:	Towards Real-Time Diffusion-Based Streaming Video Super-Resolution	</a>
 
 <li/> <a href="https://huggingface.co/uwg/upscaler/tree/main/SwinIR">		HuggingFace - upscaler	</a>
 
@@ -1554,25 +1716,20 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 
 <li/>	OPPO Research Institute <a href="https://github.com/yjsunnn/DLoRAL">	One-Step Diffusion for Detail-Rich and Temporally Consistent Video Super-Resolution (DLoRAL)	</a>
 
-
-
 <li/>	<a href="https://4kagent.github.io/">	4kagent (satellite)	</a>
 
-<li/>	
-	<mark>
+<li id="mark"/>
+	SeedVR
 	<a href="https://iceclear.github.io/projects/seedvr2/">	seedvr2	</a>,
 	<a href="https://github.com/ByteDance-Seed/SeedVR">	ByteDance-Seed/SeedVR	</a>, 
 	<a href="https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler">	ComfyUI-SeedVR2_VideoUpscaler	</a>
 	<a href="https://huggingface.co/numz/SeedVR2_comfyUI/tree/main">	SeedVR2_comfyUI (6Gb, 13Gb)	</a>
 	<a href="https://huggingface.co/ByteDance-Seed/SeedVR2-7B/tree/main">	SeedVR2-7B (33Gb)	</a>,
 	<a href="https://huggingface.co/ByteDance-Seed/SeedVR2-3B/tree/main">	SeedVR2-3B (14Gb)	</a>
-	</mark>
-
-
 
 </ol>
 <!----------------------------------------------------------->
-<h3>	Video			</h3>
+<h3 id="tagVideo">	Video			</h3>
 <li/>	Keywords: <a href="https://github.com/showlab/Awesome-Video-Diffusion">	Github - Awesome Video Diffusion	</a>,
 	<a href="https://github.com/yunlong10/Awesome-LLMs-for-Video-Understanding">	Github - Awesome-LLMs-for-Video-Understanding	</a><br/><ol start=1 type=1>
 
@@ -1581,12 +1738,10 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://github.com/SkyworkAI/SkyReels-V1">	SkyworkAI/SkyReels-V1 </a>,
 	<a href="https://huggingface.co/Kijai/SkyReels-V1-Hunyuan_comfy">	Kijai/SkyReels-V1-Hunyuan_comfy </a>,
 
-<li/>	
-	<mark>
+<li id="mark"/>
 	<a href="https://github.com/lllyasviel/FramePack">	FramePack - generate 1-minute video (60 seconds)	</a>, 
 	<a href="https://openart.ai/workflows/pix_studio/framepack6g/kZCYax19o8PgNs25y1Xr">	pix_studio/framepack6g	</a>, 
 	<a href="https://openart.ai/workflows/t8star/framepack-v1/5RCvSnlYsoe94w6NknBl">	t8star/framepack-v1	</a>
-	</mark>
 
 <li/>	<a href="https://www.genmo.ai/">	Genmo	</a>
 	<a href="https://github.com/genmoai/mochi">	Mochi	</a>,
@@ -1648,7 +1803,7 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 
 <li/>	<a href="https://matankleiner.github.io/flowedit/">	FlowEdit 	</a>,
 	<a href="https://www.youtube.com/watch?v=qJ21Vf0eHzg">	FlowEdit Image Editing (One-Click Text Modification)	</a>,
-	<a href="https://github.com/logtd/ComfyUI-Fluxtapoz">	https://github.com/logtd/ComfyUI-Fluxtapoz	</a>,
+	<a href="https://github.com/logtd/ComfyUI-Fluxtapoz">		ComfyUI-Fluxtapoz	</a>,
 	<a href="https://www.youtube.com/watch?v=s04W4tIyyKU">	FlowEdit Video Editing (No Masks, No Noise)	</a>,
 	<a href="https://github.com/logtd/ComfyUI-LTXTricks">	logtd/ComfyUI-LTXTricks	</a>,
 	<a href="https://github.com/logtd/ComfyUI-HunyuanLoom">	logtd/ComfyUI-HunyuanLoom	</a>,
@@ -1700,13 +1855,6 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 
 <li/>	<a href="https://github.com/MVIG-SJTU/AlphaPose">	AlphaPose (out-dated)	</a>
 
-<li/> <a href="https://github.com/DepthAnything/Depth-Anything-V2">		GitHub - Depth-Anything-V2	</a>,
-	<a href="https://huggingface.co/spaces/depth-anything/Depth-Anything-V2">		HuggingFace - Demo	</a>
-
-<li/> <a href="https://huggingface.co/apple/DepthPro">	Appple DepthPro	</a>,
-	<a href="https://github.com/spacepxl/ComfyUI-Depth-Pro">	ComfyUI-Depth-Pro	</a>,
-	<a href="https://openart.ai/workflows/ailab/depthflow-with-comfyui-depth-pro/4TQF8VyJgkCY4RuHYA79">	depthflow-with-comfyui-depth-pro	</a>
-
 <li/> <a href="https://github.com/Fannovel16/comfyui_controlnet_aux">	comfyui_controlnet_aux-Midas, Zoe Depth	</a>,
 	<a href="https://github.com/kijai/ComfyUI-Marigold">	ComfyUI-Marigold	</a>
 
@@ -1731,14 +1879,12 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://github.com/TMElyralab/Comfyui-MusePose">	TMElyralab/Comfyui-MusePose	</a>,
 	<a href="https://github.com/logtd/ComfyUI-4DHumans">	logtd/ComfyUI-4DHumans	</a>
 
-<li/>	<a href="https://articulate-anything.github.io/">	Articulate-Anything - Automatic Modeling of Articulated Objects	</a>
 
 <li/>	GeoWizard <a href="https://huggingface.co/spaces/lemonaddie/geowizard">	GeoWizard 2D->3D	</a>,
 	<a href="https://github.com/fuxiao0719/GeoWizard">	GitHub - fuxiao0719/GeoWizard	</a>,
 	<a href="https://github.com/kijai/ComfyUI-Geowizard">	kijai/ComfyUI-Geowizard	</a>
 
-<li/>	<a href="https://depth-anything-v2.github.io/">	Depth Anything v2	</a>, 
-	<a href="https://huggingface.co/spaces/depth-anything/Depth-Anything-V2">	spaces/depth-anything - demo	</a>
+
 
 <li/>	<a href="https://github.com/Westlake-AGI-Lab/Distill-Any-Depth">	Distill Any Depth: Distillation Creates a Stronger Monocular Depth Estimator	</a>
 
@@ -1747,10 +1893,9 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 
 <li/>	<a href="https://francis-rings.github.io/StableAnimator/">	StableAnimator: High-Quality Identity-Preserving Human Image Animation	</a>
 
-
 </ol>
 <hr><!----------------------------------------------------------->
-<h3 name="tag3D">	3D - 2D to 3D Monocular / NERF / Gaussian Splatting / Multi-view	</h3>
+<h3 id="tag3D">	3D - 2D to 3D Monocular / NERF / Gaussian Splatting / Multi-view	</h3>
 <li/> Keyword:
 	<a href="https://github.com/longxiang-ai/awesome-gaussians">		Github - awesome-gaussians	</a>,
 	<a href="https://github.com/MrNeRF/awesome-3D-gaussian-splatting">	Github - awesome-3D-gaussian-splatting	</a><br/><ol start=1 type=1>
@@ -1758,6 +1903,8 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 <li/>	AllenAI	<a href="https://objaverse.allenai.org/">	Objaverse-XL - A Universe of 10M+ 3D Objects	</a>
 
 <li/>	<a href="https://sunshinewyc.github.io/BlockGaussian/">	BlockGaussian	</a>
+
+<li/>	ByteDance	<a href="https://seed.bytedance.com/en/seed3d">	Seed3D	</a>
 
 <li/>	CityGaussian <a href="https://github.com/Linketic/CityGaussian">	CityGaussianV2: Efficient and Geometrically Accurate Reconstruction for Large-Scale Scenes	</a>,
 	<a href="https://dekuliutesla.github.io/citygs/">	GitHub - citygs	</a>, 
@@ -1769,15 +1916,19 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 
 <li/>	<a href="https://elevate3d.pages.dev/">	Elevate3D:  Elevating 3D Models: High-Quality Texture and Geometry Refinement from a Low-Quality Model </a>
 
-
 <li/>	<a href="https://rogermm14.github.io/eonerf/"> EO-NeRF - Multi-Date Earth Observation NeRF - The Detail Is in the Shadows	</a>, 
 	<a href="https://mezzelfo.github.io/EOGS/">	EOGS - Gaussian Splatting for Efficient Satellite Image Photogrammetry	</a>, 
 	<a href="https://arxiv.org/abs/2412.13047">	EOGS Paper	</a>
+
+<li/>	<a href="https://zju3dv.github.io/free360/">	Free 360 : Layered Gaussian Splatting for Unbounded 360-Degree View Synthesis from Extremely Sparse and Unposed Views	</a>
 
 <li/>	Geo4D <a href="https://geo4d.github.io/">	Geo4D: Leveraging Video Generators for Geometric 4D Scene Reconstruction	</a>, 
 	<a href="https://github.com/jzr99/Geo4D">	jzr99/Geo4D	</a>
 
 <li/>	Google <a href="https://deepmind.google/discover/blog/genie-2-a-large-scale-foundation-world-model/" title="Generates diverse training environments for embodied agents. From a single image prompt, it creates playable virtual worlds controllable via keyboard and mouse usable by both humans and AI systems.">	Google Genie2: Generative Interactive Environments	</a>
+
+<li id="mark"/>
+	<a href="https://eastbeanzhang.github.io/GUAVA/">	GUAVA: Generalizable Upper Body 3D Gaussian Avatar	</a>
 
 <li/>	<a href="https://vast-ai-research.github.io/HoloPart/">	HoloPart: Generative 3D Part Amodal Segmentation	</a>,
 	<a href="https://huggingface.co/spaces/VAST-AI/HoloPart">	HoloPart demo	</a>, 
@@ -1798,7 +1949,9 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 
 <li/>	Meta - Multi-SpatialMLLM
 	<a href="https://runsenxu.com/projects/Multi-SpatialMLLM/">	Multi-SpatialMLLM: Multi-Frame Spatial Understanding with Multi-Modal Large Language Models	</a>, 
-	<a href="https://www.amirbar.net/nwm/">	Navigation World Models		</a>
+	<a href="https://www.amirbar.net/nwm/">	Navigation World Models		</a>, 
+	<a href="https://map-anything.github.io/">	MapAnything: Universal Feed-Forward Metric 3D Reconstruction	</a>, 
+	<a href="https://huggingface.co/spaces/facebook/map-anything">	facebook/map-anything		</a>
 
 <li/>	<a href="https://blog.dynamicslab.ai/">	Mirage 2 - Generative World Engines	</a>,
 	<a href="https://demo.dynamicslab.ai/chaos">	Mirage 2 - Demo	</a>,
@@ -1811,6 +1964,9 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 	<a href="https://huggingface.co/collections/huanngzh/mv-adapter-spaces-677e497578747fd734a1b999">	MVAdapter-demo	</a>, 
 	<a href="https://arxiv.org/abs/2412.03632">	Paper 	</a>
 
+<li/>	<a href="https://nerfies.github.io/">	Nerfies: Deformable Neural Radiance Fields	</a>
+
+<li/>	<a href="https://hypernerf.github.io/">	HyperNerf : A Higher-Dimensional Representation for Topologically Varying Neural Radiance Fields	</a>
 
 <li/>	Nvidia <a href="https://huggingface.co/papers/2501.03575" title="1) Cosmos-Predict1 simulates how the visual world evolves over time, learning physical world dynamics from video clips; 2) Cosmos-Transfer1 allows to guide world generation using multiple spatial control signals: segmentation, depth, edge maps, blurred visual inputs, etc.; 3) Cosmos-Reason1 reasons about what is happening, what will happen next, and what actions are feasible.">	 Cosmos World Foundation Models	</a>
 
@@ -1822,6 +1978,10 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 
 <li/>	<a href="https://silent-chen.github.io/PartGen/">	PartGen - Part-level 3D Generation and Reconstruction	</a>
 
+<li/>	<a href="https://panowan.variantconst.com/">	PanoWan: Lifting Diffusion Video Generation Models to 360° with Latitude/Longitude-aware Mechanisms	</a>
+
+<li/>	<a href="https://playerone-hku.github.io/">	PlayerOne: Egocentric World Simulator	</a>
+
 <li/>	<a href="https://manycore-research.github.io/SpatialLM/">	SpatialLM: Large Language Model for Spatial Understanding (No COmfyUI)	</a>, 
 	<a href="https://github.com/manycore-research/SpatialLM">	manycore-research/SpatialLM	</a>,
 	<a href="https://huggingface.co/manycore-research">	manycore research	</a>
@@ -1829,40 +1989,44 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 
 <li/>	<a href="https://jamesyjl.github.io/ShapeLLM/">		ShapeLLM-Omni: A Native Multimodal LLM for 3D Generation and Understanding	</a>
 
+<li/>	<a href="https://arxiv.org/html/2508.09479v1">	SkySplat: Generalizable 3D Gaussian Splatting from Multi-Temporal Sparse Satellite Images	</a>
+
+<li/>	SkyWorld.AI	
+	<a href="https://matrix-3d.github.io/">	Matrix-3D: Omnidirectional Explorable 3D World Generation	</a>
+	<a href="https://matrix-game-v2.github.io/">	Matrix-Game 2.0: An Open-Source, Real-Time, and Streaming Interactive World Model	</a>
+
 <li/>	Stable-X
 	<a href="https://github.com/Stable-X/Hi3DGen">	Hi3DGen: High-fidelity 3D Geometry Generation from Images via Normal Bridging (no textures)	</a>,
 	<a href="https://huggingface.co/spaces/Stable-X/Hi3DGen">	Stable-X/Hi3DGen demo	</a>, 
 	<a href="https://github.com/Stable-X/ComfyUI-Hi3DGen">	Stable-X/ComfyUI-Hi3DGen	</a>,
 	<a href="https://openart.ai/workflows/t8star/hi-3dgen3d/FLKrkPWPiwNO5W0RYl8F">	t8star/hi-3dgen3d	</a>
 
-<li/>	<a href="https://panowan.variantconst.com/">	PanoWan: Lifting Diffusion Video Generation Models to 360° with Latitude/Longitude-aware Mechanisms	</a>
-
-<li/>	<a href="https://playerone-hku.github.io/">	PlayerOne: Egocentric World Simulator	</a>
-
 <li/>	<a href="https://github.com/lizhihao6/Sparc3D">	Sparc3D: Sparse Representation and Construction for High-Resolution 3D Shapes Modeling	</a>, 
 	<a href="https://huggingface.co/spaces/ilcve21/Sparc3D">	ilcve21/Sparc3D	</a>
-
-<li/>	SkyWorld.AI	
-	<a href="https://matrix-3d.github.io/">	Matrix-3D: Omnidirectional Explorable 3D World Generation	</a>
-	<a href="https://matrix-game-v2.github.io/">	Matrix-Game 2.0: An Open-Source, Real-Time, and Streaming Interactive World Model	</a>
-
 
 <li/>	SynCity <a href="https://research.paulengstler.com/syncity/">	SynCity: Training-Free Generation of 3D Worlds	</a>,
 	<a href="https://arxiv.org/abs/2503.16420">	Paper	</a>
 
-<li/>	TenCent <a href="https://3d-models.hunyuan.tencent.com/world/">	HunyuanWorld 1.0	</a>	,
+<li/>	TenCent 
+	<a href="https://3d-models.hunyuan.tencent.com/world/">	HunyuanWorld 1.0	</a>	,
 	<a href="https://github.com/Tencent-Hunyuan/HunyuanWorld-1.0">	Tencent-Hunyuan/HunyuanWorld-1.0	</a>, 
 	<a href="https://huggingface.co/tencent/HunyuanWorld-1">	tencent/HunyuanWorld-1	</a>, 
-	<a href="https://hunyuan-gamecraft.github.io/">		GameCraft: High-dynamic Interactive Game Video Generation with Hybrid History Condition	</a>
+	<a href="https://hunyuan-gamecraft.github.io/">		GameCraft: High-dynamic Interactive Game Video Generation with Hybrid History Condition	</a>, 
+	<a href="https://3d-models.hunyuan.tencent.com/world/">	HunyuanWorld-Voyager	</a>, 
+	<a href="https://github.com/Tencent-Hunyuan/HunyuanWorld-Voyager">	HunyuanWorld-Voyager:  depth and RGB video for efficient and direct 3D reconstruction	</a>, 
+	<a href="https://github.com/Tencent-Hunyuan/HunyuanWorld-Mirror">	Hunyuan World Reconstruction	</a>
+	</a>
 
-<li/>	<mark>
+<li/>	<a href="https://aim-uofa.github.io/Tinker/">	Tinker: Diffusion's Gift to 3D--Multi-View Consistent Editing From Sparse Inputs without Per-Scene Optimization		</a>
+
+<li/>	
 	Trellis3D <a href="https://trellis3d.github.io/">	Trellis3d - Structured 3D Latents - for Scalable and Versatile 3D Generation	</a>,
 	<a href="https://huggingface.co/spaces/JeffreyXiang/TRELLIS">	Trellis demo	</a>,
 	<a href="https://github.com/smthemex/ComfyUI_TRELLIS">	smthemex/ComfyUI_TRELLIS	</a>,
 	<a href="https://github.com/if-ai/ComfyUI-IF_Trellis">	if-ai/ComfyUI-IF_Trellis	</a>,
 	<a href="https://github.com/microsoft/TRELLIS">	microsoft/TRELLIS	</a>
 	<a href="https://www.youtube.com/watch?v=-vEpuYL9I3g">	YouTube	</a>
-	</mark>
+
 
 <li/>	<a href="https://github.com/lpiccinelli-eth/UniK3D">	UniK3D: Universal Camera Monocular 3D Estimation	</a>, 
 	<a href="https://huggingface.co/spaces/lpiccinelli/UniK3D-demo">	UniK3D-demo	</a>
@@ -1874,36 +2038,31 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 
 <li/>	<a href="https://github.com/kyle8581/WMA-Agents">	Web Agents with World Models: Learning and Leveraging Environment Dynamics in Web Navigation	</a>
 
+<li/>	<a href="https://lizizun.github.io/WinT3R.github.io/">		WinT3R: Window-Based Streaming Reconstruction with Camera Token Pool	</a>
+
 <li/>	<a href="https://www.worldlabs.ai/blog">	WorldLabs.AI (Li FeiFei)	</a>
 
 <li/>	<a href="https://greatx3.github.io/Yan/">		Yan: Foundational Interactive Video Generation	</a>	
 
 <li/>	<a href="https://stdstu12.github.io/YUME-Project/">	YUME: An Interactive World Generation Model	</a>
 
+<li/>	<a href="https://eric-ai-lab.github.io/3dtown.github.io/">	3DTown: Constructing a 3D Town from a Single Image	</a>
 
-<li/>	<mark>
-	<a href="https://eric-ai-lab.github.io/3dtown.github.io/">	3DTown: Constructing a 3D Town from a Single Image	</a>
-	</mark>
-
-<li/>	<mark>
+<li/>	
 	HunYuan 3D <a href="https://www.hunyuan-3d.com/">	hunyuan-3d	</a>, 
 	<a href="https://github.com/Tencent/Hunyuan3D-2">	Tencent/Hunyuan3D-2	</a>, 
 	<a href="https://github.com/MrForExample/ComfyUI-3D-Pack">	MrForExample/ComfyUI-3D-Pack	</a>, 
 	<a href="https://github.com/niknah/ComfyUI-Hunyuan-3D-2">	niknah/ComfyUI-Hunyuan-3D-2	</a>
-	</mark>
+	
 
-
-
-<li/>	<mark>
-	Vast.AI <a href="https://github.com/VAST-AI-Research/TripoSG">	Github - TripoSG	</a>
-	</mark>
+<li/>	Vast.AI <a href="https://github.com/VAST-AI-Research/TripoSG">	Github - TripoSG	</a>
 
 <li/>	<a href="https://huanngzh.github.io/VoxHammer-Page/">	VoxHammer: Training-Free Precise and Coherent 3D Editing in Native 3D Space	</a>
 
-
 </ol>
+<markRED>
 <hr><!----------------------------------------------------------->
-<h3 name="tagAgent">	Agents	</h3>
+<h3 id="tagAgent">	Agents	</h3>
 <li/> Keyword:
 	<a href="https://github.com/AGI-Edgerunners/LLM-Agents-Papers">		Github - LLM-Agents-Papers	</a>,
 	<a href="https://scholar.google.com/citations?user=jW5e3jkAAAAJ&hl=en">	Google Scholar	</a>,
@@ -1915,8 +2074,7 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 <li/>	<a href="https://agentsociety.readthedocs.io/en/latest/">	AgentSociety: LLM Agents in City		</a>,
 	<a href="https://github.com/tsinghua-fib-lab/AgentSociety">	tsinghua-fib-lab/AgentSociety	</a>
 
-<li/>	
-	<a href="https://arxiv.org/html/2501.13554v3">	One-Prompt-One-Story: Free-Lunch Consistent Text-to-Image Generation Using a Single Prompt	</a>
+<li/>	<a href="https://arxiv.org/html/2501.13554v3">	One-Prompt-One-Story: Free-Lunch Consistent Text-to-Image Generation Using a Single Prompt	</a>
 	<a href="https://byliutao.github.io/1Prompt1Story.github.io/">	1Prompt1Story	</a>,
 	<a href="https://github.com/byliutao/1Prompt1Story">		byliutao/1Prompt1Story	</a>
 
@@ -1930,20 +2088,53 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 <li/>	<a href="https://github.com/ljcleo/agent_sense">	AgentSense: Benchmarking Social Intelligence of Language Agents through Interactive Scenarios	</a>, 
 	<a href="https://arxiv.org/abs/2410.19346">	Paper	</a>
 
-
 <li/>	<a href="https://github.com/AIPress-Web/AIPress-code">	AIPress: A Muti-Agent News Generation and Feedback Simulation System	</a>,
 	<a href="https://arxiv.org/abs/2410.07561">	Paper	</a>
 
+<li/>	Microsoft <a href="https://huggingface.co/microsoft/UserLM-8b">	UserLM-8B: Flipping the Dialogue: Training and Evaluating User Language Models	</a>, 
+	<a href="https://github.com/microsoft/TinyTroupe">	TinyTroupe:	LLM-powered multiagent persona simulation for imagination enhancement and business insights	</a>
+
 <li/>	n8n <a href="https://www.youtube.com/watch?v=Jtc6b1P40fc">	n8n + comfyUI API: Batch Convert Images to Video	</a>, 
 	<a href="https://www.youtube.com/watch?v=wqwZoIPq0Jw">	n8n + comfyUI API: Simple	</a>
+
+<li/>	Nvidia <a href="https://huggingface.co/datasets/nvidia/Nemotron-Personas">	Nemotron-Personas (US)	</a>, 
+	<a href="https://huggingface.co/datasets/nvidia/Nemotron-Personas-India">		Nemotron-Personas (India)	</a>, 
+	<a href="https://huggingface.co/datasets/nvidia/Nemotron-Personas-Japan">		Nemotron-Personas (Japan)	</a>
 
 <li/>	<a href="https://github.com/xxyQwQ/ComfyBench">	ComfyBench: Benchmarking LLM-based Agents in ComfyUI for Autonomously Designing Collaborative AI Systems	</a>
 
 <li/>	<a href="https://arxiv.org/html/2506.09790v1">	ComfyUI-R1: Exploring Reasoning Models for Workflow Generation	</a>
 
+
 </ol>
+</markRED>
 <hr><!----------------------------------------------------------->
-<h3 name="tagLighting">	Lighting	</h3>
+<h3 id="tagData">	Datasets	</h3>
+<markRED>
+<ol>
+<li/>	<a href="https://c8241998.github.io/HumanRig/">	HumanRig - Learning Automatic Rigging for Humanoid Character in a Large Scale Dataset	</a>
+
+<li/>	<a href="https://huggingface.co/datasets/kubernetes-bad/CivitAI-As-Characters">	CivitAI-As-Characters	</a>
+
+<li/>	<a href="https://huggingface.co/spaces/HuggingFaceM4/FineVision">	FineVision: Open Data Is All You Need	</a> 200 datasets containing 17M images, 89M question-answer turns, and 10B answer tokens, totaling 5TB of high-quality data
+
+<li/>	<a href="https://huggingface.co/spaces/mesolitica/Malay-VITS ">	Malay Speech Dataset	</a>
+<li/>	<a href="https://github.com/Yuan-ManX/ai-audio-datasets">	Yuan-ManX/ai-audio-datasets 	</a>
+
+<li/>	Data <a href="https://www.artelingo.org/">	No Culture Left Behind: ArtELingo-28, a Benchmark of WikiArt with Captions in 28 Languages	</a>
+
+<li/>	Data <a href="https://blog.eleuther.ai/common-pile/">	Common Pile v0.1	</a>
+
+<li/>	Nvidia <a href="https://blogs.nvidia.com/blog/speech-ai-dataset-models/">	Granary - Multilingual Speech AI		</a>
+
+
+<li/>	<a href="https://huggingface.co/datasets/FudanCVL/MOSEv2">	MOSEv2: A More Challenging Dataset for Video Object Segmentation in Complex Scenes	</a>
+
+
+</ol>
+</markRED>
+<hr><!----------------------------------------------------------->
+<h3 id="tagLighting">	Lighting	</h3>
 <li/> Keyword:
 	<a href="https://civitai.com/search/models?sortBy=models_v9&query=lighting">			CivitAI - lighting	</a>,
 	<a href="https://openart.ai/workflows/all?keyword=lighting">		openart- lighting	</a><br/><ol start=1 type=1>
@@ -1971,7 +2162,6 @@ https://github.com/HelloVision/ComfyUI_HelloMeme
 
 </tr>
 </table>
-
 
 
 </body>
