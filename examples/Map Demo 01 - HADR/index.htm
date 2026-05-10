@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SENTINEL · HADR Satellite Monitoring System</title>
+  <meta name="description" content="Map-centric satellite monitoring platform for Humanitarian Assistance and Disaster Relief operations with pattern-of-life, predictive, and prescriptive analytics." />
+
+  <!-- Fonts -->
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&f[]=cabinet-grotesk@500,700,800&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Leaflet Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER / TOP BAR
+============================================================ -->
+<header class="top-bar" id="topBar">
+  <!-- Logo -->
+  <div class="logo-area">
+    <svg class="logo-mark" viewBox="0 0 32 32" fill="none" aria-label="Sentinel logo" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="16" r="14" stroke="var(--accent)" stroke-width="1.5"/>
+      <circle cx="16" cy="16" r="6" fill="var(--accent)" opacity="0.2"/>
+      <circle cx="16" cy="16" r="2.5" fill="var(--accent)"/>
+      <line x1="16" y1="2" x2="16" y2="8" stroke="var(--accent)" stroke-width="1.5"/>
+      <line x1="16" y1="24" x2="16" y2="30" stroke="var(--accent)" stroke-width="1.5"/>
+      <line x1="2" y1="16" x2="8" y2="16" stroke="var(--accent)" stroke-width="1.5"/>
+      <line x1="24" y1="16" x2="30" y2="16" stroke="var(--accent)" stroke-width="1.5"/>
+      <circle cx="24" cy="8" r="2" fill="var(--accent-warm)"/>
+      <circle cx="8" cy="8" r="1.5" stroke="var(--accent)" stroke-width="1"/>
+    </svg>
+    <div class="logo-text">
+      <span class="logo-name">SENTINEL</span>
+      <span class="logo-sub">HADR · SAT MONITOR</span>
+    </div>
+  </div>
+
+  <!-- Mission Status Bar -->
+  <div class="mission-bar">
+    <div class="mission-item active">
+      <span class="dot dot-green pulse"></span>
+      <span class="label">OPS ACTIVE</span>
+    </div>
+    <div class="sep"></div>
+    <div class="mission-item">
+      <span class="label muted">OPERATION</span>
+      <span class="value">BLUE SHIELD 24</span>
+    </div>
+    <div class="sep"></div>
+    <div class="mission-item">
+      <span class="label muted">AOI</span>
+      <span class="value">SE ASIA · INDO-PACIFIC</span>
+    </div>
+    <div class="sep"></div>
+    <div class="mission-item" id="missionClock">
+      <span class="label muted">ZULU</span>
+      <span class="value mono" id="clockDisplay">00:00:00Z</span>
+    </div>
+    <div class="sep"></div>
+    <div class="mission-item">
+      <span class="label muted">SAT FEEDS</span>
+      <span class="value">
+        <span class="dot dot-green"></span> 7 LIVE
+      </span>
+    </div>
+    <div class="sep"></div>
+    <div class="mission-item">
+      <span class="label muted">ALERTS</span>
+      <span class="value alert-badge">4 CRITICAL</span>
+    </div>
+  </div>
+
+  <!-- Right controls -->
+  <div class="top-controls">
+    <div class="search-box">
+      <i data-lucide="search" class="icon-sm"></i>
+      <input type="text" placeholder="Search area, event, asset…" id="globalSearch" />
+    </div>
+    <button class="icon-btn" title="Notifications" data-testid="btn-notifications">
+      <i data-lucide="bell" class="icon-sm"></i>
+      <span class="notif-badge">4</span>
+    </button>
+    <button class="icon-btn" title="Settings" data-testid="btn-settings">
+      <i data-lucide="settings" class="icon-sm"></i>
+    </button>
+    <button class="icon-btn" data-theme-toggle title="Toggle theme" aria-label="Switch to light mode" data-testid="btn-theme">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+    </button>
+    <div class="user-chip">
+      <div class="user-avatar">JA</div>
+      <span class="user-name">J. ANALYST</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     MAIN LAYOUT
+============================================================ -->
+<div class="app-layout">
+
+  <!-- ===== LEFT SIDEBAR ===== -->
+  <aside class="sidebar-left" id="sidebarLeft">
+    
+    <!-- LAYERS CONTROL -->
+    <div class="panel-section">
+      <div class="panel-header">
+        <i data-lucide="layers" class="icon-xs"></i>
+        <span>MAP LAYERS</span>
+        <button class="collapse-btn" data-collapse="layers" data-testid="btn-collapse-layers"><i data-lucide="chevron-down" class="icon-xs"></i></button>
+      </div>
+      <div class="panel-body" id="layers-body">
+        <div class="layer-group">
+          <div class="layer-group-title">SATELLITE</div>
+          <label class="layer-toggle active">
+            <input type="checkbox" checked data-layer="sat-optical" /> Optical Imagery
+            <span class="layer-badge sat">SAT</span>
+          </label>
+          <label class="layer-toggle">
+            <input type="checkbox" data-layer="sar" /> SAR / Radar
+            <span class="layer-badge sar">SAR</span>
+          </label>
+          <label class="layer-toggle">
+            <input type="checkbox" data-layer="multispectral" /> Multispectral
+            <span class="layer-badge ms">MS</span>
+          </label>
+        </div>
+        <div class="layer-group">
+          <div class="layer-group-title">AI-DERIVED</div>
+          <label class="layer-toggle active">
+            <input type="checkbox" checked data-layer="alpha-earth" />
+            <span class="ai-dot alpha"></span> AlphaEarth Change
+          </label>
+          <label class="layer-toggle active">
+            <input type="checkbox" checked data-layer="earth2-wx" />
+            <span class="ai-dot earth2"></span> Earth-2 Weather
+          </label>
+          <label class="layer-toggle">
+            <input type="checkbox" data-layer="flood-mask" /> Flood Extent Mask
+          </label>
+          <label class="layer-toggle">
+            <input type="checkbox" data-layer="dmg-assess" /> Damage Assessment
+          </label>
+        </div>
+        <div class="layer-group">
+          <div class="layer-group-title">ANALYTICS</div>
+          <label class="layer-toggle active">
+            <input type="checkbox" checked data-layer="pol-heatmap" /> Pattern-of-Life HM
+          </label>
+          <label class="layer-toggle">
+            <input type="checkbox" data-layer="predictive-zones" /> Predictive Risk Zones
+          </label>
+          <label class="layer-toggle">
+            <input type="checkbox" data-layer="aid-routes" /> Aid Route Network
+          </label>
+          <label class="layer-toggle active">
+            <input type="checkbox" checked data-layer="asset-tracks" /> Asset Tracks
+          </label>
+        </div>
+        <div class="layer-group">
+          <div class="layer-group-title">REFERENCE</div>
+          <label class="layer-toggle active">
+            <input type="checkbox" checked data-layer="admin-bounds" /> Admin Boundaries
+          </label>
+          <label class="layer-toggle">
+            <input type="checkbox" data-layer="pop-density" /> Population Density
+          </label>
+          <label class="layer-toggle">
+            <input type="checkbox" data-layer="infrastructure" /> Critical Infrastructure
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTIVE EVENTS -->
+    <div class="panel-section">
+      <div class="panel-header">
+        <i data-lucide="alert-triangle" class="icon-xs"></i>
+        <span>ACTIVE EVENTS</span>
+        <span class="count-badge">7</span>
+        <button class="collapse-btn" data-collapse="events" data-testid="btn-collapse-events"><i data-lucide="chevron-down" class="icon-xs"></i></button>
+      </div>
+      <div class="panel-body" id="events-body">
+        <div id="eventList" class="event-list">
+          <!-- populated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ASSETS -->
+    <div class="panel-section">
+      <div class="panel-header">
+        <i data-lucide="satellite" class="icon-xs"></i>
+        <span>SAT ASSETS</span>
+        <span class="count-badge green">7 LIVE</span>
+        <button class="collapse-btn" data-collapse="assets" data-testid="btn-collapse-assets"><i data-lucide="chevron-down" class="icon-xs"></i></button>
+      </div>
+      <div class="panel-body" id="assets-body">
+        <div id="assetList" class="asset-list">
+          <!-- populated by JS -->
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ===== MAP AREA ===== -->
+  <main class="map-area" id="mapArea">
+    <div id="map"></div>
+
+    <!-- Map overlay controls -->
+    <div class="map-overlay-controls">
+      <button class="map-ctrl-btn active" data-view="2d" title="2D View" data-testid="btn-view-2d">2D</button>
+      <button class="map-ctrl-btn" data-view="3d" title="3D Globe" data-testid="btn-view-3d">3D</button>
+      <div class="ctrl-sep"></div>
+      <button class="map-ctrl-btn" id="btnZoomIn" title="Zoom In" data-testid="btn-zoom-in"><i data-lucide="plus" class="icon-xs"></i></button>
+      <button class="map-ctrl-btn" id="btnZoomOut" title="Zoom Out" data-testid="btn-zoom-out"><i data-lucide="minus" class="icon-xs"></i></button>
+      <div class="ctrl-sep"></div>
+      <button class="map-ctrl-btn" id="btnHome" title="Reset View" data-testid="btn-home"><i data-lucide="home" class="icon-xs"></i></button>
+      <button class="map-ctrl-btn" id="btnMeasure" title="Measure Tool" data-testid="btn-measure"><i data-lucide="ruler" class="icon-xs"></i></button>
+      <button class="map-ctrl-btn" id="btnDraw" title="Draw AOI" data-testid="btn-draw"><i data-lucide="pentagon" class="icon-xs"></i></button>
+    </div>
+
+    <!-- Basemap selector -->
+    <div class="basemap-selector">
+      <button class="bm-btn active" data-basemap="dark" data-testid="btn-bm-dark">DARK</button>
+      <button class="bm-btn" data-basemap="satellite" data-testid="btn-bm-sat">SAT</button>
+      <button class="bm-btn" data-basemap="topo" data-testid="btn-bm-topo">TOPO</button>
+    </div>
+
+    <!-- Timeline scrubber -->
+    <div class="timeline-bar">
+      <div class="timeline-header">
+        <i data-lucide="clock" class="icon-xs"></i>
+        <span class="mono">TEMPORAL VIEW</span>
+        <div class="tl-controls">
+          <button class="tl-btn" id="btnPlayback" data-testid="btn-playback"><i data-lucide="play" class="icon-xs"></i></button>
+          <button class="tl-btn" data-testid="btn-tl-faster"><i data-lucide="fast-forward" class="icon-xs"></i></button>
+        </div>
+        <span class="tl-current mono" id="tlDate">2026-04-19 · 09:00Z</span>
+      </div>
+      <div class="timeline-track">
+        <input type="range" min="0" max="100" value="70" class="tl-slider" id="timelineSlider" data-testid="input-timeline" />
+        <div class="tl-labels">
+          <span>-72h</span><span>-48h</span><span>-24h</span><span>NOW</span>
+        </div>
+        <div class="tl-events-track" id="tlEventsTrack">
+          <!-- event ticks drawn by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Event popup (appears on marker click) -->
+    <div class="event-popup hidden" id="eventPopup">
+      <div class="ep-header">
+        <span class="ep-type" id="epType">FLOOD EVENT</span>
+        <span class="ep-sev" id="epSev">CRITICAL</span>
+        <button class="ep-close" id="epClose" data-testid="btn-ep-close"><i data-lucide="x" class="icon-xs"></i></button>
+      </div>
+      <div class="ep-body">
+        <div class="ep-field"><span>Location</span><span id="epLoc">—</span></div>
+        <div class="ep-field"><span>Detected</span><span id="epTime">—</span></div>
+        <div class="ep-field"><span>Confidence</span><span id="epConf">—</span></div>
+        <div class="ep-field"><span>Affected Pop.</span><span id="epPop">—</span></div>
+        <div class="ep-field"><span>Source</span><span id="epSrc">—</span></div>
+      </div>
+      <div class="ep-actions">
+        <button class="ep-btn primary" data-testid="btn-ep-analyze">Analyze</button>
+        <button class="ep-btn" data-testid="btn-ep-report">Report</button>
+        <button class="ep-btn" data-testid="btn-ep-task">Task Asset</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ===== RIGHT PANEL ===== -->
+  <aside class="sidebar-right" id="sidebarRight">
+
+    <!-- TABS -->
+    <div class="right-tabs">
+      <button class="rtab active" data-tab="analytics" data-testid="tab-analytics">ANALYTICS</button>
+      <button class="rtab" data-tab="genai" data-testid="tab-genai">GenAI</button>
+      <button class="rtab" data-tab="tasking" data-testid="tab-tasking">TASKING</button>
+    </div>
+
+    <!-- ===== ANALYTICS TAB ===== -->
+    <div class="rtab-content active" id="tab-analytics">
+
+      <!-- Pattern of Life -->
+      <div class="panel-section">
+        <div class="panel-header">
+          <i data-lucide="activity" class="icon-xs"></i>
+          <span>PATTERN OF LIFE</span>
+          <span class="status-chip">LIVE</span>
+        </div>
+        <div class="panel-body">
+          <div class="pol-row">
+            <div class="pol-metric">
+              <span class="pm-value green">NORMAL</span>
+              <span class="pm-label">POPULATION MOVEMENT</span>
+            </div>
+            <div class="pol-metric">
+              <span class="pm-value orange">ELEVATED</span>
+              <span class="pm-label">VEHICLE ACTIVITY</span>
+            </div>
+            <div class="pol-metric">
+              <span class="pm-value red">ANOMALY</span>
+              <span class="pm-label">MARITIME TRAFFIC</span>
+            </div>
+          </div>
+          <div class="chart-area">
+            <div class="chart-label">72H Activity Baseline vs. Observed</div>
+            <canvas id="polChart" height="90"></canvas>
+          </div>
+          <div class="anomaly-list">
+            <div class="anomaly-item critical">
+              <span class="dot dot-red pulse"></span>
+              <div class="ai-text">
+                <strong>Displacement surge detected</strong>
+                <span>Luzon coast · +340% above baseline · 2h ago</span>
+              </div>
+              <button class="ai-btn" data-testid="btn-anomaly-1">→</button>
+            </div>
+            <div class="anomaly-item warn">
+              <span class="dot dot-orange"></span>
+              <div class="ai-text">
+                <strong>Port traffic anomaly</strong>
+                <span>Manila Bay · Vessel clustering · 5h ago</span>
+              </div>
+              <button class="ai-btn" data-testid="btn-anomaly-2">→</button>
+            </div>
+            <div class="anomaly-item info">
+              <span class="dot dot-blue"></span>
+              <div class="ai-text">
+                <strong>Road network flow change</strong>
+                <span>Highway 54 · Relief convoy movement · 1h ago</span>
+              </div>
+              <button class="ai-btn" data-testid="btn-anomaly-3">→</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Predictive Analytics -->
+      <div class="panel-section">
+        <div class="panel-header">
+          <i data-lucide="trending-up" class="icon-xs"></i>
+          <span>PREDICTIVE ANALYTICS</span>
+          <span class="horizon-chip">+72H</span>
+        </div>
+        <div class="panel-body">
+          <div class="predict-grid">
+            <div class="predict-card risk-high">
+              <div class="pc-icon"><i data-lucide="cloud-rain" class="icon-sm"></i></div>
+              <div class="pc-body">
+                <span class="pc-title">Secondary Flooding</span>
+                <span class="pc-prob">87%</span>
+                <span class="pc-loc">Mindanao interior · +18h</span>
+              </div>
+              <div class="pc-bar"><div class="pc-fill" style="width:87%"></div></div>
+            </div>
+            <div class="predict-card risk-med">
+              <div class="pc-icon"><i data-lucide="wind" class="icon-sm"></i></div>
+              <div class="pc-body">
+                <span class="pc-title">Typhoon Landfall</span>
+                <span class="pc-prob">62%</span>
+                <span class="pc-loc">East Visayas · +36h</span>
+              </div>
+              <div class="pc-bar"><div class="pc-fill" style="width:62%"></div></div>
+            </div>
+            <div class="predict-card risk-low">
+              <div class="pc-icon"><i data-lucide="users" class="icon-sm"></i></div>
+              <div class="pc-body">
+                <span class="pc-title">Displacement Wave</span>
+                <span class="pc-prob">45%</span>
+                <span class="pc-loc">3 provinces · +48h</span>
+              </div>
+              <div class="pc-bar"><div class="pc-fill" style="width:45%"></div></div>
+            </div>
+            <div class="predict-card risk-high">
+              <div class="pc-icon"><i data-lucide="zap" class="icon-sm"></i></div>
+              <div class="pc-body">
+                <span class="pc-title">Infrastructure Failure</span>
+                <span class="pc-prob">78%</span>
+                <span class="pc-loc">Power grid · +24h</span>
+              </div>
+              <div class="pc-bar"><div class="pc-fill" style="width:78%"></div></div>
+            </div>
+          </div>
+          <div class="chart-area" style="margin-top:10px">
+            <div class="chart-label">Composite Risk Score Forecast (72h)</div>
+            <canvas id="predictChart" height="75"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prescriptive Analytics -->
+      <div class="panel-section">
+        <div class="panel-header">
+          <i data-lucide="clipboard-check" class="icon-xs"></i>
+          <span>PRESCRIPTIVE</span>
+          <span class="status-chip amber">AI RECS</span>
+        </div>
+        <div class="panel-body">
+          <div class="rec-list" id="recList">
+            <!-- populated by JS -->
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /analytics tab -->
+
+    <!-- ===== GENAI TAB ===== -->
+    <div class="rtab-content" id="tab-genai">
+
+      <!-- AlphaEarth -->
+      <div class="panel-section">
+        <div class="panel-header ai-header alpha-header">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#4285F4" stroke-width="1.5"/><path d="M8 12h8M12 8l4 4-4 4" stroke="#4285F4" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span>GOOGLE ALPHAEARTH</span>
+          <span class="ai-live-badge">LIVE</span>
+        </div>
+        <div class="panel-body">
+          <div class="ai-module-card alpha-card">
+            <div class="ai-mod-row">
+              <span class="ai-mod-label">Model</span>
+              <span class="ai-mod-val">AlphaEarth Foundations v2025</span>
+            </div>
+            <div class="ai-mod-row">
+              <span class="ai-mod-label">Coverage</span>
+              <span class="ai-mod-val">Global · 10m/px · 64-dim embedding</span>
+            </div>
+            <div class="ai-mod-row">
+              <span class="ai-mod-label">Last Sync</span>
+              <span class="ai-mod-val mono">2026-04-19 · 06:00Z</span>
+            </div>
+          </div>
+
+          <div class="ai-capabilities">
+            <div class="ai-cap active" id="alphaChangeDetect" data-testid="cap-change-detect">
+              <div class="ai-cap-icon"><i data-lucide="eye" class="icon-xs"></i></div>
+              <div>
+                <div class="ai-cap-title">Change Detection</div>
+                <div class="ai-cap-sub">Year-over-year spectral delta · Active on AOI</div>
+              </div>
+              <div class="ai-cap-status on">ON</div>
+            </div>
+            <div class="ai-cap" data-testid="cap-flood-seg">
+              <div class="ai-cap-icon"><i data-lucide="droplets" class="icon-xs"></i></div>
+              <div>
+                <div class="ai-cap-title">Flood Segmentation</div>
+                <div class="ai-cap-sub">Water body extent from SAR fusion</div>
+              </div>
+              <div class="ai-cap-status off">OFF</div>
+            </div>
+            <div class="ai-cap active" data-testid="cap-land-cover">
+              <div class="ai-cap-icon"><i data-lucide="map" class="icon-xs"></i></div>
+              <div>
+                <div class="ai-cap-title">Land Cover Classification</div>
+                <div class="ai-cap-sub">Urban / agri / forest / water</div>
+              </div>
+              <div class="ai-cap-status on">ON</div>
+            </div>
+            <div class="ai-cap" data-testid="cap-infra">
+              <div class="ai-cap-icon"><i data-lucide="building-2" class="icon-xs"></i></div>
+              <div>
+                <div class="ai-cap-title">Infrastructure Damage</div>
+                <div class="ai-cap-sub">Pre/post comparison · Road, bridge, building</div>
+              </div>
+              <div class="ai-cap-status off">OFF</div>
+            </div>
+          </div>
+
+          <!-- AlphaEarth Query -->
+          <div class="ai-query-box">
+            <div class="ai-query-label"><i data-lucide="sparkles" class="icon-xs"></i> NATURAL LANGUAGE QUERY</div>
+            <textarea id="alphaQuery" rows="2" placeholder="e.g. Show flood extent change over Luzon in last 48 hours…" data-testid="input-alpha-query"></textarea>
+            <button class="ai-run-btn" id="runAlphaQuery" data-testid="btn-run-alpha">
+              <i data-lucide="play" class="icon-xs"></i> RUN ANALYSIS
+            </button>
+            <div class="ai-result" id="alphaResult"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nvidia Earth-2 -->
+      <div class="panel-section">
+        <div class="panel-header ai-header earth2-header">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="#76B900" stroke-width="1.5"/><path d="M7 12h10M12 7v10" stroke="#76B900" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span>NVIDIA EARTH-2</span>
+          <span class="ai-live-badge nvidia">LIVE</span>
+        </div>
+        <div class="panel-body">
+          <div class="ai-module-card earth2-card">
+            <div class="ai-mod-row">
+              <span class="ai-mod-label">Model Suite</span>
+              <span class="ai-mod-val">Earth-2 Medium Range · CorrDiff</span>
+            </div>
+            <div class="ai-mod-row">
+              <span class="ai-mod-label">Resolution</span>
+              <span class="ai-mod-val">~3km downscaled (CorrDiff 500×)</span>
+            </div>
+            <div class="ai-mod-row">
+              <span class="ai-mod-label">Forecast</span>
+              <span class="ai-mod-val mono">15-day · Updated 03:00Z</span>
+            </div>
+          </div>
+
+          <!-- Weather Forecast Cards -->
+          <div class="wx-grid" id="wxGrid">
+            <!-- populated by JS -->
+          </div>
+
+          <div class="ai-capabilities">
+            <div class="ai-cap active" data-testid="cap-wx-forecast">
+              <div class="ai-cap-icon"><i data-lucide="cloud" class="icon-xs"></i></div>
+              <div>
+                <div class="ai-cap-title">15-Day Forecast</div>
+                <div class="ai-cap-sub">70+ variables · Atlas architecture</div>
+              </div>
+              <div class="ai-cap-status on nvidia-on">ON</div>
+            </div>
+            <div class="ai-cap active" data-testid="cap-nowcast">
+              <div class="ai-cap-icon"><i data-lucide="zap" class="icon-xs"></i></div>
+              <div>
+                <div class="ai-cap-title">Nowcasting (0–6h)</div>
+                <div class="ai-cap-sub">Storm dynamics · Typhoon track</div>
+              </div>
+              <div class="ai-cap-status on nvidia-on">ON</div>
+            </div>
+            <div class="ai-cap" data-testid="cap-flood-risk">
+              <div class="ai-cap-icon"><i data-lucide="waves" class="icon-xs"></i></div>
+              <div>
+                <div class="ai-cap-title">Flood Risk Downscaling</div>
+                <div class="ai-cap-sub">CorrDiff precipitation super-resolution</div>
+              </div>
+              <div class="ai-cap-status off">OFF</div>
+            </div>
+          </div>
+
+          <!-- Typhoon Track -->
+          <div class="typhoon-track-widget">
+            <div class="ttw-header">
+              <i data-lucide="wind" class="icon-xs"></i>
+              <span class="mono">TYPHOON TRACK · MALAYA (CAT 3)</span>
+              <span class="dot dot-red pulse"></span>
+            </div>
+            <div class="ttw-body">
+              <canvas id="typhoonChart" height="80"></canvas>
+            </div>
+            <div class="ttw-stats">
+              <div class="ttw-stat">
+                <span class="ts-label">WIND SPEED</span>
+                <span class="ts-val">185 km/h</span>
+              </div>
+              <div class="ttw-stat">
+                <span class="ts-label">PRESSURE</span>
+                <span class="ts-val">940 hPa</span>
+              </div>
+              <div class="ttw-stat">
+                <span class="ts-label">LANDFALL ETA</span>
+                <span class="ts-val red">+34h</span>
+              </div>
+              <div class="ttw-stat">
+                <span class="ts-label">CONFIDENCE</span>
+                <span class="ts-val">91%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Earth2 query -->
+          <div class="ai-query-box">
+            <div class="ai-query-label"><i data-lucide="cpu" class="icon-xs"></i> SIMULATION QUERY</div>
+            <textarea id="earth2Query" rows="2" placeholder="e.g. Generate 72h precipitation forecast for Visayas with CorrDiff downscaling…" data-testid="input-earth2-query"></textarea>
+            <button class="ai-run-btn nvidia-btn" id="runEarth2Query" data-testid="btn-run-earth2">
+              <i data-lucide="play" class="icon-xs"></i> RUN SIMULATION
+            </button>
+            <div class="ai-result" id="earth2Result"></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /genai tab -->
+
+    <!-- ===== TASKING TAB ===== -->
+    <div class="rtab-content" id="tab-tasking">
+      <div class="panel-section">
+        <div class="panel-header">
+          <i data-lucide="crosshair" class="icon-xs"></i>
+          <span>SATELLITE TASKING</span>
+        </div>
+        <div class="panel-body">
+          <div class="task-queue" id="taskQueue">
+            <!-- populated by JS -->
+          </div>
+          <button class="new-task-btn" data-testid="btn-new-task">
+            <i data-lucide="plus" class="icon-xs"></i> NEW TASK REQUEST
+          </button>
+        </div>
+      </div>
+      <div class="panel-section">
+        <div class="panel-header">
+          <i data-lucide="archive" class="icon-xs"></i>
+          <span>IMAGERY ARCHIVE</span>
+        </div>
+        <div class="panel-body">
+          <div class="archive-filters">
+            <select class="arc-select" data-testid="select-sensor">
+              <option>All Sensors</option>
+              <option>Optical HR</option>
+              <option>SAR X-band</option>
+              <option>Multispectral</option>
+            </select>
+            <select class="arc-select" data-testid="select-timerange">
+              <option>Last 7 days</option>
+              <option>Last 30 days</option>
+              <option>Custom Range</option>
+            </select>
+          </div>
+          <div class="archive-grid" id="archiveGrid">
+            <!-- populated by JS -->
+          </div>
+        </div>
+      </div>
+    </div><!-- /tasking tab -->
+
+  </aside>
+
+</div><!-- /app-layout -->
+
+<script src="app.js"></script>
+<script data-pplx-inline-edit>
+(function(){
+  if(window===window.top)return;
+  function inlineAll(orig,clone){
+    if(orig.nodeType!==1)return;
+    try{
+      var cs=getComputedStyle(orig);
+      var t='';
+      for(var i=0;i<cs.length;i++){t+=cs[i]+':'+cs.getPropertyValue(cs[i])+';';}
+      clone.style.cssText=t;
+    }catch(e){}
+    var oc=orig.children,cc=clone.children;
+    for(var j=0;j<oc.length&&j<cc.length;j++){inlineAll(oc[j],cc[j]);}
+  }
+  function stripExternal(clone){
+    var imgs=clone.querySelectorAll('img');
+    for(var i=0;i<imgs.length;i++){
+      var s=imgs[i].getAttribute('src');
+      if(s&&!s.startsWith('data:'))imgs[i].removeAttribute('src');
+    }
+    var all=clone.querySelectorAll('*');
+    for(var i=0;i<all.length;i++){
+      var st=all[i].style.cssText;
+      if(st&&st.indexOf('url(')>=0){
+        all[i].style.cssText=st.replace(/url\(["']?(?!data:)[^)"']*["']?\)/gi,'none');
+      }
+    }
+  }
+  var scrollRaf=0;
+  function emitScroll(){
+    scrollRaf=0;
+    var x=window.scrollX||window.pageXOffset||0;
+    var y=window.scrollY||window.pageYOffset||0;
+    window.parent.postMessage({type:'INLINE_EDIT_SCROLL',scrollX:x,scrollY:y},'*');
+  }
+  window.addEventListener('scroll',function(){
+    if(scrollRaf)return;
+    scrollRaf=requestAnimationFrame(emitScroll);
+  },{passive:true,capture:true});
+  emitScroll();
+  window.addEventListener('message',function(e){
+    if(!e.data||e.data.type!=='INLINE_EDIT_CAPTURE_REQUEST')return;
+    var scrollX=window.scrollX||window.pageXOffset||0;
+    var scrollY=window.scrollY||window.pageYOffset||0;
+    var w=window.innerWidth,h=window.innerHeight;
+    try{
+      var clone=document.documentElement.cloneNode(true);
+      var rm=clone.querySelectorAll('script,link[rel="stylesheet"],style');
+      for(var i=0;i<rm.length;i++){rm[i].remove();}
+      inlineAll(document.documentElement,clone);
+      stripExternal(clone);
+      var html=new XMLSerializer().serializeToString(clone);
+      var svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'">'
+        +'<foreignObject width="100%" height="100%">'
+        +'<div xmlns="http://www.w3.org/1999/xhtml" style="width:'+w+'px;height:'+h+'px;overflow:hidden">'
+        +'<div style="transform:translate(-'+scrollX+'px,-'+scrollY+'px);transform-origin:top left">'
+        +html+'</div></div></foreignObject></svg>';
+      var svgUrl='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+      var img=new Image();
+      img.onload=function(){
+        var c=document.createElement('canvas');c.width=w;c.height=h;
+        c.getContext('2d').drawImage(img,0,0);
+        window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:c.toDataURL('image/png'),scrollX:scrollX,scrollY:scrollY},'*');
+      };
+      img.onerror=function(){
+        window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:null,scrollX:scrollX,scrollY:scrollY},'*');
+      };
+      img.src=svgUrl;
+    }catch(err){
+      window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:null,scrollX:scrollX,scrollY:scrollY},'*');
+    }
+  });
+})();
+</script></body>
+</html>
