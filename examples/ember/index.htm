@@ -1,0 +1,426 @@
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>EMBER · AI Generated Command & Control Prototype </title>
+    <meta name="description" content="AI Generated prototype of map-centric command and control for NATO Electromagnetic Warfare — situational awareness, planning, and offensive/defensive effects with AI and GenAI decision support" />
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&f[]=jetbrains-mono@400,500,700&display=swap" rel="stylesheet" />
+    <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/cesium@1.121.0/Build/Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <script>window.CESIUM_BASE_URL = 'https://cdn.jsdelivr.net/npm/cesium@1.121.0/Build/Cesium/';</script>
+    <script src="https://cdn.jsdelivr.net/npm/cesium@1.121.0/Build/Cesium/Cesium.js" defer></script>
+    <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230a0f1a'/><path d='M6 16h20M16 6v20M10 10l12 12M22 10L10 22' stroke='%2300b3ff' stroke-width='2' fill='none'/><circle cx='16' cy='16' r='5' fill='none' stroke='%23ff4757' stroke-width='2'/></svg>" />
+  </head>
+  <body>
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <div class="brand">
+        <svg class="logo" viewBox="0 0 40 40" aria-label="EMBER">
+          <circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" stroke-width="1.25" opacity=".35"/>
+          <circle cx="20" cy="20" r="12" fill="none" stroke="currentColor" stroke-width="1.25" opacity=".55"/>
+          <circle cx="20" cy="20" r="6" fill="none" stroke="currentColor" stroke-width="1.25"/>
+          <path d="M20 2v36M2 20h36M7 7l26 26M33 7L7 33" stroke="currentColor" stroke-width=".6" opacity=".5"/>
+          <circle cx="20" cy="20" r="2" fill="var(--accent-red)"/>
+        </svg>
+        <div class="brand-text">
+          <div class="brand-name">EMBER<span class="brand-dot">·</span><span class="brand-sub">EW C2</span></div>
+          <div class="brand-meta">NATO / NEWWG · PROTOTYPE · UNCLASSIFIED // FOUO</div>
+        </div>
+      </div>
+
+      <nav class="view-switch" role="tablist" aria-label="Operational view">
+        <button class="view-btn active" data-view="cop" role="tab" aria-selected="true">Common Op Picture</button>
+        <button class="view-btn" data-view="ems" role="tab">EMS Battlespace</button>
+        <button class="view-btn" data-view="planning" role="tab">Planning</button>
+        <button class="view-btn" data-view="effects" role="tab">Effects</button>
+        <button class="view-btn" data-view="multi" role="tab" title="3D multi-domain (Cesium)">Multi-Domain<span class="view-flag">3D</span></button>
+      </nav>
+
+      <div class="topbar-right">
+        <div class="clock">
+          <span class="clock-label">ZULU</span>
+          <span id="zulu" class="clock-value">—</span>
+        </div>
+        <div class="condef" title="Condition of the EMS">
+          <span class="condef-label">EMCON</span>
+          <span class="pill pill-amber" id="emcon">BRAVO</span>
+        </div>
+        <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- APP -->
+    <main class="app">
+      <!-- LEFT RAIL -->
+      <aside class="rail rail-left">
+        <div class="rail-section">
+          <div class="rail-head">
+            <span>Area of Responsibility</span>
+            <button class="chip chip-ghost" id="ao-select">JOA BALTIC</button>
+          </div>
+          <div class="kv">
+            <div class="kv-row"><span>Mission</span><strong>OP IRON DAWN 26</strong></div>
+            <div class="kv-row"><span>JFC</span><strong>JFCBS Brunssum</strong></div>
+            <div class="kv-row"><span>EW Lead</span><strong>JEWCS / JCEWS</strong></div>
+            <div class="kv-row"><span>Phase</span><strong class="text-accent">Phase II · Deter</strong></div>
+          </div>
+        </div>
+
+        <div class="rail-section">
+          <div class="rail-head">
+            <span>Layers</span>
+            <span class="rail-hint">toggle</span>
+          </div>
+          <ul class="layer-list" id="layer-list">
+            <li><label class="layer"><input type="checkbox" data-layer="red-emitters" checked><span class="layer-swatch sw-red"></span>Red emitters (ES)</label><span class="layer-count" id="count-red">0</span></li>
+            <li><label class="layer"><input type="checkbox" data-layer="blue-assets" checked><span class="layer-swatch sw-blue"></span>Blue EW assets (EA/EP)</label><span class="layer-count" id="count-blue">0</span></li>
+            <li><label class="layer"><input type="checkbox" data-layer="sigint" checked><span class="layer-swatch sw-cyan"></span>SIGINT cuts / LOBs</label></li>
+            <li><label class="layer"><input type="checkbox" data-layer="jamming" checked><span class="layer-swatch sw-amber"></span>Jamming / EA footprints</label></li>
+            <li><label class="layer"><input type="checkbox" data-layer="coverage" checked><span class="layer-swatch sw-blue-faint"></span>Sensor coverage</label></li>
+            <li><label class="layer"><input type="checkbox" data-layer="jcewl"><span class="layer-swatch sw-purple"></span>JCEWL / JRFL zones</label></li>
+            <li><label class="layer"><input type="checkbox" data-layer="fsa"><span class="layer-swatch sw-green"></span>Fires / FSCM</label></li>
+            <li><label class="layer"><input type="checkbox" data-layer="heatmap"><span class="layer-swatch sw-heat"></span>EM density (kHz/µV)</label></li>
+            <li class="layer-divider"><span>Multi-domain</span></li>
+            <li><label class="layer"><input type="checkbox" data-layer="cyber-nodes" checked><span class="layer-swatch sw-cyber"></span>Cyber network nodes</label><span class="layer-count" id="count-cyber">0</span></li>
+            <li><label class="layer"><input type="checkbox" data-layer="cyber-links" checked><span class="layer-swatch sw-cyber"></span>Intrusion edges / C2</label></li>
+            <li><label class="layer"><input type="checkbox" data-layer="gps-spoof" checked><span class="layer-swatch sw-amber"></span>GPS spoofing zones</label></li>
+            <li><label class="layer"><input type="checkbox" data-layer="sat-tracks" checked><span class="layer-swatch sw-space"></span>LEO ground tracks</label></li>
+            <li><label class="layer"><input type="checkbox" data-layer="sat-footprint"><span class="layer-swatch sw-space"></span>Sat coverage footprints</label></li>
+          </ul>
+        </div>
+
+        <div class="rail-section">
+          <div class="rail-head"><span>NATO Emitter DB · NEDB</span><span class="rail-hint">live</span></div>
+          <div class="search">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>
+            <input id="emitter-search" placeholder="Search NEDB (e.g. 64N6, Krasukha-4)…" />
+          </div>
+          <ul class="nedb-list" id="nedb-list"></ul>
+        </div>
+      </aside>
+
+      <!-- MAP -->
+      <section class="mapwrap">
+        <div id="map" role="region" aria-label="Operational map"></div>
+        <div id="globe" role="region" aria-label="3D globe · multi-domain" hidden></div>
+        <div id="globe-loading" class="globe-loading" hidden>
+          <div class="gl-spin"></div>
+          <div class="gl-text">Initialising CesiumJS globe…</div>
+        </div>
+
+        <!-- Floating mini-controls over map -->
+        <div class="map-tools">
+          <button class="tool-btn" id="tool-measure" title="Measure / ruler"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 17 6-6 3 3 9-9"/><path d="M14 5h7v7"/></svg></button>
+          <button class="tool-btn" id="tool-rect" title="Area / geofence"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="1"/></svg></button>
+          <button class="tool-btn" id="tool-cone" title="Cone / bearing"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 4 21l8-4 8 4z"/></svg></button>
+          <div class="tool-div"></div>
+          <button class="tool-btn" id="tool-fit" title="Fit AO"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6"/></svg></button>
+        </div>
+
+        <!-- Threat ribbon -->
+        <div class="threat-ribbon" id="threat-ribbon">
+          <div class="ribbon-head"><span class="live-dot"></span> LIVE · ES / SIGINT / CYBER stream</div>
+          <div class="ribbon-track" id="ribbon-track"></div>
+        </div>
+
+        <!-- Space domain HUD — overflight windows -->
+        <div class="space-hud" id="space-hud" hidden>
+          <div class="hud-head">
+            <span><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(35 12 12)"/></svg> LEO Overflights</span>
+            <span class="hud-sub">next AOS</span>
+          </div>
+          <div class="hud-list" id="overflight-list"></div>
+        </div>
+
+        <!-- Bottom spectrum strip -->
+        <div class="spectrum-strip">
+          <div class="strip-head">
+            <span class="strip-title">
+              <span class="sdr-dot" id="sdr-link-dot" title="WebSDR subscription"></span>
+              WebSDR • <span id="sdr-node">UTWENTE 8901</span>
+            </span>
+            <div class="sdr-controls">
+              <label class="sdr-tune">TUNE <input type="number" id="sdr-freq" value="8400" step="50" min="0.1" max="40000"><span>MHz</span></label>
+              <select id="sdr-mode" class="sdr-mode" title="Demod mode">
+                <option>AM</option><option>USB</option><option>LSB</option><option selected>CW</option><option>FM</option><option>IQ</option>
+              </select>
+              <div class="strip-bands">
+                <button class="band active" data-band="all">ALL</button>
+                <button class="band" data-band="hf">HF</button>
+                <button class="band" data-band="vhf">VHF</button>
+                <button class="band" data-band="uhf">UHF</button>
+                <button class="band" data-band="lband">L</button>
+                <button class="band" data-band="sband">S</button>
+                <button class="band" data-band="xband">X</button>
+                <button class="band" data-band="kuband">Ku</button>
+              </div>
+              <a class="sdr-live" id="sdr-open" href="http://websdr.ewi.utwente.nl:8901/" target="_blank" rel="noopener">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 5h6v2H7v10h10v-4h2v6H5zM14 3h7v7h-2V6.41l-8.3 8.3-1.4-1.4L17.59 5H14z"/></svg>
+                Open live feed
+              </a>
+            </div>
+            <span class="strip-meta" id="strip-meta">24.7 MHz RBW · waterfall 60s · sub 0.27/s</span>
+          </div>
+          <canvas id="waterfall" width="1400" height="90"></canvas>
+          <div class="sdr-carriers" id="sdr-carriers"></div>
+        </div>
+      </section>
+
+      <!-- RIGHT RAIL -->
+      <aside class="rail rail-right">
+        <!-- Tab strip -->
+        <div class="rtab-strip" role="tablist">
+          <button class="rtab active" data-rtab="entity" role="tab">Entity</button>
+          <button class="rtab" data-rtab="ai" role="tab">AI Analyst</button>
+          <button class="rtab" data-rtab="plan" role="tab">GenAI Planner</button>
+          <button class="rtab" data-rtab="effect" role="tab">Effects</button>
+          <button class="rtab" data-rtab="cysp" role="tab">Cyber/Space</button>
+        </div>
+
+        <!-- Entity inspector -->
+        <div class="rpanel active" data-rpanel="entity" id="entity-panel">
+          <div class="rpanel-empty" id="entity-empty">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".6"><circle cx="12" cy="12" r="9"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>
+            <p>Select an entity on the map to inspect parametrics, fingerprint, and COAs.</p>
+          </div>
+          <div class="rpanel-full" id="entity-detail" hidden></div>
+        </div>
+
+        <!-- AI Analyst -->
+        <div class="rpanel" data-rpanel="ai">
+          <div class="ai-header">
+            <div class="ai-avatar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 3 7v6c0 5 4 8 9 9 5-1 9-4 9-9V7z"/><path d="M8 12l3 3 5-6"/></svg>
+            </div>
+            <div>
+              <div class="ai-title">AI ES Analyst<span class="model-pill">ember-rf-7B</span></div>
+              <div class="ai-sub">RF fingerprinting · emitter attribution · COA suggestion</div>
+            </div>
+          </div>
+          <div class="ai-metrics">
+            <div class="mcard"><span class="mlabel">Detections · 24h</span><span class="mval">14,827</span><span class="mdelta up">+8.1%</span></div>
+            <div class="mcard"><span class="mlabel">New emitters</span><span class="mval">31</span><span class="mdelta up">+4</span></div>
+            <div class="mcard"><span class="mlabel">Unresolved</span><span class="mval">9</span><span class="mdelta down">−2</span></div>
+            <div class="mcard"><span class="mlabel">Attribution conf.</span><span class="mval">0.87</span><span class="mdelta flat">stable</span></div>
+          </div>
+          <div class="ai-section">
+            <div class="ai-section-title">Priority signals</div>
+            <ul class="ai-feed" id="ai-feed"></ul>
+          </div>
+          <div class="ai-section">
+            <div class="ai-section-title">Ask the analyst</div>
+            <div class="promptbar">
+              <input id="ai-input" placeholder="e.g. Why did confidence rise on emitter R-37?"/>
+              <button class="btn btn-primary" id="ai-send">Ask</button>
+            </div>
+            <div class="ai-chips">
+              <button class="chip">Correlate new S-band tracks</button>
+              <button class="chip">Suspected Krasukha-4 activity?</button>
+              <button class="chip">Explain burst at 09:42Z</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- GenAI Planner -->
+        <div class="rpanel" data-rpanel="plan">
+          <div class="ai-header">
+            <div class="ai-avatar ai-avatar-2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg>
+            </div>
+            <div>
+              <div class="ai-title">GenAI Planner<span class="model-pill">ember-plan-70B</span></div>
+              <div class="ai-sub">JEMSOC-aligned COA generation · JCEWL deconfliction</div>
+            </div>
+          </div>
+          <div class="planner-objective">
+            <label class="mini-label">Commander's intent</label>
+            <textarea id="intent" rows="3">Suppress adversary GBAD and C2 emitters along the Suwałki Gap to enable friendly fixed-wing corridor at H-hour +30 min. Preserve civil EMS. Minimize fratricide with SATCOM and GPS.</textarea>
+            <div class="planner-row">
+              <div>
+                <label class="mini-label">Window</label>
+                <select><option>H-hour +30 to +90 min</option><option>H-hour to +60 min</option><option>H-hour +60 to +180 min</option></select>
+              </div>
+              <div>
+                <label class="mini-label">ROE</label>
+                <select><option>EA: non-destructive, reversible</option><option>EA: hard-kill authorized</option><option>ES only (passive)</option></select>
+              </div>
+              <div>
+                <label class="mini-label">Collateral tol.</label>
+                <select><option>Low</option><option>Medium</option><option>High</option></select>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-wide" id="gen-coa">
+              <span class="btn-glyph">✦</span>Generate COAs
+            </button>
+          </div>
+          <div class="coa-list" id="coa-list"></div>
+        </div>
+
+        <!-- Effects -->
+        <div class="rpanel" data-rpanel="effect">
+          <div class="ai-header">
+            <div class="ai-avatar ai-avatar-3">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+            </div>
+            <div>
+              <div class="ai-title">Effects Sequencer</div>
+              <div class="ai-sub">EA · EP · ES tasking · kill-chain timing</div>
+            </div>
+          </div>
+          <div class="seq-toolbar">
+            <div class="seq-tabs">
+              <button class="seq-tab active" data-seq="ea">EA</button>
+              <button class="seq-tab" data-seq="ep">EP</button>
+              <button class="seq-tab" data-seq="es">ES</button>
+              <button class="seq-tab seq-tab-cyber" data-seq="cyber">Cyber</button>
+              <button class="seq-tab seq-tab-space" data-seq="space">Space</button>
+            </div>
+            <span class="seq-clock" id="seq-clock">T-00:04:12</span>
+          </div>
+          <div class="seq-body" id="seq-body"></div>
+          <div class="seq-footer">
+            <div class="seq-stat"><span>Deconflicted</span><strong class="text-green">7 / 7</strong></div>
+            <div class="seq-stat"><span>JCEWL breaches</span><strong class="text-green">0</strong></div>
+            <div class="seq-stat"><span>Est. p(success)</span><strong class="text-accent">0.82</strong></div>
+            <button class="btn btn-execute" id="btn-execute">ARM · Sync to JEMSOC</button>
+          </div>
+        </div>
+
+        <!-- Cyber / Space -->
+        <div class="rpanel" data-rpanel="cysp">
+          <div class="ai-header">
+            <div class="ai-avatar ai-avatar-cyber">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 3 6v6c0 5 4 9 9 10 5-1 9-5 9-10V6z"/><path d="M8 11l3 3 5-6"/></svg>
+            </div>
+            <div>
+              <div class="ai-title">Cyber · Space<span class="model-pill pill-space">multi-domain</span></div>
+              <div class="ai-sub">Kill-chain intrusions · LEO overflights · GPS spoofing</div>
+            </div>
+          </div>
+
+          <div class="cysp-section">
+            <div class="cysp-section-head"><span class="dom-tag dom-cyber">CYBER</span><span>Active kill-chain — ATT&amp;CK</span><span class="ai-sub" id="cyber-count"></span></div>
+            <ul class="cyber-list" id="cyber-list"></ul>
+          </div>
+
+          <div class="cysp-section">
+            <div class="cysp-section-head"><span class="dom-tag dom-space">SPACE</span><span>LEO &amp; PNT order of battle</span></div>
+            <ul class="sat-list" id="sat-list"></ul>
+          </div>
+
+          <div class="cysp-section">
+            <div class="cysp-section-head"><span class="dom-tag dom-gps">PNT</span><span>GPS spoofing events</span></div>
+            <ul class="gps-list" id="gps-list"></ul>
+          </div>
+
+          <div class="cysp-section">
+            <div class="cysp-section-head"><span class="dom-tag dom-multi">H-HOUR</span><span>Unified multi-domain timeline</span></div>
+            <button class="btn btn-primary btn-wide" id="open-timeline">
+              <span class="btn-glyph">▤</span>Open multi-domain timeline
+            </button>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Status bar -->
+    <footer class="statusbar">
+      <span class="status-group"><span class="live-dot"></span> NEDB sync · OK</span>
+      <span class="status-group">JRFL · v26.04.1</span>
+      <span class="status-group">SIGINT feed · 3 streams</span>
+      <span class="status-group">GPS · <strong class="text-amber">degraded / spoof GS-01</strong></span>
+      <span class="status-group">CYBER · <strong class="text-cyber">APT28 active — 2 hosts</strong></span>
+      <span class="status-group">SPACE · <strong class="text-space" id="sb-sat">HE360 AOS in 00:58</strong></span>
+      <span class="status-spacer"></span>
+      <span class="status-group">JADC2 bridge · <strong class="text-green">linked</strong></span>
+      <span class="status-group">Classification: <strong>UNCLASSIFIED // FOUO · PROTOTYPE</strong></span>
+    </footer>
+
+    <!-- Generated COA modal -->
+    <div class="scrim" id="scrim" hidden></div>
+
+    <!-- Toasts -->
+    <div class="toaster" id="toaster" aria-live="polite"></div>
+
+    <script type="module" src="app.js"></script>
+  <script data-pplx-inline-edit>
+(function(){
+  if(window===window.top)return;
+  function inlineAll(orig,clone){
+    if(orig.nodeType!==1)return;
+    try{
+      var cs=getComputedStyle(orig);
+      var t='';
+      for(var i=0;i<cs.length;i++){t+=cs[i]+':'+cs.getPropertyValue(cs[i])+';';}
+      clone.style.cssText=t;
+    }catch(e){}
+    var oc=orig.children,cc=clone.children;
+    for(var j=0;j<oc.length&&j<cc.length;j++){inlineAll(oc[j],cc[j]);}
+  }
+  function stripExternal(clone){
+    var imgs=clone.querySelectorAll('img');
+    for(var i=0;i<imgs.length;i++){
+      var s=imgs[i].getAttribute('src');
+      if(s&&!s.startsWith('data:'))imgs[i].removeAttribute('src');
+    }
+    var all=clone.querySelectorAll('*');
+    for(var i=0;i<all.length;i++){
+      var st=all[i].style.cssText;
+      if(st&&st.indexOf('url(')>=0){
+        all[i].style.cssText=st.replace(/url\(["']?(?!data:)[^)"']*["']?\)/gi,'none');
+      }
+    }
+  }
+  var scrollRaf=0;
+  function emitScroll(){
+    scrollRaf=0;
+    var x=window.scrollX||window.pageXOffset||0;
+    var y=window.scrollY||window.pageYOffset||0;
+    window.parent.postMessage({type:'INLINE_EDIT_SCROLL',scrollX:x,scrollY:y},'*');
+  }
+  window.addEventListener('scroll',function(){
+    if(scrollRaf)return;
+    scrollRaf=requestAnimationFrame(emitScroll);
+  },{passive:true,capture:true});
+  emitScroll();
+  window.addEventListener('message',function(e){
+    if(!e.data||e.data.type!=='INLINE_EDIT_CAPTURE_REQUEST')return;
+    var scrollX=window.scrollX||window.pageXOffset||0;
+    var scrollY=window.scrollY||window.pageYOffset||0;
+    var w=window.innerWidth,h=window.innerHeight;
+    try{
+      var clone=document.documentElement.cloneNode(true);
+      var rm=clone.querySelectorAll('script,link[rel="stylesheet"],style');
+      for(var i=0;i<rm.length;i++){rm[i].remove();}
+      inlineAll(document.documentElement,clone);
+      stripExternal(clone);
+      var html=new XMLSerializer().serializeToString(clone);
+      var svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'">'
+        +'<foreignObject width="100%" height="100%">'
+        +'<div xmlns="http://www.w3.org/1999/xhtml" style="width:'+w+'px;height:'+h+'px;overflow:hidden">'
+        +'<div style="transform:translate(-'+scrollX+'px,-'+scrollY+'px);transform-origin:top left">'
+        +html+'</div></div></foreignObject></svg>';
+      var svgUrl='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+      var img=new Image();
+      img.onload=function(){
+        var c=document.createElement('canvas');c.width=w;c.height=h;
+        c.getContext('2d').drawImage(img,0,0);
+        window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:c.toDataURL('image/png'),scrollX:scrollX,scrollY:scrollY},'*');
+      };
+      img.onerror=function(){
+        window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:null,scrollX:scrollX,scrollY:scrollY},'*');
+      };
+      img.src=svgUrl;
+    }catch(err){
+      window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:null,scrollX:scrollX,scrollY:scrollY},'*');
+    }
+  });
+})();
+</script></body>
+</html>
