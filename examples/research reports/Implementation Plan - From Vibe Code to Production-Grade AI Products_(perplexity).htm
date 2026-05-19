@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Implementation Plan: From Vibe Code to Production</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1, h2, h3, h4 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        h1 { font-size: 1.8rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem; }
+        h2 { font-size: 1.4rem; }
+        h3 { font-size: 1.1rem; }
+        p { margin-bottom: 1rem; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #f9f9f9;
+            font-weight: 600;
+        }
+        ul, ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        a {
+            color: #0056b3;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .footnotes {
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        .footnotes ol {
+            padding-left: 1.2rem;
+        }
+        .footnotes li {
+            margin-bottom: 0.4rem;
+        }
+        .center {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        img {
+            height: 64px;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://r2cdn.perplexity.ai/pplx-full-logo-primary-dark%402x.png" alt="Perplexity Logo">
+
+        <h1>Implementation Plan: From Vibe Code to Production-Grade AI Products</h1>
+
+        <h2>Overview</h2>
+        <p>A production-grade AI product should be built as a gated delivery system, not as a straight line from prompt to deployment. The recommended stack is Claude for architecture and control definition, Cursor for implementation, scanners for codebase reality checks, NanoClaw for browser-level UX and auth-path validation, pentest-ai-agents for structured offensive testing, OpenMythos for targeted vulnerability assessment, and Runable plus CI for evidence-driven release gates.<sup><a href="#fn1">[1]</a></sup><sup><a href="#fn2">[2]</a></sup><sup><a href="#fn3">[3]</a></sup><sup><a href="#fn4">[4]</a></sup><sup><a href="#fn5">[5]</a></sup></p>
+        <p>This operating model matches two current realities. First, NIST SSDF and its generative-AI extension emphasize secure design, review, testing, triage, and remediation as lifecycle practices rather than end-of-pipeline add-ons. Second, recent public work from AISLE, Anthropic, and Cloudflare shows that AI cyber capability is modular and system-driven, with real value emerging from orchestration across ranking, hunting, validation, proof generation, traceability, and reporting rather than from a single model prompt.<sup><a href="#fn2">[2]</a></sup><sup><a href="#fn4">[4]</a></sup><sup><a href="#fn6">[6]</a></sup><sup><a href="#fn7">[7]</a></sup><sup><a href="#fn1">[1]</a></sup></p>
+
+        <h2>Target operating model</h2>
+        <p>The delivery system should have seven controlled lanes, each answering a different release question. Separating these lanes prevents one tool from being over-trusted and makes failure modes observable earlier.<sup><a href="#fn7">[7]</a></sup><sup><a href="#fn1">[1]</a></sup></p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Lane</th>
+                    <th>Primary tool</th>
+                    <th>Main job</th>
+                    <th>Release question</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Architecture</td>
+                    <td>Claude</td>
+                    <td>System design, trust boundaries, auth model, input contracts</td>
+                    <td>Are the controls specified? <sup><a href="#fn1">[1]</a></sup><sup><a href="#fn8">[8]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>Implementation</td>
+                    <td>Cursor</td>
+                    <td>Product code, tests, migrations, adapters</td>
+                    <td>Was the design implemented? <sup><a href="#fn2">[2]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>Code scanning</td>
+                    <td>Scanner stack</td>
+                    <td>Catch auth gaps, BOLA patterns, risky DB privilege use, dependency issues</td>
+                    <td>Does the codebase obviously violate policy? <sup><a href="#fn9">[9]</a></sup><sup><a href="#fn8">[8]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>UI/UX validation</td>
+                    <td>NanoClaw</td>
+                    <td>Run login, onboarding, CRUD, and role-based browser journeys</td>
+                    <td>Does the product behave safely for real users? <sup><a href="#fn3">[3]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>Offensive assessment</td>
+                    <td>pentest-ai-agents</td>
+                    <td>Structured API, web, logic, and LLM red-team testing against staging</td>
+                    <td>Can a real attacker exploit the running product? <sup><a href="#fn5">[5]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>Static vulnerability assessment</td>
+                    <td>OpenMythos</td>
+                    <td>Targeted source-code analysis of risky paths and patch suggestions</td>
+                    <td>Are there deeper exploitable weaknesses in the code? <sup><a href="#fn4">[4]</a></sup><sup><a href="#fn6">[6]</a></sup><sup><a href="#fn7">[7]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>Governance</td>
+                    <td>Runable + CI</td>
+                    <td>Evidence collection, gating, exceptions, sign-off</td>
+                    <td>Can this release be trusted? <sup><a href="#fn1">[1]</a></sup><sup><a href="#fn2">[2]</a></sup></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Phase 1: Architecture and control pack</h2>
+        <p>Start with Claude, but use it to define controls rather than to generate large volumes of final code. Claude should produce a system context diagram, trust boundaries, role-action-resource matrix, endpoint inventory, input contract catalog, data-flow map, logging and observability requirements, rollback constraints, and abuse-case list.<sup><a href="#fn8">[8]</a></sup><sup><a href="#fn10">[10]</a></sup><sup><a href="#fn1">[1]</a></sup><sup><a href="#fn2">[2]</a></sup></p>
+        <p>The control pack should explicitly define authentication, authorization, and input validation because these remain the highest-probability weak points in fast AI-generated application code. OWASP guidance stresses that authorization must be validated on every request, BOLA occurs when object identifiers are trusted without proper object-level checks, and input validation must happen server-side as early as possible with allowlisting and semantic validation, not just UI-side checks.<sup><a href="#fn9">[9]</a></sup><sup><a href="#fn10">[10]</a></sup><sup><a href="#fn8">[8]</a></sup></p>
+
+        <h3>Required Claude artifacts</h3>
+        <ul>
+            <li>Architecture decision record for the chosen stack and trust boundaries.<sup><a href="#fn1">[1]</a></sup></li>
+            <li>Endpoint inventory labeled public, authenticated, admin, service-only, or internal.<sup><a href="#fn8">[8]</a></sup></li>
+            <li>Role matrix covering user, admin, service account, and tenant or org scope.<sup><a href="#fn8">[8]</a></sup></li>
+            <li>Input contract pack with type, length, enum, regex, normalization, and semantic rules per field.<sup><a href="#fn10">[10]</a></sup></li>
+            <li>Abuse cases covering auth bypass, BOLA, file upload misuse, prompt injection entry points, secret exposure, and session expiry behavior.<sup><a href="#fn11">[11]</a></sup><sup><a href="#fn9">[9]</a></sup></li>
+            <li>Security acceptance criteria for every story, including tests and evidence expected later in CI.<sup><a href="#fn2">[2]</a></sup><sup><a href="#fn1">[1]</a></sup></li>
+        </ul>
+
+        <h2>Phase 2: Cursor implementation under constraints</h2>
+        <p>Cursor should implement against the control pack, not replace it. External guidance on secure AI-assisted development consistently points toward mandatory review, secure defaults, and gated testing before AI-generated code is treated as production ready.<sup><a href="#fn2">[2]</a></sup></p>
+        <p>A practical rule is that no route, server action, mutation, parser, or privileged job reaches the main branch unless it includes an auth decision, validation schema, logging behavior, ownership semantics where relevant, and at least one misuse-path test for the highest-risk flows. That rule turns "vibe coding" into constrained implementation rather than free-form generation.<sup><a href="#fn9">[9]</a></sup><sup><a href="#fn10">[10]</a></sup><sup><a href="#fn8">[8]</a></sup></p>
+
+        <h3>Cursor coding rules</h3>
+        <ul>
+            <li>No new endpoint without explicit auth middleware or dependency-injection guard.<sup><a href="#fn11">[11]</a></sup><sup><a href="#fn8">[8]</a></sup></li>
+            <li>No object fetch, update, or delete without object-level authorization logic to prevent BOLA.<sup><a href="#fn9">[9]</a></sup></li>
+            <li>No new user input path without server-side validation and clear error handling.<sup><a href="#fn10">[10]</a></sup></li>
+            <li>No secrets in code, prompts, test data, or environment templates.<sup><a href="#fn1">[1]</a></sup><sup><a href="#fn2">[2]</a></sup></li>
+            <li>No broad dependency additions without review and version discipline.<sup><a href="#fn2">[2]</a></sup></li>
+            <li>No merge without unit tests, integration tests, and misuse-path coverage for high-risk features.<sup><a href="#fn1">[1]</a></sup><sup><a href="#fn2">[2]</a></sup></li>
+        </ul>
+
+        <h2>Phase 3: Scanner lane for codebase reality</h2>
+        <p>The scanner lane should run immediately after implementation and before browser or offensive testing. Its purpose is to detect what is actually present in the codebase, not what the architecture intended. This matters especially for missing auth checks, BOLA indicators, and privilege configuration drift.<sup><a href="#fn8">[8]</a></sup><sup><a href="#fn9">[9]</a></sup></p>
+        <p>The scanner stack should combine SAST, dependency scanning, secrets scanning, IaC scanning, and custom grep or AST rules tuned to your stack. The highest-value custom rules are the ones that check whether routes are missing auth guards, whether user-controlled IDs reach database operations without ownership predicates, and whether privileged data-layer constructs appear without review.<sup><a href="#fn9">[9]</a></sup><sup><a href="#fn8">[8]</a></sup></p>
+
+        <h3>Scanner outputs</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Bucket</th>
+                    <th>Examples</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Route findings</td>
+                    <td>Missing auth middleware, missing session checks, public write route</td>
+                    <td>Fix or explicitly allowlist. <sup><a href="#fn8">[8]</a></sup><sup><a href="#fn11">[11]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>Query findings</td>
+                    <td>Direct object lookup without ownership check, missing tenant filter</td>
+                    <td>Treat as likely BOLA until disproven. <sup><a href="#fn9">[9]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>Database findings</td>
+                    <td>RLS gaps, risky privilege boundaries, broad service-role usage</td>
+                    <td>Manual review and least-privilege remediation. <sup><a href="#fn8">[8]</a></sup></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Merge policy should fail shut for critical findings. Unresolved criticals block release, while accepted risks require written rationale, approver sign-off, and a remediation due date.<sup><a href="#fn1">[1]</a></sup><sup><a href="#fn2">[2]</a></sup></p>
+
+        <h2>Phase 4: NanoClaw UI and UX validation</h2>
+        <p>NanoClaw's documented browser capability is Playwright-based and supports navigation, snapshots, form filling, clicking, screenshots, data extraction, file uploads, PDFs, and saved authentication state. That makes it well suited to browser-level validation after code scanning but before release approval.<sup><a href="#fn3">[3]</a></sup></p>
+        <p>Its best role is deterministic execution of high-value journeys rather than broad exploratory fuzzing. Use it to validate login, onboarding, CRUD, role-based navigation, direct URL access attempts, error-state clarity, and session-expiry behavior using reusable auth states and evidence artifacts such as screenshots and extracted text.<sup><a href="#fn3">[3]</a></sup></p>
+
+        <h3>Golden NanoClaw journeys</h3>
+        <ul>
+            <li>Standard-user login success and invalid-login rejection.<sup><a href="#fn3">[3]</a></sup></li>
+            <li>New-user onboarding flow including validation copy and progress behavior.<sup><a href="#fn3">[3]</a></sup></li>
+            <li>CRUD smoke tests for core entities with screenshots after create, read, update, and delete.<sup><a href="#fn3">[3]</a></sup></li>
+            <li>Role-diff tests comparing standard-user and admin navigation visibility and direct-path access.<sup><a href="#fn3">[3]</a></sup></li>
+            <li>Unauthorized object access attempts using manipulated identifiers to reveal BOLA symptoms in real UI flows.<sup><a href="#fn9">[9]</a></sup><sup><a href="#fn3">[3]</a></sup></li>
+            <li>Session-expiry and stale-session handling tests for redirects, safe failure states, and data leakage checks.<sup><a href="#fn3">[3]</a></sup></li>
+        </ul>
+        <p>Browser-level evidence matters because code that passes static scanners can still fail in hidden-but-reachable routes, broken redirects, unsafe deep links, or unusable validation states. NanoClaw closes that gap by exercising the product as a user would experience it.<sup><a href="#fn3">[3]</a></sup></p>
+
+        <h2>Phase 5a: pentest-ai-agents as structured offensive coverage</h2>
+        <p><code>pentest-ai-agents</code> provides a structured offensive layer that should sit before OpenMythos's code-level analysis. Its 35 Claude Code subagents cover planning, recon, offensive operations, detection, and reporting, and they integrate naturally into a product-security workflow where staging systems are in scope for authorized testing.<sup><a href="#fn5">[5]</a></sup></p>
+        <p>The relevant product-security subset is smaller than the full collection. <code>api-security</code>, <code>web-hunter</code>, <code>bizlogic-hunter</code>, <code>vuln-scanner</code>, <code>llm-redteam</code>, <code>cicd-redteam</code>, <code>detection-engineer</code>, and <code>report-generator</code> are the main agents to operationalize. The framework also distinguishes Tier 1 advisory agents from Tier 2 agents that can compose and execute commands after scope declaration and approval.<sup><a href="#fn5">[5]</a></sup></p>
+
+        <h3>High-value agents for AI products</h3>
+        <ul>
+            <li><code>api-security</code>: exercises REST, GraphQL, and WebSocket paths against OWASP API risk patterns, including JWT and OAuth issues.<sup><a href="#fn5">[5]</a></sup></li>
+            <li><code>bizlogic-hunter</code>: targets workflow bypass, BOLA, authorization flaws, and race conditions that scanners often miss.<sup><a href="#fn5">[5]</a></sup></li>
+            <li><code>llm-redteam</code>: targets prompt injection, RAG poisoning, tool abuse, and MCP server exploitation using tooling aligned to OWASP LLM Top 10 and MITRE ATLAS.<sup><a href="#fn5">[5]</a></sup></li>
+            <li><code>report-generator</code>: turns validated results into remediation-ready pentest output.<sup><a href="#fn5">[5]</a></sup></li>
+        </ul>
+        <p>pentest-ai-agents also includes a persistent findings database with export and handoff support, which maps well to Runable evidence artifacts and staged-release packets.<sup><a href="#fn5">[5]</a></sup></p>
+
+        <h2>Phase 5b: OpenMythos vulnerability assessment</h2>
+        <p>OpenMythos should be positioned as a targeted vulnerability-assessment engine inside a broader harness, not as a self-sufficient oracle. AISLE's analysis argues that current AI cyber capability is modular, with scanning, detection, triage, patching, and verification functioning as a system rather than a single-model trick. It also argues that smaller and open models can do meaningful detection work when the surrounding system handles ranking, evidence capture, and validation.<sup><a href="#fn4">[4]</a></sup></p>
+        <p>Anthropic's Mythos Preview results make that lesson concrete. In their published assessment, the scaffold autonomously found a 27-year-old OpenBSD TCP bug, a 16-year-old FFmpeg integer mismatch, a 17-year-old FreeBSD NFS remote code execution issue, Linux kernel privilege-escalation chains, and browser JIT heap-spray vulnerabilities across major browsers after only an initial prompt and then independent iterative work.<sup><a href="#fn6">[6]</a></sup></p>
+
+        <h3>Reusable harness design</h3>
+        <p>The core Anthropic workflow is directly reusable for OpenMythos: launch isolated containers with the source code, rank files by attack surface, run many short-context parallel agents on the highest-risk files, and send each candidate bug report to a separate verification layer before a human sees it. Anthropic reported that expert contractors agreed exactly with the model's severity in 89% of 198 manually reviewed reports and were within one severity level in 98% of cases, which is a useful calibration target for your own verification harness.<sup><a href="#fn6">[6]</a></sup></p>
+
+        <h3>Vulnerability classes to prioritize</h3>
+        <ul>
+            <li>Memory-safety boundaries, including unsafe Rust, JNI, ctypes, C, and C++ pointer-heavy code.<sup><a href="#fn6">[6]</a></sup></li>
+            <li>Parser and codec entry points where integer mismatches and sentinel collisions can hide for years.<sup><a href="#fn6">[6]</a></sup></li>
+            <li>Network authentication handlers and packet-processing logic.<sup><a href="#fn6">[6]</a></sup></li>
+            <li>Cryptographic implementation logic around key, certificate, session, and protocol handling.<sup><a href="#fn6">[6]</a></sup></li>
+            <li>Web-application logic where implemented behavior diverges from intended auth, BOLA, or workflow policy.<sup><a href="#fn9">[9]</a></sup><sup><a href="#fn6">[6]</a></sup></li>
+        </ul>
+
+        <h3>File-ranking scoring rubric</h3>
+        <p>Before parallel assessment agents run, a ranking pass should assign each file a 1 to 5 priority score based on attack surface. This mirrors Anthropic's documented scaffold and is one of the easiest high-impact upgrades to make reusable.<sup><a href="#fn6">[6]</a></sup></p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Score</th>
+                    <th>Label</th>
+                    <th>Canonical examples</th>
+                    <th>CI action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>No surface</td>
+                    <td>Constants, enums, auto-generated schema files, pure type definitions, i18n strings</td>
+                    <>Skip. <sup><a href="#fn6">[6]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Minimal</td>
+                    <td>Internal utility functions, formatting logic, in-memory helpers</td>
+                    <td>Low priority. <sup><a href="#fn6">[6]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Moderate</td>
+                    <td>Business logic between validated layers, ORM models, migrations, internal service calls</td>
+                    <td>Queue. <sup><a href="#fn6">[6]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>High</td>
+                    <td>Auth middleware, session management, authorization checks, file upload, admin routes, query builders, deserialization paths</td>
+                    <td>Prioritize. <sup><a href="#fn6">[6]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Critical</td>
+                    <td>Network parsers, protocol implementations, public handlers for user-controlled IDs, crypto primitives, memory-unsafe operations, sandbox boundaries, SSO callbacks, external-data ingestion</td>
+                    <td>Immediate. <sup><a href="#fn6">[6]</a></sup></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Only score 4 and 5 files should enter the first assessment wave. Score 3 files can join lower-priority nightly passes, while scores 1 and 2 are usually skipped entirely.<sup><a href="#fn6">[6]</a></sup></p>
+
+        <h3>Verification agent design</h3>
+        <p>After assessment agents emit findings, a separate verification agent should receive each candidate report and attempt to confirm whether it is real, reachable, and worth escalating. That prompt should force four tasks: a reality check, a severity rating, a false-positive screen, and a structured JSON output containing <code>confirmed</code>, <code>severity</code>, <code>real_and_reachable</code>, <code>reasoning</code>, <code>escalate_to_human</code>, <code>suggested_fix_class</code>, and <code>false_positive_reason</code>.<sup><a href="#fn6">[6]</a></sup></p>
+        <p>This verification layer matters because AI models remain capable of strong sensitivity on vulnerable code while still producing noisy or hedged findings on safe or patched code. The verification step should reject findings that rely on impossible preconditions, affect test-only code, require already-privileged attackers with no escalation path, or merely restate best-practice gaps without an exploit path.<sup><a href="#fn7">[7]</a></sup><sup><a href="#fn6">[6]</a></sup></p>
+
+        <h3>CI integration for nightly OpenMythos runs</h3>
+        <p>The most practical CI pattern is a nightly scheduled workflow with four jobs: <code>rank-files</code>, <code>assess</code> with a matrix of parallel chunks, <code>verify-and-triage</code>, and <code>gate</code>. The assessment prompts should be per-file and short-context rather than monolithic, because both Anthropic and Cloudflare found that narrow, parallel tasks outperform one exhaustive agent session.<sup><a href="#fn7">[7]</a></sup><sup><a href="#fn6">[6]</a></sup></p>
+        <p>All artifacts should be retained: ranked file manifest, chunk findings, verified findings, and Runable-ready evidence JSON. This makes every release auditable and gives security teams data to tune false-positive suppression and attack-surface coverage over time.<sup><a href="#fn1">[1]</a></sup><sup><a href="#fn6">[6]</a></sup></p>
+
+        <h3>Cost and throughput calibration</h3>
+        <p>Anthropic published a useful cost benchmark: one thousand parallel runs against OpenBSD cost under $20,000 in aggregate, and the specific run that found the historical SACK bug cost under $50 in hindsight. The main lesson is not the exact number but the economics of parallel narrow hunts across ranked files rather than one expensive long-context pass over the whole codebase.<sup><a href="#fn6">[6]</a></sup></p>
+
+        <h2>Phase 5c: Cloudflare Project Glasswing lessons</h2>
+        <p>Cloudflare's Project Glasswing offers the clearest published reference architecture for AI vulnerability assessment at scale against real production infrastructure. Over several months they pointed Mythos Preview at more than fifty internal repositories spanning runtime, edge data path, protocol stack, control plane, and open-source dependencies.<sup><a href="#fn7">[7]</a></sup></p>
+
+        <h3>Architectural lessons to copy</h3>
+        <ul>
+            <li>Mythos-class systems are qualitatively better at exploit-chain construction and iterative proof generation than general coding agents.<sup><a href="#fn7">[7]</a></sup></li>
+            <li>Generic coding agents are the wrong shape for whole-repo vulnerability coverage because they saturate context quickly and cannot sustain enough hypotheses in parallel.<sup><a href="#fn7">[7]</a></sup></li>
+            <li>C and C++ code generates more false positives than memory-safe stacks, which means language mix should influence queue design and reviewer staffing.<sup><a href="#fn7">[7]</a></sup></li>
+            <li>Organic model refusals are inconsistent and cannot be treated as a reliable safety boundary. Harness-level controls are still required.<sup><a href="#fn7">[7]</a></sup></li>
+            <li>Faster patching without architecture-aware regression and blast-radius control can ship fixes that are worse than the original bug.<sup><a href="#fn7">[7]</a></sup></li>
+        </ul>
+
+        <h3>Cloudflare's six-stage harness</h3>
+        <p>Cloudflare describes a harness with recon, hunt, validate, gapfill, dedupe, trace, and report stages, where the trace stage answers the most important question: whether attacker-controlled input actually reaches the bug from outside the system. Their design principles align closely with this report: narrow scope improves findings, adversarial review reduces noise, splitting different reasoning tasks across agents works better than bundling them, and many parallel narrow tasks outperform a single exhaustive agent.<sup><a href="#fn7">[7]</a></sup></p>
+
+        <h2>Phase 5d: llm-redteam prompt sequence for AI product features</h2>
+        <p>For any feature that passes user-controlled text into model context, <code>llm-redteam</code> should run a structured prompt sequence against staging before release. This is essential for chat, search, summarization, document Q and A, code-generation copilots, agent tools, and MCP-server-connected experiences.<sup><a href="#fn5">[5]</a></sup></p>
+
+        <h3>Prompt sequence</h3>
+        <ol>
+            <li><strong>Threat-surface mapping:</strong> map where user-controlled input enters context, what system instructions are prepended, what tools or MCP servers are reachable, what data stores can be read or written, and what output channels exist.<sup><a href="#fn5">[5]</a></sup></li>
+            <li><strong>Prompt-injection testing:</strong> attempt direct injection, indirect injection through retrieval or tool output, role override, context extension, encoding bypass, and delimiter-boundary attacks.<sup><a href="#fn5">[5]</a></sup></li>
+            <li><strong>Sensitive-data exposure:</strong> test whether prompts can extract system instructions, secrets, internal paths, or cross-user data through retrieval or tool calls.<sup><a href="#fn5">[5]</a></sup></li>
+            <li><strong>Excessive agency and tool abuse:</strong> attempt unintended tool calls, over-broad function invocation, chained tool misuse, MCP endpoint misuse, and unvalidated user-controlled tool parameters.<sup><a href="#fn5">[5]</a></sup></li>
+            <li><strong>Insecure output handling:</strong> test whether model output can create stored or reflected XSS, query injection, command injection, or path manipulation when downstream components trust its output.<sup><a href="#fn5">[5]</a></sup></li>
+            <li><strong>RAG poisoning:</strong> insert adversarial documents or retrieval content, trigger their retrieval, and observe whether they alter model behavior or override intended instructions.<sup><a href="#fn5">[5]</a></sup></li>
+            <li><strong>Verification and reporting:</strong> emit structured JSON with severity, reproduction steps, OWASP LLM or MITRE ATLAS mapping, blast radius, and recommended mitigation for Runable ingestion.<sup><a href="#fn5">[5]</a></sup></li>
+        </ol>
+        <p>This sequence should be run against staging, not production, and tied to release criteria for any feature where the model can read privileged context, invoke tools, or produce output that downstream systems execute or render.<sup><a href="#fn2">[2]</a></sup><sup><a href="#fn5">[5]</a></sup></p>
+
+        <h2>Phase 6: Governance and release gates</h2>
+        <p>Runable and CI should act as the control tower for the entire workflow. The release gate should be evidence-driven rather than trust-driven: architecture references, scanner results, NanoClaw artifacts, pentest results, OpenMythos findings, remediation status, known exceptions, rollback instructions, and approver sign-off should all be part of the release packet.<sup><a href="#fn2">[2]</a></sup><sup><a href="#fn1">[1]</a></sup><sup><a href="#fn5">[5]</a></sup></p>
+
+        <h3>Release criteria</h3>
+        <p>A release should require all of the following:</p>
+        <ul>
+            <li>All critical scanner findings resolved or explicitly excepted with senior approval.<sup><a href="#fn1">[1]</a></sup></li>
+            <li>All golden NanoClaw journeys passing on staging.<sup><a href="#fn3">[3]</a></sup></li>
+            <li>pentest-ai-agents findings triaged, with confirmed issues either remediated or accepted with rationale.<sup><a href="#fn5">[5]</a></sup></li>
+            <li>OpenMythos high-confidence findings triaged and either remediated or disproven.<sup><a href="#fn4">[4]</a></sup><sup><a href="#fn6">[6]</a></sup></li>
+            <li>Observability checks in place, including logs, metrics, traces, alert routing, and dashboards.<sup><a href="#fn1">[1]</a></sup></li>
+            <li>Rollback documented and, ideally, rehearsed.<sup><a href="#fn1">[1]</a></sup></li>
+            <li>Production config locked behind least privilege, branch protections, immutable CI templates, and reviewed deployment definitions.<sup><a href="#fn2">[2]</a></sup><sup><a href="#fn1">[1]</a></sup></li>
+        </ul>
+
+        <h2>Operating cadence</h2>
+        <p>Different controls should run at different speeds. Fast checks belong in the inner loop, broader analysis belongs in CI, and deeper offensive testing belongs in staging or scheduled nightly windows.<sup><a href="#fn1">[1]</a></sup><sup><a href="#fn6">[6]</a></sup><sup><a href="#fn7">[7]</a></sup></p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Cadence</th>
+                    <th>Control</th>
+                    <th>Tooling</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>On save / pre-commit</td>
+                    <td>Lint, schema checks, unit tests, local scanner rules</td>
+                    <td>Cursor + local scanner</td>
+                </tr>
+                <tr>
+                    <td>On PR</td>
+                    <td>SAST, secrets, dependency scan, auth/BOLA rules</td>
+                    <td>CI scanner stack <sup><a href="#fn9">[9]</a></sup><sup><a href="#fn8">[8]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>On staging deploy</td>
+                    <td>NanoClaw golden journeys and role-path validation</td>
+                    <td>NanoClaw <sup><a href="#fn3">[3]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>Nightly</td>
+                    <td>OpenMythos ranked-file assessment and drift scans</td>
+                    <td>OpenMythos harness <sup><a href="#fn6">[6]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>Weekly or pre-release</td>
+                    <td>pentest-ai-agents offensive sweep, including llm-redteam for AI features</td>
+                    <td>pentest-ai-agents <sup><a href="#fn5">[5]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>Pre-release</td>
+                    <td>Manual exception review, rollback validation, final Runable gate</td>
+                    <td>Humans + Runable <sup><a href="#fn1">[1]</a></sup></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Risk mitigation and remediation strategy</h2>
+        <p>The main risk in vibe-coded delivery is over-trusting the model that generated the code or the model that reviewed it. The mitigation is to assume partial correctness and surround AI output with independent validation at every layer: design review, static scanning, browser execution, offensive testing, vulnerability triage, and governance gates.<sup><a href="#fn4">[4]</a></sup><sup><a href="#fn2">[2]</a></sup><sup><a href="#fn7">[7]</a></sup></p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Risk</th>
+                    <th>Likely failure mode</th>
+                    <th>Primary mitigation</th>
+                    <th>Remediation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Missing auth</td>
+                    <td>Public or weakly protected route</td>
+                    <td>Auth matrix + scanner rule + route tests</td>
+                    <td>Add middleware or dependency guard and regression test. <sup><a href="#fn8">[8]</a></sup><sup><a href="#fn11">[11]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>BOLA</td>
+                    <td>Object ID tampering reveals or mutates another user's record</td>
+                    <td>Ownership policy + query filter + NanoClaw direct-path test + bizlogic testing</td>
+                    <td>Add object-level authorization and deny-by-default logic. <sup><a href="#fn9">[9]</a></sup><sup><a href="#fn3">[3]</a></sup><sup><a href="#fn5">[5]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>Weak validation</td>
+                    <td>Dangerous input reaches server logic</td>
+                    <td>Schema-first validation + server-side enforcement</td>
+                    <td>Centralize validators and add misuse-path tests. <sup><a href="#fn10">[10]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>UI safety failure</td>
+                    <td>Hidden route still reachable, unsafe redirect, unclear failure state</td>
+                    <td>NanoClaw journeys and role-diff checks</td>
+                    <td>Fix navigation, redirects, and error copy. <sup><a href="#fn3">[3]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>LLM prompt injection</td>
+                    <td>User or retrieved content overrides intended model behavior</td>
+                    <td>llm-redteam sequence + tool isolation + retrieval controls</td>
+                    <td>Harden prompts, isolate tools, add output encoding and RAG integrity controls. <sup><a href="#fn5">[5]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>Vulnerability-assessment noise</td>
+                    <td>Team burns time on hedged or false findings</td>
+                    <td>Verification agent + trace stage + severity thresholds</td>
+                    <td>Suppress classes, improve prompts, and require independent confirmation. <sup><a href="#fn6">[6]</a></sup><sup><a href="#fn7">[7]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>Unsafe AI patches</td>
+                    <td>Auto-generated fix changes behavior incorrectly</td>
+                    <td>Human review + tests + reassessment</td>
+                    <td>Minimize diff, add regression tests, and retain rollback path. <sup><a href="#fn7">[7]</a></sup></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>30-60-90 day rollout</h2>
+        
+        <h3>First 30 days</h3>
+        <p>Define the Claude control pack, codify Cursor coding rules, deploy the first scanner rules, and stand up 5 to 10 NanoClaw golden journeys covering login, onboarding, CRUD, and role paths. Install pentest-ai-agents for staging-only use and start with <code>api-security</code>, <code>bizlogic-hunter</code>, and <code>llm-redteam</code> on one product surface.<sup><a href="#fn3">[3]</a></sup><sup><a href="#fn5">[5]</a></sup></p>
+        <p>Use OpenMythos only on the highest-risk code categories in this phase so the team learns what good versus noisy findings look like. Standardize the Runable evidence packet now so later pipeline stages have a stable target.<sup><a href="#fn4">[4]</a></sup><sup><a href="#fn6">[6]</a></sup></p>
+
+        <h3>Days 31 to 60</h3>
+        <p>Expand scanner coverage to more frameworks and database patterns, increase NanoClaw coverage, begin nightly OpenMythos runs against score 4 and 5 files, and operationalize weekly pentest-ai-agents sweeps for staging. Add severity-based merge policies and exception workflows so gates become enforceable rather than advisory.<sup><a href="#fn6">[6]</a></sup><sup><a href="#fn5">[5]</a></sup></p>
+
+        <h3>Days 61 to 90</h3>
+        <p>Add AST-based scanner rules, tune false-positive suppression, add Cloudflare-style trace logic for high-confidence vulnerabilities, measure defect escape rate, and create dashboards for gate pass rates, remediation time, recurring vulnerability classes, and LLM-redteam findings by category.<sup><a href="#fn1">[1]</a></sup><sup><a href="#fn7">[7]</a></sup></p>
+
+        <h2>Success metrics</h2>
+        <ul>
+            <li>Percentage of new routes with explicit auth declaration at design time.<sup><a href="#fn8">[8]</a></sup></li>
+            <li>Percentage of release candidates with zero critical scanner findings.<sup><a href="#fn1">[1]</a></sup></li>
+            <li>NanoClaw pass rate on golden journeys and role-diff tests.<sup><a href="#fn3">[3]</a></sup></li>
+            <li>pentest-ai-agents confirmed-findings rate after triage.<sup><a href="#fn5">[5]</a></sup></li>
+            <li>OpenMythos precision after verification and trace.<sup><a href="#fn7">[7]</a></sup><sup><a href="#fn6">[6]</a></sup></li>
+            <li>Mean time to remediate high-severity issues.<sup><a href="#fn1">[1]</a></sup></li>
+            <li>Defect escape rate from staging to production for auth, validation, UI safety, and AI-feature abuse cases.<sup><a href="#fn8">[8]</a></sup><sup><a href="#fn3">[3]</a></sup><sup><a href="#fn5">[5]</a></sup></li>
+            <li>Percentage of releases with complete evidence packets in Runable.<sup><a href="#fn1">[1]</a></sup></li>
+        </ul>
+
+        <h2>Final recommendation</h2>
+        <p>The most effective path from vibe code to production-grade AI products is not to slow AI coding down to traditional velocity, but to surround it with faster and independent control loops. Claude should define the system and controls, Cursor should implement within those guardrails, scanners should catch structural code issues, NanoClaw should verify browser behavior, pentest-ai-agents should test exploitability in the running product, OpenMythos should probe for deeper source-level vulnerabilities, and Runable plus CI should convert all of that into non-bypassable release gates.<sup><a href="#fn4">[4]</a></sup><sup><a href="#fn3">[3]</a></sup><sup><a href="#fn7">[7]</a></sup><sup><a href="#fn1">[1]</a></sup><sup><a href="#fn5">[5]</a></sup></p>
+        <p>The winning system is not the smartest single model. It is the most disciplined workflow for converting partially trusted AI output into auditable, testable, and reversible software releases.<sup><a href="#fn4">[4]</a></sup><sup><a href="#fn7">[7]</a></sup></p>
+
+        <div class="center">⁂</div>
+
+        <div class="footnotes">
+            <ol>
+                <li id="fn1">https://csrc.nist.gov/projects/ssdf</li>
+                <li id="fn2">https://www.nist.gov/publications/secure-software-development-practices-generative-ai-and-dual-use-foundation-models-ssdf</li>
+                <li id="fn3">https://cheatsheetseries.owasp.org/IndexASVS.html</li>
+                <li id="fn4">https://blog.secureflag.com/2024/11/15/understanding-owasp-asvs/</li>
+                <li id="fn5">https://codific.com/owasp-asvs-a-comprehensive-overview/</li>
+                <li id="fn6">https://github.com/OWASP/ASVS/blob/master/4.0/en/0x12-V4-Access-Control.md</li>
+                <li id="fn7">https://devguide.owasp.org/en/04-design/02-web-app-checklist/05-validate-inputs/</li>
+                <li id="fn8">https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html</li>
+                <li id="fn9">https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/</li>
+                <li id="fn10">https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html</li>
+                <li id="fn11">https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html</li>
+            </ol>
+        </div>
+
+    </div>
+</body>
+</html>
