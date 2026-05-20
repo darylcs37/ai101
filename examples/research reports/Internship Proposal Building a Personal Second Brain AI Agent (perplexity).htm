@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Proposal: Building a Personal "Second Brain" AI Agent</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1, h2, h3, h4 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        h1 { font-size: 1.8rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem; }
+        h2 { font-size: 1.4rem; }
+        h3 { font-size: 1.1rem; }
+        p { margin-bottom: 1rem; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #f9f9f9;
+            font-weight: 600;
+        }
+        ul, ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        a {
+            color: #0056b3;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        blockquote {
+            border-left: 3px solid #ddd;
+            margin-left: 0;
+            padding-left: 1rem;
+            color: #666;
+        }
+        hr {
+            border: 0;
+            border-top: 1px solid #eee;
+            margin: 2rem 0;
+        }
+        .footnotes {
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        .footnotes ol {
+            padding-left: 1.2rem;
+        }
+        .footnotes li {
+            margin-bottom: 0.4rem;
+        }
+        img {
+            height: 64px;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+        <img src="https://r2cdn.perplexity.ai/pplx-full-logo-primary-dark%402x.png" alt="Perplexity Logo">
+    <div class="container">
+        <h1>Internship Proposal: Building a Personal "Second Brain" AI Agent</h1>
+        <p><em>Based on Dr. Vivian Balakrishnan's keynote at AI Engineer Singapore, May 2026</em></p>
+        
+        <hr>
+        
+        <h2>Executive Summary</h2>
+        <p>This proposal outlines a structured internship project to implement a self-hosted, compounding-memory AI assistant — a "Second Brain" — using the open-source stack demonstrated by Singapore's Minister for Foreign Affairs, Dr. Vivian Balakrishnan, at AI Engineer Singapore on 16 May 2026. The system transforms how an individual interacts with information, replacing stateless chatbots with a personal agent that accumulates knowledge over time, communicates via WhatsApp or Telegram, processes voice and documents, and synthesises facts into a structured, human-readable knowledge graph.<sup><a href="#fn1">[1]</a></sup><sup><a href="#fn2">[2]</a></sup><sup><a href="#fn3">[3]</a></sup></p>
+        <p>The core thesis: real AI value is created <strong>at the edge</strong> — workflow by workflow, individual by individual — not only at the frontier model level. Barriers to building this system have already fallen; the components are open-source, battle-tested, and deployable on hardware as modest as a Raspberry Pi 5 with 8 GB RAM.<sup><a href="#fn3">[3]</a></sup><sup><a href="#fn1">[1]</a></sup></p>
+        
+        <h2>Problem Statement</h2>
+        <p>Standard LLM assistants are stateless — they forget everything between sessions. The common fix is RAG (Retrieval-Augmented Generation), but RAG retrieves raw text chunks, not synthesised knowledge. For high-cognitive-load professionals (diplomats, analysts, engineers, researchers), this creates three failure modes:<sup><a href="#fn2">[2]</a></sup></p>
+        <ol>
+            <li><strong>Context loss</strong> — every session requires re-briefing the model on background</li>
+            <li><strong>No accumulation</strong> — the system does not get smarter as you use it</li>
+            <li><strong>Cloud exposure</strong> — sensitive documents must be sent to third-party servers</li>
+        </ol>
+        <p>The NanoClaw architecture solves all three: persistent graph-based memory, continuous knowledge compounding, and entirely local execution for sensitive content.<sup><a href="#fn4">[4]</a></sup><sup><a href="#fn2">[2]</a></sup></p>
+        
+        <h2>Project Overview</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Attribute</th>
+                    <th>Detail</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Duration</strong></td>
+                    <td>10–14 weeks</td>
+                </tr>
+                <tr>
+                    <td><strong>Team size</strong></td>
+                    <td>1–2 interns (1 backend, optionally 1 DevOps/infra)</td>
+                </tr>
+                <tr>
+                    <td><strong>Primary stack</strong></td>
+                    <td>Node.js/TypeScript, Docker, SQLite, Ollama, Obsidian</td>
+                </tr>
+                <tr>
+                    <td><strong>AI backbone</strong></td>
+                    <td>Anthropic Claude (via Claude Code + Claude Agent SDK)</td>
+                </tr>
+                <tr>
+                    <td><strong>Target platform</strong></td>
+                    <td>macOS / Linux server (Proxmox VM, Raspberry Pi 5, or cloud VPS)</td>
+                </tr>
+                <tr>
+                    <td><strong>Primary reference</strong></td>
+                    <td><a href="https://github.com/qwibitai/nanoclaw">github.com/qwibitai/nanoclaw</a> <sup><a href="#fn2">[2]</a></sup><sup><a href="#fn5">[5]</a></sup></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h2>System Architecture</h2>
+        <p>The stack has three logical layers that mirror how human memory works: raw storage, structured recall, and narrative synthesis.<sup><a href="#fn2">[2]</a></sup></p>
+        
+        <pre><code>Raw Sources → mnemon Knowledge Graph → Wiki Pages
+(transcripts,    (structured facts,       (narrative summaries,
+ articles,        graph nodes,             cross-referenced,
+ web clips)       semantic retrieval)      browsable in Obsidian)</code></pre>
+        
+        <h3>Core Components</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Component</th>
+                    <th>Role</th>
+                    <th>Key Technology</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>NanoClaw orchestrator</strong></td>
+                    <td>Message loop, container management, channel routing</td>
+                    <td>Node.js + TypeScript<sup><a href="#fn2">[2]</a></sup></td>
+                </tr>
+                <tr>
+                    <td><strong>Claude Agent SDK</strong></td>
+                    <td>Runs agent logic in isolated Docker containers per group</td>
+                    <td>Anthropic SDK<sup><a href="#fn2">[2]</a></sup></td>
+                </tr>
+                <tr>
+                    <td><strong>Baileys</strong></td>
+                    <td>WhatsApp Web protocol bridge (no business API needed)</td>
+                    <td>TypeScript library<sup><a href="#fn6">[6]</a></sup><sup><a href="#fn7">[7]</a></sup></td>
+                </tr>
+                <tr>
+                    <td><strong>mnemon</strong></td>
+                    <td>Custom CLI knowledge graph tool — SQLite + graph traversal</td>
+                    <td>Go binary<sup><a href="#fn8">[8]</a></sup></td>
+                </tr>
+                <tr>
+                    <td><strong>Ollama + nomic-embed-text</strong></td>
+                    <td>Local vector embeddings for semantic recall (no cloud calls)</td>
+                    <td>~275 MB model, runs on Pi<sup><a href="#fn2">[2]</a></sup><sup><a href="#fn9">[9]</a></sup></td>
+                </tr>
+                <tr>
+                    <td><strong>whisper.cpp</strong></td>
+                    <td>Local voice transcription of WhatsApp voice notes</td>
+                    <td>On-device, private<sup><a href="#fn2">[2]</a></sup></td>
+                </tr>
+                <tr>
+                    <td><strong>Obsidian</strong></td>
+                    <td>IDE/frontend for viewing wiki pages, synced via iCloud</td>
+                    <td>macOS/iOS app<sup><a href="#fn10">[10]</a></sup></td>
+                </tr>
+                <tr>
+                    <td><strong>Docker</strong></td>
+                    <td>Container isolation — one container per agent group</td>
+                    <td>Container runtime<sup><a href="#fn2">[2]</a></sup></td>
+                </tr>
+                <tr>
+                    <td><strong>SQLite</strong></td>
+                    <td>Message store, group registry, task scheduler</td>
+                    <td>Embedded DB<sup><a href="#fn2">[2]</a></sup></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Memory Flow (on every agent invocation)</h3>
+        <ol>
+            <li>User sends message via WhatsApp/Telegram</li>
+            <li>Baileys delivers message to NanoClaw orchestrator</li>
+            <li>mnemon runs a semantic query against the knowledge graph using nomic-embed-text embeddings</li>
+            <li>Relevant facts are injected as system context before the Claude agent responds</li>
+            <li>Agent response is returned to the user via the same channel</li>
+            <li>New facts are extracted and written back to mnemon graph</li>
+        </ol>
+        
+        <h2>Phase-by-Phase Implementation Guide</h2>
+        
+        <h3>Phase 0 — Environment Setup (Week 1)</h3>
+        <p><strong>Goal:</strong> All prerequisites installed, Claude Code working, Docker running.</p>
+        <p><strong>Steps:</strong></p>
+        <ol>
+            <li><strong>Install Node.js 20+</strong>
+                <pre><code># macOS
+brew install node@20
+# Ubuntu/Linux
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs</code></pre>
+            </li>
+            <li><strong>Install Docker Desktop</strong> — download from docker.com; ensure Docker daemon is running before proceeding<sup><a href="#fn11">[11]</a></sup></li>
+            <li><strong>Install Claude Code and authenticate</strong>
+                <pre><code>npm install -g @anthropic-ai/claude-code
+claude login
+# Verify: claude --version</code></pre>
+                Claude Code is mandatory — NanoClaw's <code>/setup</code> workflow runs entirely inside it<sup><a href="#fn12">[12]</a></sup><sup><a href="#fn11">[11]</a></sup>
+            </li>
+            <li><strong>Install Ollama</strong> (for local embeddings)
+                <pre><code># macOS
+brew install ollama
+brew services start ollama
+# Pull the embedding model
+ollama pull nomic-embed-text</code></pre>
+                The nomic-embed-text model is ~275 MB and runs efficiently on CPU-only hardware including Raspberry Pi 5<sup><a href="#fn9">[9]</a></sup><sup><a href="#fn2">[2]</a></sup>
+            </li>
+            <li><strong>Install mnemon</strong> (knowledge graph CLI)
+                <pre><code>brew install mnemon-dev/tap/mnemon
+# or via Go
+go install github.com/mnemon-dev/mnemon@latest
+# Verify
+mnemon --version
+mnemon setup   # auto-detects Claude Code</code></pre>
+                mnemon is an LLM-supervised graph — the host LLM makes judgment calls (what to remember, how to link, when to forget); the binary handles deterministic storage and retrieval<sup><a href="#fn8">[8]</a></sup>
+            </li>
+        </ol>
+        <p><strong>Checkpoint:</strong> Run <code>node --version && docker --version && claude --version && ollama list && mnemon --version</code> — all must return versions.</p>
+        
+        <h3>Phase 1 — NanoClaw Core Setup (Week 2)</h3>
+        <p><strong>Goal:</strong> NanoClaw running, able to receive and respond to one test message.</p>
+        <p><strong>Steps:</strong></p>
+        <ol>
+            <li><strong>Fork and clone the repository</strong>
+                <pre><code>gh repo fork qwibitai/nanoclaw --clone
+cd nanoclaw</code></pre>
+            </li>
+            <li><strong>Open Claude Code inside the project directory</strong>
+                <pre><code>claude</code></pre>
+                <blockquote>Important: always launch <code>claude</code> from within the <code>nanoclaw/</code> folder — the <code>/setup</code> skill reads the project's <code>CLAUDE.md</code> and project structure<sup><a href="#fn12">[12]</a></sup></blockquote>
+            </li>
+            <li><strong>Run the guided setup skill</strong>
+                <pre><code>/setup</code></pre>
+                Claude will automatically: install all npm dependencies, create <code>.env</code> with your Anthropic API key, build the Docker container image, configure the system service (launchd on macOS, systemd on Linux), and start NanoClaw in the background<sup><a href="#fn11">[11]</a></sup>
+            </li>
+            <li><strong>Verify the service is running</strong>
+                <pre><code># Linux
+systemctl --user status nanoclaw
+# macOS — check via Console.app or:
+ps aux | grep nanoclaw</code></pre>
+            </li>
+            <li><strong>Send a test message</strong> — from inside <code>claude</code>, type a plain message. Confirm a Claude response appears.</li>
+        </ol>
+        <p><strong>Checkpoint:</strong> Agent responds to a basic text message with no errors in logs.</p>
+        
+        <h3>Phase 2 — WhatsApp Channel Integration (Week 3)</h3>
+        <p><strong>Goal:</strong> Communicate with the agent via WhatsApp on your personal phone.</p>
+        <p><strong>Steps:</strong></p>
+        <ol>
+            <li><strong>Add WhatsApp channel</strong> — inside <code>claude</code>, run:
+                <pre><code>/add-whatsapp</code></pre>
+            </li>
+            <li><strong>Scan QR code</strong> — Claude will display a terminal QR code. On your phone: WhatsApp → Settings → Linked Devices → Link a Device → Scan<sup><a href="#fn11">[11]</a></sup></li>
+            <li><strong>Test the connection</strong>
+                <pre><code>@Andy hello</code></pre>
+                You should receive a response in the same chat within seconds.
+            </li>
+        </ol>
+        <p><strong>About Baileys:</strong> The WhatsApp integration uses Baileys, a TypeScript library that connects to the WhatsApp Web WebSocket protocol using the Linked Devices feature. It does not use the official WhatsApp Business API. As a result, it is technically unofficial — acceptable for personal/research use but should not be used in production commercial deployments.<sup><a href="#fn13">[13]</a></sup><sup><a href="#fn6">[6]</a></sup><sup><a href="#fn7">[7]</a></sup></p>
+        <p><strong>Telegram alternative</strong> — if WhatsApp is unsuitable for your context, use Telegram instead:
+        <pre><code>/add-telegram</code></pre>
+        This requires creating a bot via @BotFather on Telegram, then providing the bot token.<sup><a href="#fn11">[11]</a></sup></p>
+        <p><strong>Checkpoint:</strong> Two-way messaging via WhatsApp, agent trigger word (<code>@Andy</code>) works reliably.</p>
+        
+        <h3>Phase 3 — Memory System & Knowledge Graph (Weeks 4–5)</h3>
+        <p><strong>Goal:</strong> Agent accumulates and recalls knowledge across sessions.</p>
+        <p><strong>Background:</strong> The mnemon knowledge graph stores facts as discrete nodes with content, category, importance scores, tags, timestamps, and graph edges to related entries. This is fundamentally different from RAG: instead of retrieving raw text, mnemon retrieves synthesised, linked facts that have been validated and deduplicated by the LLM supervisor.<sup><a href="#fn8">[8]</a></sup><sup><a href="#fn2">[2]</a></sup></p>
+        <p><strong>Steps:</strong></p>
+        <ol>
+            <li><strong>Ingest your first source documents</strong> — place markdown files in the <code>groups/global/transcripts/</code> directory. These can be meeting notes, articles, or speeches<sup><a href="#fn2">[2]</a></sup></li>
+            <li><strong>Trigger the ingest pipeline</strong> — inside <code>claude</code>:
+                <pre><code>ingest the documents in transcripts/ into the knowledge graph</code></pre>
+            </li>
+            <li><strong>Test semantic recall</strong> — send a question about the ingested content via WhatsApp:
+                <pre><code>@Andy what are the key points from [document topic]?</code></pre>
+                Verify that the agent surfaces specific facts from the graph, not just generic LLM knowledge.
+            </li>
+            <li><strong>Configure the article watcher</strong> (optional but recommended) — NanoClaw includes a <code>watch-articles.sh</code> script using <code>inotifywait</code> that automatically triggers an ingest task whenever new files appear in a watched folder:<sup><a href="#fn2">[2]</a></sup>
+                <pre><code># The watcher is managed by systemd — enable it:
+systemctl --user enable nanoclaw-article-watcher
+systemctl --user start nanoclaw-article-watcher</code></pre>
+            </li>
+            <li><strong>Explore the mnemon graph structure</strong> — the graph maintains two stores:
+                <ul>
+                    <li><strong>Global store</strong> — shared knowledge across all groups; read-only for non-main agents</li>
+                    <li><strong>Local store</strong> — per-group memory, writable only by that group's agent<sup><a href="#fn2">[2]</a></sup></li>
+                </ul>
+            </li>
+        </ol>
+        <p><strong>Checkpoint:</strong> Agent correctly references specific ingested facts when asked, and the mnemon graph is growing as new documents are processed.</p>
+        
+        <h3>Phase 4 — LLM Wiki Synthesis (Weeks 5–6)</h3>
+        <p><strong>Goal:</strong> Implement Andrej Karpathy's LLM Wiki pattern to compile raw facts into a human-readable, cross-linked knowledge base browsable in Obsidian.</p>
+        <p><strong>Background:</strong> Karpathy's LLM Wiki approach (shared April 2026) compiles raw documents into a structured wiki of <code>.md</code> files organised into concepts, entities, and timelines. Unlike indexing documents whole, the LLM reads each source once and writes synthesised, interlinked articles. The wiki grows incrementally as new sources are added.<sup><a href="#fn10">[10]</a></sup><sup><a href="#fn14">[14]</a></sup><sup><a href="#fn15">[15]</a></sup></p>
+        <p><strong>Steps:</strong></p>
+        <ol>
+            <li><strong>Set up Obsidian vault structure</strong>
+                <pre><code>vault/
+  raw/          ← source documents (never modified by agent)
+  knowledge/
+    entities/   ← people, organisations
+    concepts/   ← topics, ideas
+    timelines/  ← chronological views</code></pre>
+            </li>
+            <li><strong>Create a <code>CLAUDE.md</code> schema file</strong> in the vault root — this instructs the LLM how to structure wiki articles, what categories to use, and how to cross-reference entries. Example:<sup><a href="#fn14">[14]</a></sup>
+                <pre><code># Wiki Schema
+## Article format
+Each article covers one entity or concept.
+Include: definition, key facts, cross-references (wikilinks), and sources.
+## Categories
+- entities/: People, organisations, places
+- concepts/: Ideas, frameworks, policies
+- timelines/: Events ordered by date</code></pre>
+            </li>
+            <li><strong>Trigger wiki compilation</strong> — inside <code>claude</code> or via WhatsApp:
+                <pre><code>@Andy compile the wiki from documents in raw/</code></pre>
+            </li>
+            <li><strong>Set up Obsidian sync to mobile</strong> — Dr. Balakrishnan's approach uses iCloud + rsync from a Mac Mini. A simpler alternative for an internship context is git-based sync or Obsidian Sync.<sup><a href="#fn2">[2]</a></sup></li>
+            <li><strong>Add the Obsidian Web Clipper browser extension</strong> — this lets you clip web articles directly into the <code>raw/</code> folder for automatic ingestion<sup><a href="#fn10">[10]</a></sup></li>
+        </ol>
+        <p><strong>Checkpoint:</strong> Obsidian vault contains auto-generated wiki articles with wikilinks between entries. Asking the agent a complex cross-topic question returns answers that cite specific wiki articles.</p>
+        
+        <h3>Phase 5 — Voice Interface (Week 7)</h3>
+        <p><strong>Goal:</strong> Send voice notes via WhatsApp; agent transcribes and responds.</p>
+        <p>NanoClaw uses whisper.cpp, a lightweight C++ port of OpenAI's Whisper ASR model, to transcribe voice notes entirely on-device. This keeps audio content private — nothing is sent to cloud services.<sup><a href="#fn2">[2]</a></sup></p>
+        <p><strong>Steps:</strong></p>
+        <ol>
+            <li><strong>Verify whisper.cpp is installed</strong> — the <code>/setup</code> skill installs it automatically. Confirm with:
+                <pre><code>which whisper-cpp</code></pre>
+            </li>
+            <li><strong>Send a voice note</strong> — in WhatsApp, hold the microphone button and speak. NanoClaw will:
+                <ul>
+                    <li>Receive the audio file via Baileys</li>
+                    <li>Transcribe it using whisper.cpp (base model)</li>
+                    <li>Pass the transcript to the Claude agent as a text message</li>
+                    <li>Respond in text (or voice, if TTS is configured)</li>
+                </ul>
+            </li>
+            <li><strong>Test with a complex query</strong> — try a spoken factual question about ingested documents to verify the full voice → transcription → graph recall → response pipeline.</li>
+        </ol>
+        <p><strong>Checkpoint:</strong> Voice notes are transcribed correctly; agent responds with relevant knowledge-graph-informed answers.</p>
+        
+        <h3>Phase 6 — Task Scheduler & Automated Briefings (Week 8)</h3>
+        <p><strong>Goal:</strong> Schedule recurring tasks such as morning briefings, news summaries, and reminder queries.</p>
+        <p><strong>Steps:</strong></p>
+        <ol>
+            <li><strong>Create a scheduled briefing</strong> — via WhatsApp:
+                <pre><code>@Andy every weekday at 8am, give me a morning briefing: top 3 AI news, any scheduled meetings, and one fact from my knowledge graph</code></pre>
+            </li>
+            <li><strong>Configure pre-check scripts</strong> — for tasks that check external conditions (e.g., "did any new articles arrive?"), use a bash pre-check script. The scheduler only wakes the agent if the script returns <code>wakeAgent: true</code>. This minimises API token usage:<sup><a href="#fn2">[2]</a></sup>
+                <pre><code>#!/bin/bash
+# pre-check.sh — check if new articles exist
+count=$(find /path/to/raw -newer /tmp/last-check -name "*.md" | wc -l)
+if [ "$count" -gt 0 ]; then
+  echo '{"wakeAgent": true}'
+else
+  echo '{"wakeAgent": false}'
+fi
+touch /tmp/last-check</code></pre>
+            </li>
+            <li><strong>Test cron, interval, and one-time tasks</strong> — NanoClaw's scheduler supports all three modes<sup><a href="#fn2">[2]</a></sup></li>
+        </ol>
+        <p><strong>Checkpoint:</strong> At least one recurring scheduled task runs autonomously without manual trigger.</p>
+        
+        <h3>Phase 7 — Security Hardening (Week 9)</h3>
+        <p><strong>Goal:</strong> Apply production-grade security controls appropriate for sensitive personal data.</p>
+        <p>Dr. Balakrishnan's security approach: "only put what is already open source, what is already published, and subject your systems to transparency and scrutiny that can be withstood". For more sensitive deployments, additional controls are needed.<sup><a href="#fn1">[1]</a></sup></p>
+        <p><strong>Key security controls to implement:</strong></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Control</th>
+                    <th>Implementation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>API key isolation</strong></td>
+                    <td>Containers never see raw API keys — OneCLI proxy intercepts HTTPS and injects credentials<sup><a href="#fn2">[2]</a></sup></td>
+                </tr>
+                <tr>
+                    <td><strong>Sender allowlist</strong></td>
+                    <td>Only authorised phone numbers/users can trigger the agent<sup><a href="#fn2">[2]</a></sup></td>
+                </tr>
+                <tr>
+                    <td><strong>Mount allowlist</strong></td>
+                    <td>Stored outside project root; blocks sensitive paths (<code>.ssh</code>, <code>.aws</code>, <code>*.pem</code>)<sup><a href="#fn2">[2]</a></sup></td>
+                </tr>
+                <tr>
+                    <td><strong>Per-group IPC namespacing</strong></td>
+                    <td>Each group can only send to its own JID; identity verified by directory path, not message content<sup><a href="#fn2">[2]</a></sup></td>
+                </tr>
+                <tr>
+                    <td><strong>Local embeddings</strong></td>
+                    <td>nomic-embed-text runs on-device — knowledge base content never leaves the machine<sup><a href="#fn2">[2]</a></sup></td>
+                </tr>
+                <tr>
+                    <td><strong>Local transcription</strong></td>
+                    <td>whisper.cpp on-device — voice notes stay private<sup><a href="#fn2">[2]</a></sup></td>
+                </tr>
+            </tbody>
+        </table>
+        <p><strong>Additional hardening for enterprise contexts:</strong></p>
+        <ul>
+            <li>Enable Docker network policies to restrict container egress</li>
+            <li>Rotate Anthropic API keys on a schedule</li>
+            <li>Set up log monitoring for unexpected container spawns</li>
+            <li>Consider running on an isolated VLAN if connecting to sensitive internal documents</li>
+        </ul>
+        
+        <h3>Phase 8 — Evaluation & Documentation (Weeks 10–11)</h3>
+        <p><strong>Goal:</strong> Measure system performance, identify gaps, and produce handover documentation.</p>
+        <p><strong>Evaluation criteria:</strong></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Target</th>
+                    <th>How to Measure</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Memory recall accuracy</td>
+                    <td>>80% of ingested facts retrievable</td>
+                    <td>Test set of 20 factual Q&A pairs</td>
+                </tr>
+                <tr>
+                    <td>Response latency (WhatsApp)</td>
+                    <td>&lt;10 seconds end-to-end</td>
+                    <td>Stopwatch from send to receive</td>
+                </tr>
+                <tr>
+                    <td>Voice transcription WER</td>
+                    <td>&lt;10% word error rate</td>
+                    <td>Compare whisper output to ground truth</td>
+                </tr>
+                <tr>
+                    <td>Uptime over 7-day period</td>
+                    <td>>99%</td>
+                    <td>System monitoring logs</td>
+                </tr>
+                <tr>
+                    <td>Wiki article quality</td>
+                    <td>Human review by supervisor</td>
+                    <td>Coherence, cross-links, accuracy</td>
+                </tr>
+                <tr>
+                    <td>API cost per day</td>
+                    <td>Track and stay within budget</td>
+                    <td>Anthropic usage dashboard</td>
+                </tr>
+            </tbody>
+        </table>
+        <p><strong>Documentation deliverables:</strong></p>
+        <ol>
+            <li>Architecture diagram (draw.io or Mermaid)</li>
+            <li>Setup guide for a new user starting from zero</li>
+            <li><code>CLAUDE.md</code> templates for different use cases (diplomat, developer, researcher)</li>
+            <li>Known limitations and failure modes log</li>
+            <li>Recommended extensions (Gmail integration, subagent teams, Obsidian mobile sync)</li>
+        </ol>
+        
+        <h2>Week-by-Week Timeline</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Week</th>
+                    <th>Phase</th>
+                    <th>Milestone</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Environment Setup</td>
+                    <td>All prerequisites installed and verified</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>NanoClaw Core</td>
+                    <td>Agent running, responds to test message</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>WhatsApp/Telegram</td>
+                    <td>Two-way messaging channel live</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Knowledge Graph</td>
+                    <td>mnemon ingesting documents, semantic recall working</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>LLM Wiki</td>
+                    <td>Obsidian vault with auto-compiled wiki articles</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Wiki Polish</td>
+                    <td>Cross-linked wiki, mobile sync via iCloud/Obsidian</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>Voice Interface</td>
+                    <td>Voice notes transcribed and processed by agent</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>Task Scheduler</td>
+                    <td>Morning briefing running on cron schedule</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>Security Hardening</td>
+                    <td>Allowlists, container isolation, API key proxy</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>Evaluation</td>
+                    <td>Test suite run, metrics recorded</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>Documentation</td>
+                    <td>Full handover docs, setup guide, CLAUDE.md templates</td>
+                </tr>
+                <tr>
+                    <td>12 (optional)</td>
+                    <td>Extensions</td>
+                    <td>Gmail integration, subagent teams, Telegram fallback</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h2>Technical Prerequisites for the Intern</h2>
+        <p><strong>Required:</strong></p>
+        <ul>
+            <li>Comfortable with Linux/macOS terminal (bash commands, file navigation)</li>
+            <li>Basic understanding of Docker containers</li>
+            <li>Node.js/TypeScript familiarity (read and debug code, not necessarily write from scratch)</li>
+            <li>Git workflow (fork, clone, commit, push)</li>
+        </ul>
+        <p><strong>Helpful but not required:</strong></p>
+        <ul>
+            <li>Go (mnemon is a Go binary — useful for deep debugging)</li>
+            <li>Networking fundamentals (for security phase)</li>
+            <li>Understanding of vector embeddings and semantic search</li>
+        </ul>
+        <p><strong>Not required:</strong></p>
+        <ul>
+            <li>ML/AI research background</li>
+            <li>Experience with Anthropic APIs (Claude Code handles most abstraction)</li>
+            <li>Raspberry Pi hardware (any Linux server or developer laptop suffices)</li>
+        </ul>
+        <p>As Dr. Balakrishnan noted: <em>"I didn't write any code. I was just assembling tools"</em> — the project is fundamentally about composing existing open-source components, not building from scratch.<sup><a href="#fn16">[16]</a></sup><sup><a href="#fn1">[1]</a></sup></p>
+        
+        <h2>Expected Outcomes</h2>
+        <p>By the end of the internship, the intern will have:</p>
+        <ol>
+            <li><strong>A working personal AI agent</strong> — self-hosted, runs 24/7, communicates via WhatsApp</li>
+            <li><strong>A compounding knowledge base</strong> — mnemon graph + Obsidian wiki that grows with each ingested document</li>
+            <li><strong>Practical LLM systems experience</strong> — agent orchestration, memory architectures, container isolation, local embeddings</li>
+            <li><strong>Security-aware system design skills</strong> — applied to a real system with personal/sensitive data</li>
+            <li><strong>A replicable template</strong> — setup guide and CLAUDE.md templates usable by others in the organisation</li>
+        </ol>
+        
+        <h2>Resource Requirements</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Resource</th>
+                    <th>Estimated Cost/Source</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Anthropic Claude API credits</td>
+                    <td>~USD $20–50/month for personal use<sup><a href="#fn1">[1]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>Hardware</td>
+                    <td>Existing developer laptop (macOS/Linux) or Raspberry Pi 5 (~USD $80)<sup><a href="#fn1">[1]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>Obsidian</td>
+                    <td>Free for personal use</td>
+                </tr>
+                <tr>
+                    <td>Ollama</td>
+                    <td>Free, open-source</td>
+                </tr>
+                <tr>
+                    <td>NanoClaw</td>
+                    <td>Free, open-source (github.com/qwibitai/nanoclaw)<sup><a href="#fn2">[2]</a></sup></td>
+                </tr>
+                <tr>
+                    <td>Docker Desktop</td>
+                    <td>Free for personal/educational use</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Total incremental cost: primarily API credits, estimated USD $50–150 over the internship period.</p>
+        
+        <h2>Key References</h2>
+        <ul>
+            <li>NanoClaw GitHub: <a href="https://github.com/qwibitai/nanoclaw">github.com/qwibitai/nanoclaw</a><sup><a href="#fn5">[5]</a></sup><sup><a href="#fn2">[2]</a></sup></li>
+            <li>Dr. Vivian Balakrishnan's technical write-up: <a href="https://gist.github.com/VivianBalakrishnan/a7d4eec3833baee4971a0ee54b08f322">gist.github.com/VivianBalakrishnan</a><sup><a href="#fn2">[2]</a></sup></li>
+            <li>Andrej Karpathy's LLM Wiki pattern: <a href="https://x.com/karpathy/status/2039805659525644595">x.com/karpathy — April 2026</a><sup><a href="#fn15">[15]</a></sup><sup><a href="#fn10">[10]</a></sup></li>
+            <li>mnemon knowledge graph CLI: <a href="https://pkg.go.dev/github.com/mnemon-dev/mnemon">github.com/mnemon-dev/mnemon</a><sup><a href="#fn8">[8]</a></sup></li>
+            <li>Baileys WhatsApp library: <a href="https://baileys.wiki/docs/intro/">baileys.wiki</a><sup><a href="#fn6">[6]</a></sup></li>
+            <li>Ollama embedding models: <a href="https://ollama.com/library/nomic-embed-text">ollama.com/library/nomic-embed-text</a><sup><a href="#fn9">[9]</a></sup></li>
+            <li>NanoClaw setup guide (beginner-friendly): <a href="https://www.progressiverobot.com/2026/04/09/how-to-set-up-nanoclaw/">progressiverobot.com</a><sup><a href="#fn12">[12]</a></sup></li>
+            <li>NanoClaw complete workflows guide: <a href="https://luonghongthuan.com/en/blog/nanoclaw-complete-guide-setup-workflows/">luonghongthuan.com</a><sup><a href="#fn11">[11]</a></sup></li>
+        </ul>
+        
+        <hr>
+        
+        <div class="footnotes">
+            <h2>References</h2>
+            <ol>
+                <li id="fn1"><a href="https://github.com/flepied/second-brain-agent">Second Brain AI agent - GitHub</a> - Introducing the Second Brain AI Agent Project: Empowering Your Personal Knowledge Management. Are yo...</li>
+                <li id="fn2"><a href="https://gist.github.com/VivianBalakrishnan/a7d4eec3833baee4971a0ee54b08f322">NanoClaw — Personal Claude Assistant (second brain for a diplomat)</a> - NanoClaw is a personal AI assistant built on Anthropic's Claude that runs entirely on a Raspberry Pi...</li>
+                <li id="fn3"><a href="https://www.indiatoday.in/technology/news/story/singapore-fm-vivian-balakrishnan-warns-against-overusing-ai-after-building-claude-ai-brain-2913466-2026-05-18">Singapore FM Vivian Balakrishnan warns against overusing AI after ...</a> - At the conference, he also explained how he built the Claude-powered agent on the NanoClaw platform ...</li>
+                <li id="fn4"><a href="https://www.facebook.com/Vivian.Balakrishnan.Sg/posts/ai-agents-have-crossed-a-threshold-i-didnt-expect-so-soon-not-just-impressive-de/1488408045986202/">AI agents have crossed a threshold I didn't expect so soon. Not just ...</a> - The NanoClaw + LLM Wiki combination is a compelling architecture — persistent agents with a compound...</li>
+                <li id="fn5"><a href="https://github.com/nanocoai/nanoclaw">GitHub - nanocoai/nanoclaw</a> - Requirements · macOS or Linux (Windows via WSL2) · Node.js 20+ and pnpm 10+ (the installer will inst...</li>
+                <li id="fn6"><a href="https://baileys.wiki/docs/intro/">Baileys: Introduction</a> - This guide is a work in progress and does not reflect the full functionality or the final/current st...</li>
+                <li id="fn7"><a href="https://www.npmjs.com/package/baileys">baileys - NPM</a> - WhatsApp provides a multi-device API that allows Baileys to be authenticated as a second WhatsApp cl...</li>
+                <li id="fn8"><a href="https://pkg.go.dev/github.com/mnemon-dev/mnemon@v0.1.2">mnemon</a></li>
+                <li id="fn9"><a href="https://ollama.com/library/nomic-embed-text">nomic-embed-text - Ollama</a> - This model is an embedding model, meaning it can only be used to generate embeddings. REST API. curl...</li>
+                <li id="fn10"><a href="https://x.com/karpathy/status/2039805659525644595">Andrej Karpathy on X: "LLM Knowledge Bases Something I'm finding very useful recently: using LLMs to build personal knowledge bases for various topics of research interest. In this way, a large fraction of my recent token throughput is going less into manipulating code, and more into manipulating" / X</a></li>
+                <li id="fn11"><a href="https://luonghongthuan.com/en/blog/nanoclaw-complete-guide-setup-workflows/">NanoClaw Complete Guide 2026: Install, Setup & Real Workflows ...</a> - Step-by-step guide to install NanoClaw on macOS, WSL Windows, and Proxmox. Includes real workflows f...</li>
+                <li id="fn12"><a href="https://www.progressiverobot.com/2026/04/09/how-to-set-up-nanoclaw/">How to Set Up NanoClaw: A Beginner-Friendly Guide</a> - 1. Prepare the host environment · 2. Install and test Claude Code first · 3. Clone the NanoClaw repo...</li>
+                <li id="fn13"><a href="https://www.youtube.com/watch?v=ehFbkAncwqk">WhatsApp Bot using Baileys (Unofficial API) | Nexos Creator</a> - ... WhatsApp bot built using the Baileys library, an unofficial WhatsApp Web API for Node.js. It all...</li>
+                <li id="fn14"><a href="https://www.youtube.com/watch?v=iXd0t60YmMw">Karpathy's LLM Wiki - Full Beginner Setup Guide</a> - How to build Karpathy's LLM Wiki. There's a smarter way to use AI with your documents, and it comes ...</li>
+                <li id="fn15"><a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f">LLM Wiki - GitHub Gist</a> - llm-wiki. GitHub Gist: instantly share code, notes, and snippets.</li>
+                <li id="fn16"><a href="https://x.com/VivianBala/status/2048091462131405169">Thanks @Gavriel_Cohen. You're right. I never used an IDE. Claude ...</a> - It answers questions, drafts speeches, condenses information. He says he doesn't dare switch it off....</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>
