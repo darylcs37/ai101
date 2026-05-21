@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Proposal: AI-Powered Supply Chain Monitoring</title>
+    <meta name="description" content="A structured internship project to build a live, 24/7 AI agent team for autonomous supply chain monitoring using OpenClaw.">
+    <style>
+        :root {
+            /* Minimalist Color Palette */
+            --bg-body: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-code: #2d2d2d;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --accent: #2563eb; /* Royal Blue */
+            --accent-hover: #1d4ed8;
+            --border: #e5e7eb;
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            --max-width: 840px;
+            --header-height: 70px;
+        }
+
+        /* Reset & Base */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--text-main);
+            background-color: var(--bg-body);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            line-height: 1.3;
+            font-weight: 700;
+            margin-bottom: 0.75em;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        h2 { font-size: 1.75rem; margin-top: 3rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        h3 { font-size: 1.35rem; margin-top: 2rem; }
+        h4 { font-size: 1.1rem; margin-top: 1.5rem; font-weight: 600; }
+
+        p { margin-bottom: 1.25rem; }
+        ul, ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+        li { margin-bottom: 0.5rem; }
+
+        /* Layout */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+        }
+
+        .brand {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            text-decoration: none !important;
+        }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        nav a:hover {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        main {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 3rem 1.5rem 6rem;
+        }
+
+        /* Components */
+        .hero {
+            padding: 2rem 0 4rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 3rem;
+        }
+
+        .hero-meta {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--text-main);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background-color 0.2s;
+            text-decoration: none !important;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            background-color: var(--accent);
+        }
+
+        blockquote {
+            border-left: 4px solid var(--accent);
+            margin: 1.5rem 0;
+            padding: 0.5rem 1.5rem;
+            background: var(--bg-secondary);
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Tables */
+        .table-container {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            min-width: 600px; /* Ensure scroll on small screens */
+        }
+
+        th, td {
+            text-align: left;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background-color: var(--bg-secondary);
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: #f1f5f9;
+        }
+
+        /* Code Blocks */
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+        }
+
+        code {
+            font-family: var(--font-mono);
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: var(--text-main);
+        }
+
+        /* Inline Code */
+        p code, li code {
+            background: var(--bg-secondary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.85em;
+            color: #d63384; /* Pinkish for inline code to stand out */
+        }
+
+        /* Specific Block Styles */
+        .arch-diagram {
+            background: var(--bg-code);
+            color: #e5e7eb;
+            border: none;
+            font-family: var(--font-mono);
+            line-height: 1.4;
+        }
+        
+        .arch-diagram code { color: inherit; }
+
+        .phase-card {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .phase-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        .phase-tag {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            background: var(--bg-secondary);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            color: var(--text-muted);
+        }
+
+        /* File Content Representation */
+        .file-block {
+            border-left: 3px solid #fbbf24; /* Amber */
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .file-name {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .references-list {
+            list-style-type: decimal;
+            padding-left: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        .references-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 0 1rem;
+            }
+            
+            nav {
+                display: none; /* In a real app, integrate a burger menu */
+            }
+
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            
+            main {
+                padding: 2rem 1rem 4rem;
+            }
+        }
+        img {
+            height: 64px;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="brand">OpenClaw Proposal</a>
+        <nav>
+            <a href="#overview">Overview</a>
+            <a href="#architecture">Architecture</a>
+            <a href="#phases">Phases</a>
+            <a href="#timeline">Timeline</a>
+            <a href="#resources">Resources</a>
+        </nav>
+    </header>
+        <img src="https://r2cdn.perplexity.ai/pplx-full-logo-primary-dark%402x.png" alt="Perplexity Logo">
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-meta">Based on Samir Saci's "I Simulated an International Supply Chain and Let OpenClaw Monitor It"</div>
+            <h1>Internship Proposal: AI-Powered Supply Chain Monitoring</h1>
+            <p style="font-size: 1.2rem; color: var(--text-muted); max-width: 600px;">
+                A structured project to build a live, 24/7 AI agent team that autonomously detects cascading delays and pushes flash reports via Telegram.
+            </p>
+            <a href="https://plan.supply-science.com/openclaw" target="_blank" class="btn">View Live Demo &rarr;</a>
+        </section>
+
+        <!-- Executive Summary -->
+        <section id="executive-summary">
+            <h2>Executive Summary</h2>
+            <p>This proposal outlines a structured internship project to build a live, 24/7 AI agent team that autonomously monitors an international supply chain — detecting cascading delays, identifying root causes, and pushing flash reports to operational teams via Telegram — all without human intervention between monitoring cycles.<sup>[1][2]</sup></p>
+            <p>The reference implementation, built by supply chain data scientist Samir Saci, was motivated by a real client problem: <strong>18% of shipments arriving late to 67 global stores</strong>, even though every individual team reported hitting their own target. The root cause was systemic — cascading bottlenecks across handoff points that no single team owned.</p>
+            <blockquote>
+                The insight is not that LLMs are smarter than analysts — it is that <strong>agents can run continuously at scale</strong>.
+            </blockquote>
+        </section>
+
+        <!-- Problem Statement -->
+        <section id="problem-statement">
+            <h2>Problem Statement</h2>
+            <h3>The "Everyone Is On Time Yet Shipments Are Late" Paradox</h3>
+            <p>Luxury goods moving from a Milan distribution centre through customs, air freight, and local last-mile delivery pass through four distinct teams. Each team measures only its own step. A warehouse picking delay that pushes a shipment past a flight cut-off time creates a two-day cascading delay — but no team owns that threshold crossing.<sup>[2]</sup></p>
+            <p>With 90+ late deliveries per day across 8 cities, manual CSV exports cannot keep pace. Analysts can review only a few cases per week. Store managers escalate every Monday, and team leads show up with conflicting spreadsheets.<sup>[4][2]</sup></p>
+            
+            <h3 style="margin-top: 2rem;">What AI Agents Solve</h3>
+            <p>The solution is a team of four global and eight regional AI analyst agents, each scoped to a slice of the network, running hourly investigation cycles and pushing findings directly to operations via Telegram.<sup>[2][3]</sup></p>
+        </section>
+
+        <!-- Project Overview -->
+        <section id="overview">
+            <h2>Project Overview</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%">Attribute</th>
+                            <th>Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Duration</strong></td><td>12–14 weeks</td></tr>
+                        <tr><td><strong>Team size</strong></td><td>1–2 interns (1 backend/data, 1 Python/analytics)</td></tr>
+                        <tr><td><strong>Primary stack</strong></td><td>Python, OpenClaw, SQLite/PostgreSQL, Telegram</td></tr>
+                        <tr><td><strong>Agent framework</strong></td><td>OpenClaw multi-agent (SOUL.md + IDENTITY.md + SKILL.md)</td></tr>
+                        <tr><td><strong>Simulation engine</strong></td><td>Python (pandas, numpy, SimPy) — 500+ orders/day</td></tr>
+                        <tr><td><strong>Primary reference</strong></td><td><a href="https://www.samirsaci.com/i-simulated-an-international-supply-chain-and-let-openclaw-monitor-it/" target="_blank">samirsaci.com/i-simulated…</a><sup>[2]</sup></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- System Architecture -->
+        <section id="architecture">
+            <h2>System Architecture</h2>
+            <p>The system has three distinct layers that mirror how a real operations team would be structured:<sup>[3][2]</sup></p>
+            
+            <pre class="arch-diagram">
+Supply Chain Simulator (Python)
+  ├─ Generates 500+ orders/day with realistic variability
+  ├─ Simulates 8 process steps across 4 teams
+  └─ Writes real-time state to TMS database (SQLite/Postgres)
+          ↕ (SQL queries via OpenClaw tools)
+OpenClaw Multi-Agent Gateway
+  ├─ Marco  — Distribution Network Manager (global anomaly sweep)
+  ├─ Elena  — Transportation Manager (misattributed delays)
+  ├─ Giovanni — DC Operations Manager (warehouse throughput)
+  ├─ Yuki  — Air Freight Manager (flight variability)
+  └─ 8× Regional personas (Shanghai, Tokyo, Dubai, Riyadh, Seoul…)
+          ↓ (Telegram flash reports every hour)
+Telegram Channels
+  ├─ #global-ops  ← Marco, Elena, Giovanni, Yuki
+  └─ #shanghai, #tokyo, #dubai… ← regional agents
+            </pre>
+
+            <h3>Core Components</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Role</th>
+                            <th>Technology</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Supply chain simulator</strong></td><td>24/7 order generator with realistic delay variability</td><td>Python + SimPy/pandas<sup>[2]</sup></td></tr>
+                        <tr><td><strong>TMS database</strong></td><td>Central transactional store — all shipment states and step durations</td><td>SQLite (dev) or PostgreSQL (prod)<sup>[5]</sup></td></tr>
+                        <tr><td><strong>OpenClaw gateway</strong></td><td>Runs all agent personas, routes messages, manages cron jobs</td><td>Node.js<sup>[6]</sup></td></tr>
+                        <tr><td><strong>SOUL.md</strong></td><td>Defines each persona's behavioral philosophy and analytical scope</td><td>Markdown config<sup>[7]</sup></td></tr>
+                        <tr><td><strong>IDENTITY.md</strong></td><td>Defines each persona's name, emoji, Telegram handle</td><td>Markdown config<sup>[7]</sup></td></tr>
+                        <tr><td><strong>SKILL.md</strong></td><td>Teaches each agent its specific query tools and report format</td><td>SKILL.md standard<sup>[8][9]</sup></td></tr>
+                        <tr><td><strong>Cron scheduler</strong></td><td>Triggers each agent's investigation loop every hour</td><td>OpenClaw built-in<sup>[6]</sup></td></tr>
+                        <tr><td><strong>Telegram</strong></td><td>Delivery channel for flash reports and on-demand queries</td><td>Bot API<sup>[10]</sup></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Implementation Phases -->
+        <section id="phases">
+            <h2>Phase-by-Phase Implementation Guide</h2>
+            
+            <div class="phase-card">
+                <div class="phase-header">
+                    <h3>Phase 0 — Environment Setup</h3>
+                    <span class="phase-tag">Week 1</span>
+                </div>
+                <p><strong>Goal:</strong> OpenClaw running, Telegram bot connected, all dependencies installed.</p>
+                <ul>
+                    <li><strong>Install Node.js 22+</strong> (required by OpenClaw)<sup>[6]</sup></li>
+                    <li><strong>Install OpenClaw globally via pnpm</strong><sup>[6]</sup>
+                        <pre><code>npm install -g pnpm
+pnpm install -g openclaw
+openclaw onboard</code></pre>
+                    </li>
+                    <li><strong>Create a Telegram bot</strong> via @BotFather and obtain the bot token.</li>
+                    <li><strong>Install Python data dependencies</strong> for the simulation engine.</li>
+                </ul>
+                <p><strong>Checkpoint:</strong> OpenClaw responds to a Telegram message within 5 seconds.</p>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-header">
+                    <h3>Phase 1 — Build the Supply Chain Simulator</h3>
+                    <span class="phase-tag">Weeks 2–3</span>
+                </div>
+                <p><strong>Goal:</strong> A Python process that runs 24/7, continuously generating orders and updating their state in a TMS database.</p>
+                
+                <h4>Database Schema</h4>
+                <pre><code>CREATE TABLE orders (
+    order_id      TEXT PRIMARY KEY,
+    store_city    TEXT,
+    store_id      TEXT,
+    sku           TEXT,
+    quantity      INT,
+    created_at    TIMESTAMP,
+    required_by   TIMESTAMP,
+    status        TEXT
+);
+
+CREATE TABLE shipment_steps (
+    step_id       INTEGER PRIMARY KEY AUTOINCREMENT,
+    order_id      TEXT REFERENCES orders(order_id),
+    step_name     TEXT,
+    team          TEXT,
+    target_hours  REAL,
+    actual_hours  REAL,
+    started_at    TIMESTAMP,
+    completed_at  TIMESTAMP,
+    delay_flag    BOOLEAN
+);</code></pre>
+
+                <h4>Simulator Core (Python Snippet)</h4>
+                <p>The simulator uses <code>simpy</code> to generate 500+ orders/day following a realistic inter-arrival distribution. Variability is injected using a log-normal distribution to replicate tail delays.</p>
+                <pre><code>import simpy
+import pandas as pd
+import numpy as np
+from datetime import datetime, timedelta
+
+def simulate_step_duration(target_hours: float, sigma: float) -> float:
+    """Log-normal variability: occasional large outliers mimic real delays."""
+    return float(np.random.lognormal(mean=np.log(target_hours), sigma=sigma))</code></pre>
+                <p><strong>Checkpoint:</strong> <code>tms.db</code> fills with orders, at least 15–20% flagged as <code>late</code> across all routes.</p>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-header">
+                    <h3>Phase 2 — Configure Multi-Agent Personas</h3>
+                    <span class="phase-tag">Weeks 4–5</span>
+                </div>
+                <p><strong>Goal:</strong> Four global and eight regional analyst agents configured in OpenClaw, each with a distinct scope, SOUL.md, IDENTITY.md, and SKILL.md.</p>
+                
+                <div class="file-block">
+                    <span class="file-name">~/.openclaw/agents/marco/SOUL.md</span>
+                    <pre><code># Marco — Distribution Network Manager
+
+You are Marco, a seasoned distribution network analyst with 15 years in luxury logistics.
+Your job is to run the daily anomaly sweep across all 8 cities.
+
+Your investigation style:
+- Start with the big picture: which cities are drifting from their on-time targets?
+- Quantify drift precisely: not "Shanghai is performing poorly" but "Shanghai OTD
+  dropped from 84% to 71% over the past 48 hours — 13 shipments affected"
+- Look for systemic patterns, not one-off failures
+
+Your output must always have three sections:
+1. HEADLINE (one line, specific metric)
+2. SUMMARY (one sentence finding)
+3. FULL ANALYSIS (shipment IDs, step breakdowns, responsible teams)</code></pre>
+                </div>
+
+                <p><strong>Checkpoint:</strong> All 12 agent personas listed via <code>openclaw agents list</code>.</p>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-header">
+                    <h3>Phase 3 — Write Agent Investigation Prompts</h3>
+                    <span class="phase-tag">Week 6</span>
+                </div>
+                <p><strong>Goal:</strong> Define the hourly investigation task for each of the 12 agents.</p>
+                <p>Each agent runs a structured investigation on its scope. For example, <strong>Elena (Transportation Manager)</strong> investigates misattributed delays:</p>
+                <div class="file-block">
+                    <pre><code>Every hour, investigate misattributed delays:
+1. Find all shipments where a team is flagged for a delay they did not cause
+   (i.e., the preceding team's step ran over SLA and pushed this team past deadline)
+2. Quantify how many such cases exist in the last 24 hours
+3. Identify which upstream teams are generating most "cascade victims"
+4. Post findings to #global-ops with evidence.</code></pre>
+                </div>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-header">
+                    <h3>Phase 4 — Schedule Hourly Investigations</h3>
+                    <span class="phase-tag">Week 7</span>
+                </div>
+                <p><strong>Goal:</strong> All 12 agents running autonomously on their investigation loop, zero manual triggers required.</p>
+                <pre><code># Register hourly cron jobs for all agents
+openclaw cron add --agent marco    --schedule "0 * * * *" --task "run_investigation"
+openclaw cron add --agent elena    --schedule "5 * * * *" --task "run_investigation"</code></pre>
+                <p><strong>Checkpoint:</strong> Verify via <code>openclaw cron list</code> that all 12 jobs are registered.</p>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-header">
+                    <h3>Phase 5 — Telegram Channel Routing</h3>
+                    <span class="phase-tag">Week 8</span>
+                </div>
+                <p><strong>Goal:</strong> Each agent posts to its own scoped Telegram channel; global agents share a network-ops channel.</p>
+                <ul>
+                    <li>Create channels: <code>#global-ops</code>, <code>#shanghai-ops</code>, <code>#tokyo-ops</code>, etc.</li>
+                    <li>Bind each agent to its channel in OpenClaw's config.</li>
+                    <li>Allow on-demand queries (e.g., <code>@marco What was the worst-performing route?</code>).</li>
+                </ul>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-header">
+                    <h3>Phase 6 — Dashboard & Prompt Editor</h3>
+                    <span class="phase-tag">Weeks 9–10</span>
+                </div>
+                <p><strong>Goal:</strong> Build a lightweight web dashboard that lets operations staff view reports, edit agent prompts, and monitor system health.</p>
+                <p>A minimal Streamlit or FastAPI dashboard suffices for an internship scope. Components include:</p>
+                <ul>
+                    <li><strong>Live feed:</strong> Latest flash reports from all 12 agents.</li>
+                    <li><strong>KPI tiles:</strong> Network OTD%, late count 24h, worst city.</li>
+                    <li><strong>Prompt editor:</strong> Editable text area for each agent's investigation task.</li>
+                    <li><strong>Cron monitor:</strong> Status of all 12 scheduled jobs.</li>
+                </ul>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-header">
+                    <h3>Phase 7 — Root Cause Analysis Automation</h3>
+                    <span class="phase-tag">Week 11</span>
+                </div>
+                <p><strong>Goal:</strong> Automate Elena's core value — systematically tracing which team actually caused a late delivery.</p>
+                <p>The cascade happens when Team A's overrun pushes Team B's completion past a hard constraint, making Team B's step appear delayed even though Team B ran within SLA.</p>
+                <pre><code>def find_cascade_victims(order_id: str, conn) -> list[dict]:
+    steps = pd.read_sql(
+        "SELECT * FROM shipment_steps WHERE order_id=? ORDER BY started_at",
+        conn, params=(order_id,)
+    )
+    victims = []
+    cumulative_delay = 0.0
+
+    for _, row in steps.iterrows():
+        step_delay = row["actual_hours"] - row["target_hours"]
+        if cumulative_delay > 0 and step_delay <= 0:
+            # This step was on time, but inherited delay from upstream
+            victims.append({
+                "step": row["step_name"],
+                "team": row["team"],
+                "verdict": "CASCADE VICTIM — penalised for upstream overrun"
+            })
+        cumulative_delay += max(step_delay, 0)
+    return victims</code></pre>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-header">
+                    <h3>Phase 8 — Performance Tuning & Cost Optimisation</h3>
+                    <span class="phase-tag">Week 12</span>
+                </div>
+                <p><strong>Goal:</strong> Ensure the system runs within a reasonable API cost budget while maintaining investigative quality.</p>
+                <p>Strategies include Pre-check scripts (skip agent if no new late shipments), Model tiering (Haiku for regional, Opus for global), and Context scoping.</p>
+                <p><strong>Target Budget:</strong> USD $20–40/month in API credits.</p>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-header">
+                    <h3>Phase 9 — Evaluation & Documentation</h3>
+                    <span class="phase-tag">Weeks 13–14</span>
+                </div>
+                <p><strong>Goal:</strong> Validate system performance, benchmark against the reference implementation, and produce complete handover documentation.</p>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Target</th>
+                                <th>Method</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Late detection rate</td><td>>95% within 1 hour</td><td>Inject known late orders</td></tr>
+                            <tr><td>Root cause accuracy</td><td>>80% correct team attribution</td><td>Compare to simulator ground truth</td></tr>
+                            <tr><td>Response latency</td><td>&lt;10 seconds</td><td>Stopwatch on Telegram</td></tr>
+                            <tr><td>Daily API cost</td><td>&lt;USD $5/day</td><td>Anthropic usage dashboard</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Agent Persona Reference -->
+        <section id="personas">
+            <h2>Agent Persona Reference</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Agent</th>
+                            <th>Scope</th>
+                            <th>Investigation Focus</th>
+                            <th>Channel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Marco</strong></td><td>All cities</td><td>Network-wide OTD drift, city-level anomalies</td><td>#global-ops</td></tr>
+                        <tr><td><strong>Elena</strong></td><td>All teams</td><td>Misattributed delays, cascade victim analysis</td><td>#global-ops</td></tr>
+                        <tr><td><strong>Giovanni</strong></td><td>Milan DC</td><td>Pick-pack throughput, flight-miss risk</td><td>#global-ops</td></tr>
+                        <tr><td><strong>Yuki</strong></td><td>All routes</td><td>Flight variability, downstream impact</td><td>#global-ops</td></tr>
+                        <tr><td><strong>Li Wei</strong></td><td>Shanghai</td><td>Store-level late alerts, customs delays</td><td>#shanghai-ops</td></tr>
+                        <tr><td><strong>Kenji</strong></td><td>Tokyo</td><td>Same as Li Wei scoped to Tokyo</td><td>#tokyo-ops</td></tr>
+                        <tr><td><strong>Omar</strong></td><td>Dubai</td><td>Same as Li Wei scoped to Dubai</td><td>#dubai-ops</td></tr>
+                        <tr><td colspan="4" style="text-align:center; color:var(--text-muted); font-style:italic;">... plus 4 more regional agents (Riyadh, Seoul, Hong Kong, Osaka, Singapore)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section id="timeline">
+            <h2>Week-by-Week Timeline</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 15%">Week</th>
+                            <th style="width: 30%">Phase</th>
+                            <th>Milestone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>Environment Setup</td><td>OpenClaw + Telegram live, all dependencies installed</td></tr>
+                        <tr><td>2–3</td><td>Simulator</td><td>Python TMS simulator running, 500+ orders/day</td></tr>
+                        <tr><td>4–5</td><td>Agent Personas</td><td>All 12 SOUL.md + IDENTITY.md + SKILL.md configured</td></tr>
+                        <tr><td>6</td><td>Investigation Prompts</td><td>All 12 agent task prompts written and tested manually</td></tr>
+                        <tr><td>7</td><td>Cron Scheduling</td><td>All 12 agents running hourly automatically</td></tr>
+                        <tr><td>8</td><td>Telegram Routing</td><td>Flash reports in correct city channels; on-demand queries working</td></tr>
+                        <tr><td>9–10</td><td>Dashboard</td><td>Streamlit dashboard with KPIs, live feed, prompt editor</td></tr>
+                        <tr><td>11</td><td>Root Cause Analysis</td><td>Elena's cascade detection validated against ground truth</td></tr>
+                        <tr><td>12</td><td>Cost Optimisation</td><td>Pre-checks enabled, model tiering, daily cost &lt;$5</td></tr>
+                        <tr><td>13</td><td>Evaluation</td><td>Full test suite run, all metrics benchmarked</td></tr>
+                        <tr><td>14</td><td>Documentation</td><td>Handover docs, SOUL.md library, prompt guide, extension roadmap</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Resources & Prerequisites -->
+        <section id="resources">
+            <h2>Intern Prerequisites & Resources</h2>
+            
+            <h3>Required Skills</h3>
+            <ul>
+                <li><strong>Python proficiency</strong> (pandas, numpy, SQL) — the simulator is the hardest technical component.</li>
+                <li>Comfort with Linux terminal and bash.</li>
+                <li>Familiarity with REST APIs and JSON config files.</li>
+            </ul>
+
+            <h3>Resource Requirements</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Resource</th>
+                            <th>Estimated Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Anthropic Claude API credits</td><td>~USD $20–40/month<sup>[13]</sup></td></tr>
+                        <tr><td>Server (24/7 uptime)</td><td>Raspberry Pi 5 (~USD $80) or VPS ~USD $5/month</td></tr>
+                        <tr><td>OpenClaw</td><td>Free, open-source<sup>[6]</sup></td></tr>
+                        <tr><td>Python dependencies</td><td>Free, open-source</td></tr>
+                        <tr><td>Telegram Bot API</td><td>Free</td></tr>
+                        <tr><td>Streamlit dashboard hosting</td><td>Free tier (streamlit.io)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- References -->
+        <section id="references">
+            <h2>Key References</h2>
+            <ol class="references-list">
+                <li><a href="https://towardsdatascience.com/i-simulated-an-international-supply-chain-and-let-openclaw-monitor-it/" target="_blank">I Simulated an International Supply Chain and Let OpenClaw ... (Towards Data Science)</a></li>
+                <li><a href="https://www.samirsaci.com/i-simulated-an-international-supply-chain-and-let-openclaw-monitor-it/" target="_blank">I Simulated an International Supply Chain and Let OpenClaw ... (Samir Saci)</a></li>
+                <li><a href="https://aissential.tech/articles/26cc311c-5ce7-49d0-8639-2c3b5defa57c" target="_blank">24/7 live simulation of distribution chain (AIssential)</a></li>
+                <li><a href="https://www.samirsaci.com" target="_blank">Samir Saci - Writer, AI & Analytics for Operational Productivity</a></li>
+                <li><a href="https://www.tencentcloud.com/techpedia/140944" target="_blank">OpenClaw Data Analysis Briefing</a></li>
+                <li><a href="https://www.youtube.com/watch?v=wGaVgZdwA7A" target="_blank">OpenClaw Part 1: From Setup to Build Your First Telegram Bot</a></li>
+                <li><a href="https://www.mmntm.net/articles/openclaw-identity-architecture" target="_blank">How OpenClaw Implements Agent Identity</a></li>
+                <li><a href="https://www.agensi.io/learn/how-to-install-skills-in-openclaw" target="_blank">How to Install Skills in OpenClaw</a></li>
+                <li><a href="https://docs.openclaw.ai/tools/skills.md" target="_blank">OpenClaw SKILL.md standard</a></li>
+                <li><a href="https://www.meta-intelligence.tech/en/insight-openclaw-telegram" target="_blank">OpenClaw Telegram Integration Guide</a></li>
+                <li><a href="https://www.openclawplaybook.ai/guides/openclaw-for-supply-chain-management/" target="_blank">OpenClaw supply chain playbook</a></li>
+                <li><a href="https://www.facebook.com/groups/openclawusers/posts/672443482584595/" target="_blank">Setting telegram channel for openclaw subagents</a></li>
+                <li><a href="https://www.tencentcloud.com/techpedia/141178" target="_blank">Can OpenClaw be used for supply chain and logistics automation</a></li>
+                <li><a href="https://www.reddit.com/r/AI_Agents/comments/1qv3zsn/looking-for-realworld-openclaw-agent_setups_whats/" target="_blank">Looking for real-world OpenClaw agent setups (Reddit)</a></li>
+                <li><a href="https://github.com/samirsaci/monte-carlo" target="_blank">GitHub - samirsaci/monte-carlo</a></li>
+            </ol>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Internship Proposal. Based on work by Samir Saci.</p>
+        </footer>
+
+    </main>
+
+    <script>
+        // Simple interaction: Smooth scrolling is handled by CSS, 
+        // but we add active state highlighting for nav links.
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav a');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '-20% 0px -60% 0px', // Active when section is near top
+                threshold: 0
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.style.color = ''; // Reset
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.style.color = 'var(--accent)';
+                                link.style.fontWeight = '700';
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                if (section.getAttribute('id')) {
+                    observer.observe(section);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
