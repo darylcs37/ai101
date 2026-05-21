@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Internship Proposal: Workforce OS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="light"]{
+  --color-bg:#f7f6f2;--color-surface:#f9f8f5;--color-surface-2:#fbfbf9;
+  --color-surface-offset:#f0ede8;--color-surface-dynamic:#e8e5e0;
+  --color-divider:#dcd9d5;--color-border:#d4d1ca;
+  --color-text:#1a1916;--color-text-muted:#6b6a65;--color-text-faint:#b0afaa;
+  --color-primary:#01696f;--color-primary-hover:#0c4e54;
+  --color-primary-highlight:#cedcd8;
+  --color-accent:#c45c00;--color-accent-bg:#fff0e6;
+  --color-green:#2e7d32;--color-green-bg:#e8f5e9;
+  --color-yellow:#b67000;--color-yellow-bg:#fff8e1;
+  --color-red:#c62828;--color-red-bg:#ffebee;
+  --color-code-bg:#f0ede8;--color-code-border:#d4d1ca;
+  --color-tag-bg:#e2eeee;--color-tag-text:#01696f;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.06);
+  --shadow-md:0 4px 16px rgba(0,0,0,.08);
+  --shadow-lg:0 12px 40px rgba(0,0,0,.12);
+  --radius-sm:.375rem;--radius-md:.5rem;--radius-lg:.75rem;--radius-xl:1rem;
+  --font-body:'Inter',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --sidebar-w:272px;--header-h:54px;
+}
+[data-theme="dark"]{
+  --color-bg:#0f0e0c;--color-surface:#161513;--color-surface-2:#1c1b19;
+  --color-surface-offset:#201f1d;--color-surface-dynamic:#2a2926;
+  --color-divider:#252422;--color-border:#333230;
+  --color-text:#d8d7d4;--color-text-muted:#7a7977;--color-text-faint:#4a4947;
+  --color-primary:#4f98a3;--color-primary-hover:#3a8590;
+  --color-primary-highlight:#1e3336;
+  --color-accent:#e87d30;--color-accent-bg:#2a1a0a;
+  --color-green:#66bb6a;--color-green-bg:#0d2110;
+  --color-yellow:#ffcc02;--color-yellow-bg:#1a1500;
+  --color-red:#ef5350;--color-red-bg:#200a0a;
+  --color-code-bg:#1a1917;--color-code-border:#333230;
+  --color-tag-bg:#1a2e30;--color-tag-text:#4f98a3;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.3);
+  --shadow-md:0 4px 16px rgba(0,0,0,.4);
+  --shadow-lg:0 12px 40px rgba(0,0,0,.5);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font-body);font-size:15px;line-height:1.7;color:var(--color-text);background:var(--color-bg);display:flex;flex-direction:column;min-height:100vh}
+a{color:var(--color-primary);text-decoration:none}a:hover{text-decoration:underline}
+img{display:block;max-width:100%}
+p{max-width:72ch;text-wrap:pretty}
+h1,h2,h3,h4{text-wrap:balance;line-height:1.2;font-weight:600}
+code{font-family:var(--font-mono);font-size:.82em;background:var(--color-code-bg);border:1px solid var(--color-code-border);border-radius:var(--radius-sm);padding:.1em .38em}
+pre{font-family:var(--font-mono);font-size:.8em;background:var(--color-code-bg);border:1px solid var(--color-code-border);border-radius:var(--radius-lg);padding:1.1rem 1.4rem;overflow-x:auto;line-height:1.7;margin:1rem 0;position:relative}
+pre code{background:none;border:none;padding:0;font-size:inherit}
+table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.88em}
+th{text-align:left;padding:.55rem .85rem;background:var(--color-surface-offset);font-weight:600;font-size:.75em;text-transform:uppercase;letter-spacing:.04em;color:var(--color-text-muted);border-bottom:1px solid var(--color-divider)}
+td{padding:.55rem .85rem;border-bottom:1px solid var(--color-divider);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--color-surface-offset)}
+ul,ol{padding-left:1.4rem}li{margin:.25rem 0}
+hr{border:none;border-top:1px solid var(--color-divider);margin:2rem 0}
+::selection{background:var(--color-primary-highlight);color:var(--color-text)}
+
+/* Layout */
+#top-header{position:sticky;top:0;z-index:100;height:var(--header-h);background:var(--color-surface);border-bottom:1px solid var(--color-divider);display:flex;align-items:center;justify-content:space-between;padding:0 1.25rem;gap:1rem}
+.header-brand{display:flex;align-items:center;gap:.55rem;font-weight:600;font-size:.88rem;letter-spacing:-.01em;color:var(--color-text)}
+.header-brand svg{color:var(--color-primary);flex-shrink:0}
+.header-right{display:flex;align-items:center;gap:.6rem}
+.badge{font-size:.7em;font-weight:600;padding:.18em .65em;border-radius:9999px;background:var(--color-tag-bg);color:var(--color-tag-text);letter-spacing:.02em;white-space:nowrap}
+.badge-accent{background:var(--color-accent-bg);color:var(--color-accent)}
+#theme-toggle{background:none;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:.3rem .45rem;cursor:pointer;color:var(--color-text-muted);display:flex;align-items:center;transition:border-color .15s,color .15s}
+#theme-toggle:hover{border-color:var(--color-primary);color:var(--color-primary)}
+
+#app-shell{display:flex;flex:1;min-height:0}
+#sidebar{width:var(--sidebar-w);flex-shrink:0;background:var(--color-surface);border-right:1px solid var(--color-divider);height:calc(100vh - var(--header-h));position:sticky;top:var(--header-h);overflow-y:auto;padding:1.1rem 0 2rem}
+#main{flex:1;min-width:0;padding:2.5rem 2.25rem 6rem;max-width:880px}
+
+/* Sidebar nav */
+.nav-section{padding:.2rem 1.1rem .05rem;font-size:.67em;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-text-faint);margin-top:.9rem}
+.nav-section:first-child{margin-top:0}
+.nav-item,.nav-phase{display:block;padding:.38rem 1.1rem;font-size:.8rem;color:var(--color-text-muted);cursor:pointer;border-left:2px solid transparent;transition:color .1s,background .1s,border-color .1s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-item:hover,.nav-phase:hover{color:var(--color-text);background:var(--color-surface-offset)}
+.nav-item.active,.nav-phase.active{color:var(--color-primary);border-left-color:var(--color-primary);background:var(--color-primary-highlight)}
+.nav-phase{padding-left:1.5rem;font-size:.77rem;display:flex;align-items:center;gap:.45rem}
+.phase-dot{width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0}
+
+/* Hero */
+.hero-card{background:linear-gradient(135deg,var(--color-surface) 0%,var(--color-surface-offset) 100%);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:2rem 2.25rem;margin-bottom:2.5rem;position:relative;overflow:hidden}
+.hero-card::before{content:'';position:absolute;top:-50px;right:-50px;width:180px;height:180px;background:radial-gradient(circle,var(--color-primary-highlight) 0%,transparent 70%);opacity:.7;pointer-events:none}
+.hero-title{font-size:clamp(1.35rem,2.5vw,1.85rem);font-weight:700;letter-spacing:-.03em;margin-bottom:.3rem}
+.hero-sub{color:var(--color-text-muted);font-size:.88rem;margin-bottom:1.25rem}
+.hero-meta{display:flex;flex-wrap:wrap;gap:.5rem}
+
+/* Section */
+.section{margin-bottom:3rem;scroll-margin-top:72px}
+.section-header{display:flex;align-items:baseline;gap:.65rem;margin-bottom:1rem}
+.section-header h2{font-size:1.25rem;letter-spacing:-.02em}
+.section-tag{font-size:.68em;font-weight:600;padding:.15em .6em;border-radius:9999px;background:var(--color-tag-bg);color:var(--color-tag-text)}
+
+/* Info grid */
+.info-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:.85rem;margin:1rem 0}
+.info-card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:.9rem 1.1rem}
+.info-card .label{font-size:.67em;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--color-text-faint);margin-bottom:.28rem}
+.info-card .value{font-size:.92rem;font-weight:600}
+.info-card .value-muted{font-size:.82rem;color:var(--color-text-muted);margin-top:.15rem}
+
+/* Phase card */
+.phase-card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);margin-bottom:2rem;overflow:hidden;scroll-margin-top:72px}
+.phase-header{padding:1.1rem 1.5rem;border-bottom:1px solid var(--color-divider);display:flex;align-items:center;gap:.85rem;background:var(--color-surface-offset)}
+.phase-number{font-family:var(--font-mono);font-size:.68em;font-weight:700;padding:.28em .65em;border-radius:var(--radius-md);background:var(--color-primary-highlight);color:var(--color-primary);letter-spacing:.04em;white-space:nowrap}
+.phase-title{font-size:1rem;font-weight:600;letter-spacing:-.01em}
+.phase-weeks{margin-left:auto;font-size:.72em;color:var(--color-text-faint);font-family:var(--font-mono);white-space:nowrap}
+.phase-body{padding:1.35rem 1.5rem}
+.goal-box{background:var(--color-surface-offset);border-left:3px solid var(--color-primary);border-radius:0 var(--radius-md) var(--radius-md) 0;padding:.65rem .9rem;margin-bottom:1.1rem;font-size:.86rem;color:var(--color-text-muted)}
+.goal-box strong{color:var(--color-primary);font-size:.68em;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:.2rem}
+.checkpoint{background:var(--color-green-bg);border:1px solid rgba(46,125,50,.15);border-radius:var(--radius-lg);padding:.8rem 1rem;margin-top:1.35rem;display:flex;align-items:flex-start;gap:.65rem;font-size:.85rem}
+[data-theme="dark"] .checkpoint{border-color:rgba(102,187,106,.12)}
+.checkpoint-icon{color:var(--color-green);flex-shrink:0;margin-top:.1rem}
+.checkpoint strong{color:var(--color-green);display:block;font-size:.75em;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.15rem}
+
+/* Step list */
+.step-list{list-style:none;padding:0;counter-reset:step}
+.step-list>li{counter-increment:step;position:relative;padding:.65rem 0 .65rem 2.25rem;border-bottom:1px solid var(--color-divider)}
+.step-list>li:last-child{border-bottom:none}
+.step-list>li::before{content:counter(step);position:absolute;left:0;top:.8rem;width:1.5rem;height:1.5rem;background:var(--color-surface-offset);border:1px solid var(--color-border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.68em;font-weight:700;font-family:var(--font-mono);color:var(--color-text-muted)}
+.step-title{font-weight:600;font-size:.9rem;margin-bottom:.3rem}
+
+/* Tier callouts */
+.tier-row{display:flex;align-items:flex-start;gap:.7rem;border-radius:var(--radius-lg);padding:.8rem .95rem;margin:.45rem 0}
+.tier-row.green{background:var(--color-green-bg)}
+.tier-row.yellow{background:var(--color-yellow-bg)}
+.tier-row.red{background:var(--color-red-bg)}
+.tier-badge{font-size:.75em;font-weight:700;padding:.22em .65em;border-radius:9999px;white-space:nowrap;flex-shrink:0}
+.tier-badge.g{background:rgba(46,125,50,.15);color:var(--color-green)}
+.tier-badge.y{background:rgba(182,112,0,.15);color:var(--color-yellow)}
+.tier-badge.r{background:rgba(198,40,40,.15);color:var(--color-red)}
+.tier-desc strong{display:block;font-size:.86rem;margin-bottom:.12rem}
+.tier-desc span{font-size:.8rem;color:var(--color-text-muted)}
+
+/* Safety grid */
+.safety-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:.65rem;margin:.85rem 0}
+.safety-item{background:var(--color-surface-offset);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:.75rem .9rem;display:flex;align-items:flex-start;gap:.65rem;font-size:.83rem}
+.safety-num{font-family:var(--font-mono);font-size:.68em;font-weight:700;color:var(--color-primary);flex-shrink:0;margin-top:.05rem}
+.safety-name{font-weight:600;font-size:.8rem;display:block;margin-bottom:.1rem}
+
+/* Timeline */
+.timeline{list-style:none;padding:0;position:relative;margin:.85rem 0}
+.timeline::before{content:'';position:absolute;left:.95rem;top:.6rem;bottom:.6rem;width:2px;background:var(--color-divider)}
+.timeline-item{display:grid;grid-template-columns:1.9rem 1fr;gap:.9rem;padding:.6rem 0}
+.tdot{width:1.9rem;height:1.9rem;border-radius:50%;background:var(--color-surface);border:2px solid var(--color-border);display:flex;align-items:center;justify-content:center;font-size:.65em;font-weight:700;font-family:var(--font-mono);color:var(--color-text-muted);flex-shrink:0;z-index:1;position:relative}
+.tw{font-size:.72em;font-weight:700;font-family:var(--font-mono);color:var(--color-text-faint);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.15rem}
+.tp{font-weight:600;font-size:.86rem;margin-bottom:.1rem}
+.tm{font-size:.8rem;color:var(--color-text-muted)}
+
+/* Copy button */
+.copy-btn{position:absolute;top:.55rem;right:.55rem;background:var(--color-surface-dynamic);border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:.22rem .55rem;font-size:.68em;font-family:var(--font-mono);color:var(--color-text-muted);cursor:pointer;opacity:0;transition:opacity .12s,color .12s,border-color .12s,background .12s}
+pre:hover .copy-btn{opacity:1}
+.copy-btn:hover{background:var(--color-primary-highlight);color:var(--color-primary);border-color:var(--color-primary)}
+.copy-btn.copied{color:var(--color-green);border-color:var(--color-green)}
+
+.resource-free{color:var(--color-green);font-size:.82em;font-weight:600}
+.resource-cost{color:var(--color-primary);font-size:.86em;font-weight:600}
+.subhead{margin:1.1rem 0 .6rem;font-size:.86rem;font-weight:600;color:var(--color-text)}
+
+@media(max-width:768px){
+  #sidebar{display:none}
+  #main{padding:1.75rem 1.1rem 4rem}
+  .hero-card{padding:1.35rem}
+  .info-grid{grid-template-columns:1fr 1fr}
+  .safety-grid{grid-template-columns:1fr}
+  .phase-weeks{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<header id="top-header">
+  <div class="header-brand">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+    Workforce OS — Internship Proposal
+  </div>
+  <div class="header-right">
+    <span class="badge">12–14 Weeks</span>
+    <span class="badge badge-accent">Claude Code</span>
+    <button id="theme-toggle" aria-label="Toggle theme"></button>
+  </div>
+</header>
+
+<div id="app-shell">
+<nav id="sidebar" aria-label="Navigation">
+  <div class="nav-section">Overview</div>
+  <a class="nav-item" href="#exec-summary">Executive Summary</a>
+  <a class="nav-item" href="#problem">Problem Statement</a>
+  <a class="nav-item" href="#overview">Project Overview</a>
+  <a class="nav-item" href="#architecture">System Architecture</a>
+  <div class="nav-section">Implementation</div>
+  <a class="nav-phase" href="#phase-0"><span class="phase-dot"></span>Phase 0 — Prerequisites</a>
+  <a class="nav-phase" href="#phase-1"><span class="phase-dot"></span>Phase 1 — Foundation</a>
+  <a class="nav-phase" href="#phase-2"><span class="phase-dot"></span>Phase 2 — Task System</a>
+  <a class="nav-phase" href="#phase-3"><span class="phase-dot"></span>Phase 3 — Chief of Staff</a>
+  <a class="nav-phase" href="#phase-4"><span class="phase-dot"></span>Phase 4 — Team Onboarding</a>
+  <a class="nav-phase" href="#phase-5"><span class="phase-dot"></span>Phase 5 — M365</a>
+  <a class="nav-phase" href="#phase-6"><span class="phase-dot"></span>Phase 6 — Atlassian</a>
+  <a class="nav-phase" href="#phase-7"><span class="phase-dot"></span>Phase 7 — Security</a>
+  <a class="nav-phase" href="#phase-8"><span class="phase-dot"></span>Phase 8 — validate.sh</a>
+  <a class="nav-phase" href="#phase-9"><span class="phase-dot"></span>Phase 9 — workforce.sh</a>
+  <a class="nav-phase" href="#phase-10"><span class="phase-dot"></span>Phase 10 — Chloe (Autonomous)</a>
+  <a class="nav-phase" href="#phase-11"><span class="phase-dot"></span>Phase 11 — Evaluation</a>
+  <div class="nav-section">Wrap-Up</div>
+  <a class="nav-item" href="#timeline">Timeline</a>
+  <a class="nav-item" href="#limits">Design Limits</a>
+  <a class="nav-item" href="#resources">Resources</a>
+</nav>
+
+<main id="main">
+
+<div class="hero-card">
+  <div class="hero-title">Workforce OS</div>
+  <div class="hero-sub">A file-based multi-agent operating system for a 7-person team — built on Claude Code &amp; git. No servers. No databases. Just files.</div>
+  <div class="hero-meta">
+    <span class="badge">Gaurav Keerthi — Black Hat Asia 2026</span>
+    <span class="badge badge-accent">Zero Infrastructure</span>
+    <span class="badge">Singapore</span>
+  </div>
+</div>
+
+<!-- EXEC SUMMARY -->
+<section class="section" id="exec-summary">
+  <div class="section-header"><h2>Executive Summary</h2></div>
+  <p>This proposal outlines a structured internship project to build <strong>Workforce OS</strong> — a production-grade, self-hosted multi-agent operating system where every person on a team has their own AI agent managing their inbox, calendar, tasks, drafts, and cross-team collaboration, all coordinated through a shared git repository.</p>
+  <br>
+  <p>The core insight from the reference implementation (built and battle-tested at a real 7-person company in Singapore) is that AI assistants fail not because they lack intelligence, but because they are <strong>tourists, not residents</strong> of the workflow. Copilot, ChatGPT, and similar tools live in a sidebar — the real work lives in M365, Atlassian, and the terminal. Every session is a cold start. Ten minutes re-briefing the assistant is exactly the ten you were trying to save.</p>
+  <br>
+  <p>Workforce OS fixes this: agents read and write plain Markdown files, git is the coordination layer and audit trail, and the entire system is debuggable with <code>ls</code> and <code>cat</code>.</p>
+</section>
+
+<!-- PROBLEM -->
+<section class="section" id="problem">
+  <div class="section-header"><h2>Problem Statement</h2></div>
+  <p>A 7-person team × four hats each = constant context-switching. The overhead <em>is</em> the product. Typical AI assistant approaches fail on three dimensions:</p>
+  <div class="info-grid" style="margin-top:.85rem">
+    <div class="info-card"><div class="label">Failure 1</div><div class="value">Stateless sessions</div><div class="value-muted">Memory dies with the tab. Re-brief every morning.</div></div>
+    <div class="info-card"><div class="label">Failure 2</div><div class="value">No shared state</div><div class="value-muted">Per-user silos. No one sees what others' agents are doing.</div></div>
+    <div class="info-card"><div class="label">Failure 3</div><div class="value">No scope enforcement</div><div class="value-muted">"Don't send email" is a prayer, not a rule.</div></div>
+  </div>
+</section>
+
+<!-- PROJECT OVERVIEW -->
+<section class="section" id="overview">
+  <div class="section-header"><h2>Project Overview</h2></div>
+  <table>
+    <tr><th>Attribute</th><th>Detail</th></tr>
+    <tr><td><strong>Duration</strong></td><td>12–14 weeks</td></tr>
+    <tr><td><strong>Team size</strong></td><td>1–2 interns (1 full-stack/systems, 1 DevOps/scripting)</td></tr>
+    <tr><td><strong>Core technology</strong></td><td>Claude Code, bash, git, Markdown, JSON</td></tr>
+    <tr><td><strong>Integrations</strong></td><td>Microsoft 365 MCP, Atlassian MCP, Slack MCP</td></tr>
+    <tr><td><strong>Infrastructure</strong></td><td>Zero — no servers, no databases. Developer laptops + git remote only.</td></tr>
+    <tr><td><strong>Reference</strong></td><td>Gaurav Keerthi — <em>Workforce OS</em> (Black Hat Asia 2026)</td></tr>
+    <tr><td><strong>Starter scaffold</strong></td><td><code>agent_workforce-os-gaurav-keerthi-starter-prompt.md</code> (attached)</td></tr>
+  </table>
+</section>
+
+<!-- ARCHITECTURE -->
+<section class="section" id="architecture">
+  <div class="section-header"><h2>System Architecture</h2></div>
+  <p>There is no database, no message queue, no hidden state. Every state change is a git commit — fully auditable. Any agent can be paused, inspected, or resumed by reading files.</p>
+  <pre><button class="copy-btn" onclick="copyCode(this)">copy</button>workforce-os/                    ← git repository
+├── platform/
+│   ├── base-system-prompt.md   ← loaded into EVERY agent session
+│   ├── schemas/task.md         ← task file schema
+│   └── .task-counter           ← atomic counter for task IDs
+├── agents/
+│   ├── _template/              ← scaffold for new agents
+│   ├── cos/                    ← Chief of Staff (orchestrator)
+│   ├── knight/                 ← CEO's agent
+│   └── [other agents]/
+├── shared/
+│   ├── incoming/               ← drafts awaiting CoS review
+│   ├── knowledge/              ← promoted, team-visible content
+│   └── handoffs/               ← inter-agent artifacts
+├── integrations/
+│   ├── m365/                   ← Microsoft 365 MCP config
+│   └── atlassian/              ← Jira + Confluence MCP config
+├── ops/
+│   ├── workforce.sh            ← main CLI entry point
+│   ├── launch-agent.sh         ← session composition at boot
+│   ├── onboard.sh              ← per-user setup wizard
+│   ├── validate.sh             ← repo health checks
+│   └── new-task.sh             ← task creation with auto-ID
+└── .claude/
+    └── settings.json           ← Claude Code allow/deny permissions</pre>
+
+  <div class="subhead">Agent Anatomy — Every Agent Has the Same Shape</div>
+  <table>
+    <tr><th>File / Folder</th><th>Purpose</th><th>Write Pattern</th></tr>
+    <tr><td><code>soul.md</code></td><td>Personality, voice, autonomy tiers</td><td>Human writes once</td></tr>
+    <tr><td><code>profile.md</code></td><td>Role, scope, integration bindings</td><td>Human writes once</td></tr>
+    <tr><td><code>memory/context.md</code></td><td>What is true RIGHT NOW</td><td>Agent <strong>overwrites</strong> each session</td></tr>
+    <tr><td><code>memory/lessons.md</code></td><td>Learnings from mistakes</td><td>Agent <strong>appends only</strong> (never deletes)</td></tr>
+    <tr><td><code>memory/decisions.md</code></td><td>Non-obvious choices &amp; rationale</td><td>Agent <strong>appends only</strong></td></tr>
+    <tr><td><code>tasks/inbox/</code></td><td>Tasks waiting to start</td><td>CoS or other agents</td></tr>
+    <tr><td><code>tasks/active/</code></td><td>In-progress work — folder IS the status</td><td>Agent moves from inbox</td></tr>
+    <tr><td><code>tasks/done/</code></td><td>Completed/cancelled work</td><td>Agent moves from active</td></tr>
+    <tr><td><code>workspace/private/</code></td><td>Agent scratch space</td><td>Agent only</td></tr>
+    <tr><td><code>logs/activity.log.md</code></td><td>One-line audit trail</td><td>Agent appends per action</td></tr>
+  </table>
+</section>
+
+<!-- PHASE 0 -->
+<div class="phase-card" id="phase-0">
+  <div class="phase-header">
+    <span class="phase-number">PHASE 0</span>
+    <span class="phase-title">Prerequisites &amp; Tooling</span>
+    <span class="phase-weeks">Week 1</span>
+  </div>
+  <div class="phase-body">
+    <div class="goal-box"><strong>Goal</strong>All tools installed, Claude Code authenticated, git configured.</div>
+    <ol class="step-list">
+      <li>
+        <div class="step-title">Install Node.js 22+ and Claude Code</div>
+        <pre><button class="copy-btn" onclick="copyCode(this)">copy</button>brew install node@22
+npm install -g @anthropic-ai/claude-code
+claude login       # authenticates with Anthropic API
+claude --version   # verify</pre>
+      </li>
+      <li>
+        <div class="step-title">Install gitleaks for pre-commit secret scanning</div>
+        <pre><button class="copy-btn" onclick="copyCode(this)">copy</button># macOS
+brew install gitleaks
+# Ubuntu/Debian
+curl -sSfL https://github.com/gitleaks/gitleaks/releases/download/v8.18.0/gitleaks_8.18.0_linux_x64.tar.gz | tar xz
+sudo mv gitleaks /usr/local/bin/
+gitleaks version</pre>
+      </li>
+      <li>
+        <div class="step-title">Create the git repository</div>
+        <pre><button class="copy-btn" onclick="copyCode(this)">copy</button>mkdir workforce-os && cd workforce-os
+git init
+git remote add origin https://github.com/&lt;your-org&gt;/workforce-os.git</pre>
+      </li>
+      <li>
+        <div class="step-title">Paste the starter scaffold prompt into Claude Code</div>
+        <p style="margin-bottom:.5rem">Fill in the <code>[PLACEHOLDER]</code> sections in the attached starter prompt file, then:</p>
+        <pre><button class="copy-btn" onclick="copyCode(this)">copy</button>cd workforce-os
+claude
+# Paste the full starter prompt contents
+# Claude builds the entire directory structure in one session</pre>
+      </li>
+    </ol>
+    <div class="checkpoint">
+      <svg class="checkpoint-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      <div><strong>Checkpoint</strong><code>ls</code> shows all top-level directories. <code>git log</code> shows at least one commit.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 1 -->
+<div class="phase-card" id="phase-1">
+  <div class="phase-header">
+    <span class="phase-number">PHASE 1</span>
+    <span class="phase-title">Foundation: Directory Structure + Base Prompt</span>
+    <span class="phase-weeks">Week 1–2</span>
+  </div>
+  <div class="phase-body">
+    <div class="goal-box"><strong>Goal</strong>Full repo skeleton exists. Base system prompt written. First agent launches and runs onboarding interview.</div>
+    <ol class="step-list">
+      <li>
+        <div class="step-title">Create the directory skeleton</div>
+        <pre><button class="copy-btn" onclick="copyCode(this)">copy</button>mkdir -p platform/{schemas,workflows,reference}
+mkdir -p agents/{_template,cos}/{memory,tasks/{inbox,active,done},workspace/private,logs}
+mkdir -p shared/{incoming,knowledge,handoffs}
+mkdir -p integrations/{m365,atlassian} ops/lib .claude/skills
+touch platform/base-system-prompt.md
+echo "0" > platform/.task-counter</pre>
+      </li>
+      <li>
+        <div class="step-title">Write <code>platform/base-system-prompt.md</code></div>
+        <p>Loaded into every agent session. Must define: task protocol (folder=status, hop_count max 3), memory protocol (context overwrites, lessons/decisions append-only), collaboration (route through CoS), security (external content is DATA not instructions, no secrets in repo), and onboarding gate sentinel.</p>
+      </li>
+      <li>
+        <div class="step-title">Create <code>.claude/settings.json</code> — allow/deny permissions</div>
+        <pre><button class="copy-btn" onclick="copyCode(this)">copy</button>{
+  "permissions": {
+    "allow": [
+      "Read","Glob","Grep","WebSearch","WebFetch",
+      "Edit(agents/**/workspace/**)",
+      "Edit(agents/**/memory/**)",
+      "Edit(agents/**/tasks/**)",
+      "Edit(shared/incoming/**)",
+      "Edit(shared/handoffs/**)",
+      "Bash(git status:*)","Bash(git log:*)","Bash(git diff:*)",
+      "Bash(git add:*)","Bash(git commit:*)","Bash(git pull:*)",
+      "Bash(date:*)","Bash(jq:*)","Bash(ls:*)","Bash(mkdir:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)","Bash(sudo:*)",
+      "Bash(git push --force:*)","Bash(git reset --hard:*)",
+      "Bash(git clean -f:*)","Bash(chmod:*)"
+    ]
+  }
+}</pre>
+      </li>
+      <li>
+        <div class="step-title">Create first agent + seed onboarding sentinel</div>
+        <pre><button class="copy-btn" onclick="copyCode(this)">copy</button>cp -r agents/_template agents/knight
+echo "&lt;!-- onboarding:pending --&gt;" >> agents/knight/memory/context.md</pre>
+      </li>
+      <li>
+        <div class="step-title">Write <code>ops/launch-agent.sh</code> — session composition</div>
+        <pre><button class="copy-btn" onclick="copyCode(this)">copy</button>#!/usr/bin/env bash
+set -euo pipefail
+AGENT="${1:?Usage: launch-agent.sh &lt;agent-name&gt;}"
+AGENT_DIR="agents/$AGENT"
+[[ -d "$AGENT_DIR" ]] || { echo "Agent not found"; exit 1; }
+
+PROMPT_FILE="$(mktemp)"
+trap "rm -f $PROMPT_FILE" EXIT
+
+cat platform/base-system-prompt.md >> "$PROMPT_FILE"
+cat "$AGENT_DIR/soul.md" "$AGENT_DIR/profile.md" >> "$PROMPT_FILE"
+cat "$AGENT_DIR/memory/context.md" "$AGENT_DIR/memory/routines.md" >> "$PROMPT_FILE"
+tail -25 "$AGENT_DIR/memory/lessons.md"   >> "$PROMPT_FILE"
+tail -25 "$AGENT_DIR/memory/decisions.md" >> "$PROMPT_FILE"
+for f in "$AGENT_DIR"/tasks/active/*.md "$AGENT_DIR"/tasks/inbox/*.md; do
+  [[ -f "$f" ]] && cat "$f" >> "$PROMPT_FILE"
+done
+
+cp "$PROMPT_FILE" CLAUDE.md && claude</pre>
+      </li>
+    </ol>
+    <div class="checkpoint">
+      <svg class="checkpoint-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      <div><strong>Checkpoint</strong><code>./ops/launch-agent.sh knight</code> opens Claude Code. Agent detects <code>&lt;!-- onboarding:pending --&gt;</code> and runs the 7-question interview before doing any work.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 2 -->
+<div class="phase-card" id="phase-2">
+  <div class="phase-header">
+    <span class="phase-number">PHASE 2</span>
+    <span class="phase-title">Task System</span>
+    <span class="phase-weeks">Week 2–3</span>
+  </div>
+  <div class="phase-body">
+    <div class="goal-box"><strong>Goal</strong>Tasks created with auto-incrementing IDs and YAML frontmatter. Folder location IS the status.</div>
+    <div class="subhead">Task file format</div>
+    <pre><button class="copy-btn" onclick="copyCode(this)">copy</button>---
+id: T-20260521-0001
+title: "Draft keynote abstract for AI Engineer Singapore"
+requester: "Gaurav"
+assigned_to: "knight"
+status: inbox
+priority: high
+created_at: "2026-05-21T08:00:00Z"
+due_at: "2026-05-22T18:00:00Z"
+expected_output:
+  type: markdown
+  location: "agents/knight/workspace/private/keynote-abstract-draft.md"
+hop_count: 0
+tags: [writing, external]
+---
+## Description
+Draft a 300-word abstract for the AI Engineer Singapore keynote.
+## Acceptance Criteria
+- [ ] 300 words (±10%)
+- [ ] Saved to workspace/private/keynote-abstract-draft.md</pre>
+    <div class="subhead"><code>new-task.sh</code> — atomic ID counter with <code>flock</code></div>
+    <pre><button class="copy-btn" onclick="copyCode(this)">copy</button>#!/usr/bin/env bash
+set -euo pipefail
+TITLE="${1:?Usage: new-task.sh &lt;title&gt;}"
+TODAY=$(date +%Y%m%d)
+COUNTER_FILE="platform/.task-counter"
+(
+  flock -x 9
+  COUNT=$(&lt;"$COUNTER_FILE"); COUNT=$((COUNT + 1))
+  echo "$COUNT" > "$COUNTER_FILE"
+  printf -v PADDED "%04d" "$COUNT"
+  TASK_ID="T-${TODAY}-${PADDED}"
+  cat > "agents/cos/tasks/inbox/${TASK_ID}.md" &lt;&lt;EOF
+---
+id: ${TASK_ID}
+title: "${TITLE}"
+requester: "$(whoami)"
+assigned_to: "cos"
+status: inbox
+priority: normal
+created_at: "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+hop_count: 0
+---
+## Description
+[Fill in]
+## Acceptance Criteria
+- [ ] [Add concrete checkable criteria]
+EOF
+  echo "Created: agents/cos/tasks/inbox/${TASK_ID}.md"
+) 9>>"$COUNTER_FILE.lock"</pre>
+    <div class="checkpoint">
+      <svg class="checkpoint-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      <div><strong>Checkpoint</strong><code>./ops/new-task.sh "Prepare board deck"</code> creates a valid task in CoS inbox. CoS session triages it and routes to the correct agent's inbox with a concrete output spec.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 3 -->
+<div class="phase-card" id="phase-3">
+  <div class="phase-header">
+    <span class="phase-number">PHASE 3</span>
+    <span class="phase-title">Chief of Staff Agent + Multi-Agent Routing</span>
+    <span class="phase-weeks">Week 3–4</span>
+  </div>
+  <div class="phase-body">
+    <div class="goal-box"><strong>Goal</strong>CoS operational. Two agents hand off work through the task system with zero manual file edits.</div>
+    <p>CoS has no human pair. It is the <strong>only entity that can promote drafts</strong> from <code>shared/incoming/</code> to <code>shared/knowledge/</code>. Without CoS, agents become disconnected silos.</p>
+    <div class="subhead">CoS Triage Checklist (every inbox item)</div>
+    <ol>
+      <li>Is the request specific enough to act on?</li>
+      <li>Who owns this? Check <code>agents/*/profile.md</code>.</li>
+      <li>What is the expected output? Must be a concrete file path or external artefact.</li>
+      <li>Does it need splitting? One task = one owner = one output.</li>
+      <li>Route: copy to assignee inbox → update frontmatter → log → move CoS copy to done.</li>
+    </ol>
+    <div class="subhead">End-to-End Demo Scenario</div>
+    <pre><button class="copy-btn" onclick="copyCode(this)">copy</button>1. Human: ./ops/new-task.sh "Research AI safety frameworks for blog post"
+   → T-YYYYMMDD-0002.md created in agents/cos/tasks/inbox/
+
+2. CoS session: triages, routes to research agent with clear output spec
+   → agents/research/tasks/inbox/T-YYYYMMDD-0002.md
+
+3. Research agent: picks up task, moves to active/, researches, saves draft
+   → agents/research/workspace/private/safety-frameworks.md
+
+4. Research agent: moves draft to shared/incoming/, task to done/
+
+5. CoS session: reviews draft, promotes to shared/knowledge/research/
+   → git commit "[work][agent:cos] promote safety-frameworks research"</pre>
+    <div class="checkpoint">
+      <svg class="checkpoint-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      <div><strong>Checkpoint</strong>Full handoff works with zero manual file edits. Every state change appears in <code>git log</code> with a timestamp.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 4 -->
+<div class="phase-card" id="phase-4">
+  <div class="phase-header">
+    <span class="phase-number">PHASE 4</span>
+    <span class="phase-title">Onboard Remaining Team Members</span>
+    <span class="phase-weeks">Week 4–5</span>
+  </div>
+  <div class="phase-body">
+    <div class="goal-box"><strong>Goal</strong>All team agents created from template. <code>onboard.sh</code> works for a new member starting from zero — under 10 minutes.</div>
+    <pre><button class="copy-btn" onclick="copyCode(this)">copy</button>#!/usr/bin/env bash
+# ops/onboard.sh
+set -euo pipefail
+for cmd in git node claude jq; do
+  command -v "$cmd" &>/dev/null || { echo "ERROR: $cmd not found"; exit 1; }
+done
+read -rp "Your name: " HUMAN_NAME
+read -rp "Your agent codename: " AGENT_CODE
+read -rp "Your email: " HUMAN_EMAIL
+read -rp "Your timezone (e.g. Asia/Singapore): " TZ
+mkdir -p ~/.config/workforce-os
+cat > ~/.config/workforce-os/identity &lt;&lt;EOF
+human_name=$HUMAN_NAME
+agent_codename=$AGENT_CODE
+human_email=$HUMAN_EMAIL
+timezone=$TZ
+EOF
+chmod 700 ~/.config/workforce-os && chmod 600 ~/.config/workforce-os/identity
+./ops/init-agent.sh "$AGENT_CODE" "$HUMAN_NAME" "$HUMAN_EMAIL"
+./ops/install-hooks.sh
+echo "=== Onboarding complete. Run: workforce ==="</pre>
+    <div class="subhead">First-session onboarding interview (7 questions, automatic)</div>
+    <ol>
+      <li>What are you focused on this week/month?</li>
+      <li>Who do you collaborate with most?</li>
+      <li>What tools and documents are load-bearing for you?</li>
+      <li>What recurring meetings/rhythms do you have?</li>
+      <li>How should I draft communications (tone, formality)?</li>
+      <li>What should I never touch? When should I always ask first?</li>
+      <li>How do you triage when five things land at once?</li>
+    </ol>
+    <div class="checkpoint">
+      <svg class="checkpoint-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      <div><strong>Checkpoint</strong>All 7 team agents exist. Running <code>onboard.sh</code> on a fresh laptop reaches a working, onboarded agent in under 10 minutes.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 5 -->
+<div class="phase-card" id="phase-5">
+  <div class="phase-header">
+    <span class="phase-number">PHASE 5</span>
+    <span class="phase-title">Integration: Microsoft 365</span>
+    <span class="phase-weeks">Week 5–6</span>
+  </div>
+  <div class="phase-body">
+    <div class="goal-box"><strong>Goal</strong>Each agent reads Outlook inbox, reads calendar, drafts emails (to Drafts folder — <em>never sends</em>). No secrets in the repo.</div>
+    <ol class="step-list">
+      <li>
+        <div class="step-title">Install Softeria MS-365 MCP server</div>
+        <pre><button class="copy-btn" onclick="copyCode(this)">copy</button>claude mcp add ms365 -- npx -y @softeria/ms-365-mcp-server
+npx @softeria/ms-365-mcp-server --login  # follow OAuth device code flow</pre>
+      </li>
+      <li>
+        <div class="step-title">Create public-only config template (no secrets)</div>
+        <pre><button class="copy-btn" onclick="copyCode(this)">copy</button># integrations/m365/mcp.config.template.json
+{
+  "mcpServers": {
+    "ms365": {
+      "command": "npx",
+      "args": ["-y", "@softeria/ms-365-mcp-server"]
+    }
+  }
+}</pre>
+      </li>
+      <li>
+        <div class="step-title">Add M365 permissions to <code>.claude/settings.json</code></div>
+        <pre><button class="copy-btn" onclick="copyCode(this)">copy</button>"allow": [
+  "mcp__ms365__getMyEmail",
+  "mcp__ms365__listEvents",
+  "mcp__ms365__createDraftEmail",
+  "mcp__ms365__getCalendarEvents"
+],
+"deny": [
+  "mcp__ms365__sendMail",
+  "mcp__ms365__deleteEvent",
+  "mcp__ms365__deleteEmail"
+]</pre>
+      </li>
+      <li>
+        <div class="step-title">Document known footguns in <code>integrations/m365/known-footguns.md</code> (mandatory — minimum 3)</div>
+        <ul>
+          <li><strong>Token expiry at 1 hour</strong> — tools return 401 silently. Re-run login tool to fix.</li>
+          <li><strong>Drafts are per-mailbox</strong> — another agent cannot see your drafts.</li>
+          <li><strong>Calendar events vs. Outlook Tasks</strong> — different API endpoints; clarify with human.</li>
+          <li><strong><code>sendMail</code> must be Red tier</strong> — block in <code>settings.json</code> AND <code>soul.md</code>. Agents DRAFT, humans SEND.</li>
+        </ul>
+      </li>
+    </ol>
+    <div class="checkpoint">
+      <svg class="checkpoint-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      <div><strong>Checkpoint</strong>"What's on my calendar tomorrow?" returns real data. "Draft a reply" saves to Outlook Drafts. Attempting to send triggers a Red-tier refusal.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 6 -->
+<div class="phase-card" id="phase-6">
+  <div class="phase-header">
+    <span class="phase-number">PHASE 6</span>
+    <span class="phase-title">Integration: Atlassian (Jira + Confluence)</span>
+    <span class="phase-weeks">Week 6–7</span>
+  </div>
+  <div class="phase-body">
+    <div class="goal-box"><strong>Goal</strong>Agents read/create Jira tickets, read Confluence pages, publish drafts pending human approval via <code>issue_key</code> frontmatter.</div>
+    <ol class="step-list">
+      <li>
+        <div class="step-title">Add the official Atlassian MCP</div>
+        <pre><button class="copy-btn" onclick="copyCode(this)">copy</button>claude mcp add --transport sse atlassian https://mcp.atlassian.com/v1/sse
+# Follow the auth URL → log in to Atlassian → grant access to Jira + Confluence
+# Verify inside Claude Code: type /mcp</pre>
+      </li>
+      <li>
+        <div class="step-title">Wire <code>issue_key</code> frontmatter in tasks</div>
+        <pre><button class="copy-btn" onclick="copyCode(this)">copy</button"># In task YAML frontmatter:
+issue_key: "SKA-042"   # links this filesystem task to Jira SKA-042
+# When task moves to done/, agent also transitions the Jira issue.</pre>
+      </li>
+      <li>
+        <div class="step-title">Document known footguns in <code>integrations/atlassian/known-footguns.md</code></div>
+        <ul>
+          <li><strong>SSE drops silently</strong> after ~30 min — restart the Claude Code session.</li>
+          <li><strong>Project key required</strong> — bare numbers ("123") fail silently on some endpoints.</li>
+          <li><strong>Create vs. update Confluence page</strong> — different tools, different required params.</li>
+          <li><strong>Comment vs. transition</strong> — must be in separate autonomy tiers.</li>
+        </ul>
+      </li>
+    </ol>
+    <div class="checkpoint">
+      <svg class="checkpoint-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      <div><strong>Checkpoint</strong><code>jira issue SKA-001</code> returns the real issue. A task with <code>issue_key: "SKA-XXX"</code>, when completed, also transitions the Jira issue to Done.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 7 -->
+<div class="phase-card" id="phase-7">
+  <div class="phase-header">
+    <span class="phase-number">PHASE 7</span>
+    <span class="phase-title">Security: Pre-Commit Hooks + Permissions</span>
+    <span class="phase-weeks">Week 7–8</span>
+  </div>
+  <div class="phase-body">
+    <div class="goal-box"><strong>Goal</strong>No secrets can be committed. Agent write scope enforced by path. Per-machine identity prevents cross-wiring.</div>
+    <div class="subhead">Autonomy Tiers — every <code>soul.md</code> must define all three</div>
+    <div class="tier-row green">
+      <span class="tier-badge g">🟢 Green</span>
+      <div class="tier-desc"><strong>Just do it, report what happened.</strong><span>Read ops, file edits in own workspace, draft creation, web search, git commits</span></div>
+    </div>
+    <div class="tier-row yellow">
+      <span class="tier-badge y">🟡 Yellow</span>
+      <div class="tier-desc"><strong>Act and report so human can interrupt.</strong><span>Bulk moves, memory edits, knowledge promotion via CoS</span></div>
+    </div>
+    <div class="tier-row red">
+      <span class="tier-badge r">🔴 Red</span>
+      <div class="tier-desc"><strong>Never act without explicit human confirmation.</strong><span>Send email, send Slack, money, legal, other agents' files, destructive git ops</span></div>
+    </div>
+    <div class="subhead">gitleaks pre-commit hook</div>
+    <pre><button class="copy-btn" onclick="copyCode(this)">copy</button>#!/usr/bin/env bash
+# ops/git-hooks/pre-commit
+set -euo pipefail
+STAGED=$(git diff --cached --name-only)
+[[ -z "$STAGED" ]] && exit 0
+if ! gitleaks protect --staged --no-banner -q; then
+  echo ""
+  echo "SECRETS DETECTED. Commit blocked."
+  echo "Remove the secret, replace with [REDACTED-API-KEY],"
+  echo "re-stage, commit. Rotate the real secret immediately."
+  exit 1
+fi</pre>
+    <div class="subhead">Identity file — parse with <code>awk</code>, never <code>source</code></div>
+    <pre><button class="copy-btn" onclick="copyCode(this)">copy</button"># SAFE — awk parsing prevents code injection
+AGENT=$(awk -F= '/^agent_codename/{print $2}' ~/.config/workforce-os/identity)
+
+# NEVER do this — source executes arbitrary code:
+# source ~/.config/workforce-os/identity</pre>
+    <div class="checkpoint">
+      <svg class="checkpoint-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      <div><strong>Checkpoint</strong>Committing a dummy API key is blocked by gitleaks. Agent running as <code>harold</code> cannot write to <code>agents/knight/memory/</code>. Red-tier email send is refused with an explanation.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 8 -->
+<div class="phase-card" id="phase-8">
+  <div class="phase-header">
+    <span class="phase-number">PHASE 8</span>
+    <span class="phase-title">validate.sh + CI Integration</span>
+    <span class="phase-weeks">Week 8–9</span>
+  </div>
+  <div class="phase-body">
+    <div class="goal-box"><strong>Goal</strong>Structural health checks run locally before every commit and in GitHub Actions CI.</div>
+    <pre><button class="copy-btn" onclick="copyCode(this)">copy</button>#!/usr/bin/env bash
+# ops/validate.sh
+set -euo pipefail; ERRORS=0
+fail() { echo "FAIL: $1"; ERRORS=$((ERRORS+1)); }
+
+# 1. Every agent has required files
+for agent in agents/*/; do
+  [[ "$agent" == "agents/_template/" ]] && continue
+  for f in soul.md profile.md memory/context.md memory/routines.md \
+            memory/lessons.md memory/decisions.md logs/activity.log.md; do
+    [[ -f "${agent}${f}" ]] || fail "Missing: ${agent}${f}"
+  done
+done
+
+# 2. Task status matches parent folder (folder IS the status)
+for task in agents/**/tasks/**/*.md; do
+  FOLDER=$(basename "$(dirname "$task")")
+  STATUS=$(grep "^status:" "$task" | awk '{print $2}')
+  [[ "$STATUS" == "$FOLDER" || "$STATUS" == "blocked" || \
+     "$STATUS" == "cancelled" ]] || fail "Status mismatch: $task"
+done
+
+# 3. Only CoS has written to shared/knowledge/
+NON_COS=$(git log --oneline --diff-filter=A -- shared/knowledge/ \
+  | grep -v "\[agent:cos\]" | wc -l)
+[[ "$NON_COS" -eq 0 ]] || fail "Non-CoS writes to shared/knowledge/ ($NON_COS)"
+
+# 4. Secret scanning
+gitleaks detect --no-banner -q 2>/dev/null || fail "Secrets detected"
+
+# 5. hop_count check
+for task in agents/**/tasks/**/*.md; do
+  HOPS=$(grep "^hop_count:" "$task" | awk '{print $2}')
+  [[ -z "$HOPS" || "$HOPS" -le 3 ]] || fail "hop_count > 3: $task"
+done
+
+[[ $ERRORS -eq 0 ]] && echo "All checks passed" || exit 1</pre>
+    <div class="checkpoint">
+      <svg class="checkpoint-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      <div><strong>Checkpoint</strong>Introducing a deliberate structural error (wrong frontmatter status) causes both local validate and GitHub Actions CI to fail loudly.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 9 -->
+<div class="phase-card" id="phase-9">
+  <div class="phase-header">
+    <span class="phase-number">PHASE 9</span>
+    <span class="phase-title">Main CLI: workforce.sh</span>
+    <span class="phase-weeks">Week 9–10</span>
+  </div>
+  <div class="phase-body">
+    <div class="goal-box"><strong>Goal</strong>Daily workflow reduced to one command. Full interface for every team member.</div>
+    <pre><button class="copy-btn" onclick="copyCode(this)">copy</button>#!/usr/bin/env bash
+# ops/workforce.sh
+AGENT=$(awk -F= '/^agent_codename/{print $2}' ~/.config/workforce-os/identity)
+case "${1:-launch}" in
+  launch|"")
+    git pull --rebase --autostash && ./ops/launch-agent.sh "$AGENT" ;;
+  cos)
+    git pull --rebase --autostash && ./ops/launch-agent.sh "cos" ;;
+  task)
+    ./ops/new-task.sh "${2:?Usage: workforce task &lt;title&gt;}" ;;
+  sync)
+    ./ops/validate.sh
+    git add -A && git commit -m "[work][agent:$AGENT] mid-session sync" && git push ;;
+  done)
+    ./ops/validate.sh
+    git add -A && git commit -m "[work][agent:$AGENT] end-of-day sync" && git push ;;
+  status)
+    echo "Agent: $AGENT"
+    echo "Active: $(ls agents/$AGENT/tasks/active/ 2>/dev/null | wc -l) tasks"
+    echo "Inbox:  $(ls agents/$AGENT/tasks/inbox/  2>/dev/null | wc -l) tasks"
+    claude mcp list ;;
+  help)
+    echo "workforce               Launch your agent session"
+    echo "workforce cos           Chief of Staff mode"
+    echo "workforce task &lt;title&gt;  Create a new task"
+    echo "workforce sync          Mid-session commit + push"
+    echo "workforce done          End-of-day: validate, commit, push"
+    echo "workforce status        Health check" ;;
+esac</pre>
+    <div class="subhead">Daily workflow experience</div>
+    <pre><button class="copy-btn" onclick="copyCode(this)">copy</button"># Morning
+cd ~/workforce-os && workforce
+# Agent pulls latest, summarises inbox + calendar, asks what to work on
+
+# During the day — natural language
+"What's on my calendar today?"
+"Draft a reply to Zaishao's email — keep it brief"
+"I need Harold to review the proposal by Friday — file a task"
+
+# End of day
+workforce done
+# Validates, commits memory updates + completed tasks, pushes</pre>
+    <div class="checkpoint">
+      <svg class="checkpoint-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      <div><strong>Checkpoint</strong>All six <code>workforce</code> subcommands work. <code>workforce done</code> produces a clean signed commit visible in <code>git log</code>.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 10 -->
+<div class="phase-card" id="phase-10">
+  <div class="phase-header">
+    <span class="phase-number">PHASE 10</span>
+    <span class="phase-title">Autonomous Agent: Chloe</span>
+    <span class="phase-weeks">Week 10–12</span>
+  </div>
+  <div class="phase-body">
+    <div class="goal-box"><strong>Goal</strong>Headless agent running hourly on cron with <strong>zero tools</strong>. All 12 safety layers operational.</div>
+    <p>Key principle: <strong>if Claude has no tools, prompt injection cannot trigger external actions.</strong> All publishing decisions are made by deterministic code, not the model.</p>
+    <pre><button class="copy-btn" onclick="copyCode(this)">copy</button>cron fires agent-cycle.sh (hourly)
+  → kill switch check      (platform/KILL_SWITCH file)
+  → concurrency lock       (flock — no overlapping cycles)
+  → circuit breaker check  (3 failures → 30 min cooldown)
+  → budget check           (daily USD cap per agent)
+  → git pull
+  → data-fetching workers  (bash/python — deterministic, no Claude)
+  → call Claude            (text in → structured JSON out, no tools)
+  → post-processing        (file Jira issues, write drafts to shared/incoming/)
+  → signed commit on agent/chloe branch
+  → git push</pre>
+    <div class="subhead">12 Safety Layers</div>
+    <div class="safety-grid">
+      <div class="safety-item"><span class="safety-num">01</span><div><span class="safety-name">Zero Tools</span>Claude gets text, returns JSON — no filesystem or API access</div></div>
+      <div class="safety-item"><span class="safety-num">02</span><div><span class="safety-name">Kill Switch</span><code>platform/KILL_SWITCH</code> halts all autonomous agents instantly</div></div>
+      <div class="safety-item"><span class="safety-num">03</span><div><span class="safety-name">Concurrency Lock</span><code>flock</code> prevents overlapping cycles</div></div>
+      <div class="safety-item"><span class="safety-num">04</span><div><span class="safety-name">Circuit Breaker</span>Opens after 3 failures; 30-minute cooldown before retry</div></div>
+      <div class="safety-item"><span class="safety-num">05</span><div><span class="safety-name">Budget Cap</span>Daily USD limit per agent tracked via token counter</div></div>
+      <div class="safety-item"><span class="safety-num">06</span><div><span class="safety-name">Rate Limits</span>Max actions per cycle, max pending actions total</div></div>
+      <div class="safety-item"><span class="safety-num">07</span><div><span class="safety-name">Approval Gate</span>Every draft needs a Jira ticket approved by a human</div></div>
+      <div class="safety-item"><span class="safety-num">08</span><div><span class="safety-name">Signed Commits</span>Per-agent SSH key scoped to their own branch only</div></div>
+      <div class="safety-item"><span class="safety-num">09</span><div><span class="safety-name">Branch Isolation</span>Commits to <code>agent/chloe</code>, never to <code>main</code></div></div>
+      <div class="safety-item"><span class="safety-num">10</span><div><span class="safety-name">Pre-commit Hook</span>gitleaks runs on every agent-generated commit</div></div>
+      <div class="safety-item"><span class="safety-num">11</span><div><span class="safety-name">Egress Allowlist</span>Outbound HTTP restricted to approved domains</div></div>
+      <div class="safety-item"><span class="safety-num">12</span><div><span class="safety-name">validate.sh CI</span>Every push validates structural correctness</div></div>
+    </div>
+    <div class="checkpoint">
+      <svg class="checkpoint-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      <div><strong>Checkpoint</strong>Chloe runs hourly. Drafts appear in <code>shared/incoming/</code> with Jira tickets for human approval. Placing <code>platform/KILL_SWITCH</code> halts the next cycle within 1 second.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 11 -->
+<div class="phase-card" id="phase-11">
+  <div class="phase-header">
+    <span class="phase-number">PHASE 11</span>
+    <span class="phase-title">Evaluation &amp; Documentation</span>
+    <span class="phase-weeks">Week 12–14</span>
+  </div>
+  <div class="phase-body">
+    <div class="goal-box"><strong>Goal</strong>Measure system performance. Produce complete handover documentation.</div>
+    <table>
+      <tr><th>Metric</th><th>Target</th></tr>
+      <tr><td>Morning brief latency</td><td>&lt;2 min from <code>workforce</code> to full brief</td></tr>
+      <tr><td>CoS task routing accuracy</td><td>&gt;90% correct agent on test set of 20 tasks</td></tr>
+      <tr><td>Onboarding gate respected</td><td>100% — interview before any work</td></tr>
+      <tr><td>validate.sh error detection</td><td>100% of 5 injected structural errors caught</td></tr>
+      <tr><td>Secret scanning</td><td>100% of test secrets blocked at commit</td></tr>
+      <tr><td>Autonomous agent reliability</td><td>&gt;95% cycle success over 7-day run</td></tr>
+      <tr><td>Kill switch response</td><td>Halts within 1 cycle — 100%</td></tr>
+      <tr><td>Audit trail completeness</td><td>Every state change is a commit over 48h</td></tr>
+    </table>
+    <div class="subhead">Documentation Deliverables</div>
+    <ol>
+      <li><strong>Architecture diagram</strong> — Mermaid agent graph, task flow, integration topology</li>
+      <li><strong><code>soul.md</code> library</strong> — templates for 5 roles (CEO, engineer, BizDev, ops, researcher)</li>
+      <li><strong>Integration setup guides</strong> — M365, Atlassian, Slack with known-footguns populated</li>
+      <li><strong>Security runbook</strong> — pre-commit setup, credential rotation, blast-radius containment</li>
+      <li><strong>Autonomous agent playbook</strong> — how to design a new Chloe-style headless agent</li>
+    </ol>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<section class="section" id="timeline">
+  <div class="section-header"><h2>Week-by-Week Timeline</h2></div>
+  <ul class="timeline">
+    <li class="timeline-item"><div class="tdot">1</div><div><div class="tw">Week 1</div><div class="tp">Prerequisites + Scaffold</div><div class="tm">Repo created, starter prompt run, full directory structure exists</div></div></li>
+    <li class="timeline-item"><div class="tdot">2</div><div><div class="tw">Week 2</div><div class="tp">Foundation</div><div class="tm">Base prompt written, first agent launches and onboards</div></div></li>
+    <li class="timeline-item"><div class="tdot">3</div><div><div class="tw">Week 3</div><div class="tp">Task System</div><div class="tm">new-task.sh works, lifecycle validated, folder=status enforced</div></div></li>
+    <li class="timeline-item"><div class="tdot">4</div><div><div class="tw">Week 4</div><div class="tp">CoS + Multi-Agent</div><div class="tm">CoS operational, full task handoff between two agents end-to-end</div></div></li>
+    <li class="timeline-item"><div class="tdot">5</div><div><div class="tw">Week 5</div><div class="tp">Team Expansion</div><div class="tm">All agents created, onboard.sh tested on fresh machine</div></div></li>
+    <li class="timeline-item"><div class="tdot">6</div><div><div class="tw">Week 6</div><div class="tp">M365 Integration</div><div class="tm">Calendar read, email draft, sendMail blocked, footguns documented</div></div></li>
+    <li class="timeline-item"><div class="tdot">7</div><div><div class="tw">Week 7</div><div class="tp">Atlassian Integration</div><div class="tm">Jira read/create, Confluence draft, issue_key frontmatter wired</div></div></li>
+    <li class="timeline-item"><div class="tdot">8</div><div><div class="tw">Week 8</div><div class="tp">Security Hardening</div><div class="tm">gitleaks hook, identity file, settings.json scoping verified</div></div></li>
+    <li class="timeline-item"><div class="tdot">9</div><div><div class="tw">Week 9</div><div class="tp">validate.sh + CI</div><div class="tm">Health checks run locally and in GitHub Actions</div></div></li>
+    <li class="timeline-item"><div class="tdot">10</div><div><div class="tw">Week 10</div><div class="tp">workforce.sh CLI</div><div class="tm">All six subcommands working, daily workflow tested for 3 days</div></div></li>
+    <li class="timeline-item"><div class="tdot">11</div><div><div class="tw">Week 11</div><div class="tp">Chloe Autonomous</div><div class="tm">Headless agent hourly, all 12 safety layers operational</div></div></li>
+    <li class="timeline-item"><div class="tdot">12</div><div><div class="tw">Week 12</div><div class="tp">Evaluation</div><div class="tm">Full test suite run, metrics benchmarked</div></div></li>
+    <li class="timeline-item"><div class="tdot">13</div><div><div class="tw">Week 13</div><div class="tp">Documentation</div><div class="tm">Architecture diagram, soul.md library, integration guides</div></div></li>
+    <li class="timeline-item"><div class="tdot">14</div><div><div class="tw">Week 14</div><div class="tp">Handover</div><div class="tm">Runbooks, autonomous agent playbook, knowledge promoted to shared/</div></div></li>
+  </ul>
+</section>
+
+<!-- DESIGN LIMITS -->
+<section class="section" id="limits">
+  <div class="section-header"><h2>Known Design Limits</h2><span class="section-tag">Open Questions</span></div>
+  <table>
+    <tr><th>Question (from the reference implementation)</th><th>Internship Implication</th></tr>
+    <tr><td>Does single-CoS scale past ~15 agents?</td><td>Test with 7; design CoS handoff protocol if bottleneck appears</td></tr>
+    <tr><td>Does file-based memory scale? (<code>lessons.md</code> grows forever)</td><td>Implement memory consolidation: archive entries older than 90 days</td></tr>
+    <tr><td>How do autonomous agents earn trust to graduate from draft-only to send?</td><td>Design a trust-graduation rubric based on N consecutive approved drafts</td></tr>
+    <tr><td>How to measure leverage vs. looking busy?</td><td>Add <code>leverage.md</code> per agent: tasks completed vs. time saved estimates</td></tr>
+  </table>
+</section>
+
+<!-- RESOURCES -->
+<section class="section" id="resources">
+  <div class="section-header"><h2>Resource Requirements</h2></div>
+  <table>
+    <tr><th>Resource</th><th>Cost</th></tr>
+    <tr><td>Anthropic Claude API (Claude Code + agent sessions)</td><td class="resource-cost">~USD $30–60/month</td></tr>
+    <tr><td>GitHub/GitLab repository</td><td class="resource-free">Free</td></tr>
+    <tr><td>Atlassian MCP (official)</td><td class="resource-free">Free (included in Atlassian account)</td></tr>
+    <tr><td>Softeria MS-365 MCP</td><td class="resource-free">Free, open-source</td></tr>
+    <tr><td>gitleaks</td><td class="resource-free">Free, open-source</td></tr>
+    <tr><td>Infrastructure</td><td class="resource-free">Zero — developer laptops + git remote only</td></tr>
+  </table>
+  <p style="margin-top:.85rem;font-size:.88rem;color:var(--color-text-muted)">Total incremental cost: <strong>API credits only</strong>. No servers, no databases, no infrastructure to maintain.</p>
+</section>
+
+</main>
+</div>
+
+<script>
+(function(){
+  var t=document.getElementById('theme-toggle'),r=document.documentElement;
+  function setTheme(v){
+    r.setAttribute('data-theme',v);
+    t.innerHTML=v==='dark'
+      ?'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+      :'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  }
+  setTheme(r.getAttribute('data-theme')||'dark');
+  t.addEventListener('click',function(){setTheme(r.getAttribute('data-theme')==='dark'?'light':'dark');});
+})();
+
+(function(){
+  var items=document.querySelectorAll('.nav-item,.nav-phase');
+  var sections=[];
+  items.forEach(function(a){
+    var id=(a.getAttribute('href')||'').slice(1);
+    var el=id?document.getElementById(id):null;
+    if(el)sections.push({el:el,a:a});
+  });
+  if(!('IntersectionObserver' in window))return;
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        var f=sections.find(function(s){return s.el===e.target;});
+        if(f){
+          items.forEach(function(i){i.classList.remove('active');});
+          f.a.classList.add('active');
+        }
+      }
+    });
+  },{threshold:0.15,rootMargin:'-54px 0px -55% 0px'});
+  sections.forEach(function(s){obs.observe(s.el);});
+})();
+
+function copyCode(btn){
+  var pre=btn.closest('pre');
+  var text=pre.innerText.replace(/^copy\n/,'').replace(/^copied!\n/,'');
+  navigator.clipboard.writeText(text).then(function(){
+    btn.textContent='copied!';btn.classList.add('copied');
+    setTimeout(function(){btn.textContent='copy';btn.classList.remove('copied');},1800);
+  });
+}
+</script>
+</body>
+</html>
