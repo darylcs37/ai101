@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Sense-Strike Skill Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300..700&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─────────────────────────────────────────────────── */
+:root,[data-theme="light"]{
+  --color-bg:#f7f6f2;--color-surface:#f9f8f5;--color-surface-2:#fbfbf9;
+  --color-surface-offset:#f3f0ec;--color-divider:#dcd9d5;--color-border:#d4d1ca;
+  --color-text:#28251d;--color-text-muted:#7a7974;--color-text-faint:#bab9b4;
+  --color-primary:#01696f;--color-primary-hover:#0c4e54;
+  --color-primary-highlight:#cedcd8;
+  --color-warning:#964219;--color-error:#a12c7b;
+  --color-orange:#da7101;--color-gold:#d19900;--color-success:#437a22;
+  --color-blue:#006494;--color-purple:#7a39bb;
+  --shadow-sm:0 1px 2px oklch(0.2 0.01 80/0.06);
+  --shadow-md:0 4px 12px oklch(0.2 0.01 80/0.08);
+  --radius-sm:0.375rem;--radius-md:0.5rem;--radius-lg:0.75rem;--radius-xl:1rem;
+  --space-1:.25rem;--space-2:.5rem;--space-3:.75rem;--space-4:1rem;
+  --space-5:1.25rem;--space-6:1.5rem;--space-8:2rem;--space-10:2.5rem;
+  --text-xs:clamp(.75rem,.7rem + .25vw,.875rem);
+  --text-sm:clamp(.875rem,.8rem + .35vw,1rem);
+  --text-base:clamp(1rem,.95rem + .25vw,1.125rem);
+  --text-lg:clamp(1.125rem,1rem + .75vw,1.5rem);
+  --text-xl:clamp(1.5rem,1.2rem + 1.25vw,2.25rem);
+  --font-mono:'JetBrains Mono',monospace;
+  --font-body:'Inter','Helvetica Neue',sans-serif;
+  --transition:180ms cubic-bezier(.16,1,.3,1);
+}
+[data-theme="dark"]{
+  --color-bg:#0f1117;--color-surface:#161a23;--color-surface-2:#1c2130;
+  --color-surface-offset:#131720;--color-divider:#1e2535;--color-border:#252d40;
+  --color-text:#c9d1e0;--color-text-muted:#6b7894;--color-text-faint:#3d4a65;
+  --color-primary:#4f98a3;--color-primary-hover:#227f8b;
+  --color-primary-highlight:#1a2f35;
+  --color-warning:#bb653b;--color-error:#d163a7;
+  --color-orange:#fdab43;--color-gold:#e8af34;--color-success:#6daa45;
+  --color-blue:#5591c7;--color-purple:#a86fdf;
+  --shadow-sm:0 1px 2px oklch(0 0 0/.3);
+  --shadow-md:0 4px 12px oklch(0 0 0/.4);
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme]){
+  --color-bg:#0f1117;--color-surface:#161a23;--color-surface-2:#1c2130;
+  --color-surface-offset:#131720;--color-divider:#1e2535;--color-border:#252d40;
+  --color-text:#c9d1e0;--color-text-muted:#6b7894;--color-text-faint:#3d4a65;
+  --color-primary:#4f98a3;--color-primary-hover:#227f8b;
+  --color-primary-highlight:#1a2f35;
+  --color-warning:#bb653b;--color-error:#d163a7;
+  --color-orange:#fdab43;--color-gold:#e8af34;--color-success:#6daa45;
+  --color-blue:#5591c7;--color-purple:#a86fdf;
+}}
+
+/* ─── BASE ───────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth;scroll-padding-top:5rem}
+body{min-height:100dvh;font-family:var(--font-body);font-size:var(--text-base);
+  color:var(--color-text);background:var(--color-bg);line-height:1.6}
+img{display:block;max-width:100%}
+input,button{font:inherit;color:inherit}
+h1,h2,h3,h4{text-wrap:balance;line-height:1.15}
+p,li{text-wrap:pretty;max-width:72ch}
+::selection{background:oklch(from var(--color-primary) l c h/.25);color:var(--color-text)}
+:focus-visible{outline:2px solid var(--color-primary);outline-offset:3px;border-radius:var(--radius-sm)}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{
+  animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* ─── LAYOUT ─────────────────────────────────────────────────── */
+.wrap{max-width:1100px;margin-inline:auto;padding-inline:var(--space-6)}
+
+/* ─── HEADER ─────────────────────────────────────────────────── */
+header{
+  position:sticky;top:0;z-index:100;
+  background:color-mix(in oklch,var(--color-bg) 85%,transparent);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--color-divider);
+}
+.header-inner{
+  display:flex;align-items:center;gap:var(--space-4);
+  padding:var(--space-3) var(--space-6);
+  max-width:1100px;margin-inline:auto;
+}
+.logo{display:flex;align-items:center;gap:var(--space-3);text-decoration:none;color:var(--color-text);flex-shrink:0}
+.logo-icon{width:32px;height:32px;flex-shrink:0}
+.logo-text{font-size:var(--text-sm);font-weight:600;letter-spacing:-.01em}
+.logo-sub{font-size:var(--text-xs);color:var(--color-text-muted);font-weight:400}
+.header-controls{display:flex;align-items:center;gap:var(--space-3);margin-left:auto}
+.search-wrap{position:relative;display:flex;align-items:center}
+.search-wrap svg{position:absolute;left:var(--space-3);color:var(--color-text-muted);pointer-events:none;width:16px;height:16px}
+#search{
+  width:clamp(180px,25vw,320px);
+  padding:var(--space-2) var(--space-3) var(--space-2) calc(var(--space-3)*2 + 16px);
+  font-size:var(--text-sm);
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-lg);color:var(--color-text);
+  transition:border-color var(--transition),box-shadow var(--transition);
+}
+#search::placeholder{color:var(--color-text-faint)}
+#search:focus{outline:none;border-color:var(--color-primary);box-shadow:0 0 0 3px oklch(from var(--color-primary) l c h/.15)}
+#search-count{font-size:var(--text-xs);color:var(--color-text-muted);white-space:nowrap}
+button.theme-btn{
+  height:36px;display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:0 var(--space-3);min-width:72px;
+  border:1px solid var(--color-border);border-radius:var(--radius-md);
+  background:var(--color-surface);color:var(--color-text-muted);
+  cursor:pointer;transition:background var(--transition),color var(--transition),border-color var(--transition);
+  flex-shrink:0;
+}
+button.theme-btn:active{transform:scale(.97)}
+button.theme-btn:hover{background:var(--color-surface-offset);color:var(--color-text)}
+
+/* ─── HERO ───────────────────────────────────────────────────── */
+.hero{
+  padding:var(--space-10) var(--space-6) var(--space-6);
+  max-width:1100px;margin-inline:auto;
+  border-bottom:1px solid var(--color-divider);
+  margin-bottom:var(--space-8);
+}
+.hero-tags{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-bottom:var(--space-4)}
+.hero h1{font-size:var(--text-xl);font-weight:700;letter-spacing:-.03em;margin-bottom:var(--space-2)}
+.hero p{font-size:var(--text-sm);color:var(--color-text-muted);max-width:60ch}
+.pipeline{
+  display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-1);
+  margin-top:var(--space-5);font-size:var(--text-xs);font-family:var(--font-mono);
+}
+.pipe-step{
+  padding:3px var(--space-3);border-radius:var(--radius-full);
+  font-weight:600;letter-spacing:.04em;cursor:pointer;
+  transition:transform var(--transition),box-shadow var(--transition);
+  border:1px solid transparent;
+}
+.pipe-step:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.pipe-arrow{color:var(--color-text-faint);font-weight:300}
+.ps-find{background:color-mix(in oklch,var(--color-blue) 18%,var(--color-surface));color:var(--color-blue);border-color:color-mix(in oklch,var(--color-blue) 25%,var(--color-border))}
+.ps-fix{background:color-mix(in oklch,var(--color-gold) 18%,var(--color-surface));color:var(--color-gold);border-color:color-mix(in oklch,var(--color-gold) 25%,var(--color-border))}
+.ps-track{background:color-mix(in oklch,var(--color-primary) 18%,var(--color-surface));color:var(--color-primary);border-color:color-mix(in oklch,var(--color-primary) 25%,var(--color-border))}
+.ps-target{background:color-mix(in oklch,var(--color-orange) 18%,var(--color-surface));color:var(--color-orange);border-color:color-mix(in oklch,var(--color-orange) 25%,var(--color-border))}
+.ps-engage{background:color-mix(in oklch,var(--color-error) 18%,var(--color-surface));color:var(--color-error);border-color:color-mix(in oklch,var(--color-error) 25%,var(--color-border))}
+.ps-assess{background:color-mix(in oklch,var(--color-success) 18%,var(--color-surface));color:var(--color-success);border-color:color-mix(in oklch,var(--color-success) 25%,var(--color-border))}
+.ps-all{background:color-mix(in oklch,var(--color-purple) 18%,var(--color-surface));color:var(--color-purple);border-color:color-mix(in oklch,var(--color-purple) 25%,var(--color-border))}
+
+/* ─── SKILLS GRID ────────────────────────────────────────────── */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(min(340px,100%),1fr));
+  gap:var(--space-5);padding:0 var(--space-6) var(--space-10);
+  max-width:1100px;margin-inline:auto;
+}
+.card{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-xl);padding:var(--space-5);
+  transition:box-shadow var(--transition),transform var(--transition),border-color var(--transition);
+  display:flex;flex-direction:column;gap:var(--space-4);
+}
+.card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);border-color:color-mix(in oklch,var(--color-primary) 30%,var(--color-border))}
+.card[data-hidden]{display:none}
+.card-head{display:flex;align-items:flex-start;gap:var(--space-3)}
+.card-icon{
+  width:40px;height:40px;border-radius:var(--radius-md);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;border:1px solid transparent;
+}
+.card-title{font-size:var(--text-sm);font-weight:700;letter-spacing:-.01em;font-family:var(--font-mono)}
+.card-subtitle{font-size:var(--text-xs);color:var(--color-text-muted);margin-top:2px}
+.card-desc{font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.7;max-width:100%}
+.card-meta{display:flex;flex-wrap:wrap;gap:var(--space-2)}
+
+/* ─── TAGS & BADGES ─────────────────────────────────────────── */
+.tag{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:2px var(--space-2);border-radius:var(--radius-full);
+  font-size:11px;font-weight:500;letter-spacing:.03em;
+  border:1px solid transparent;white-space:nowrap;
+}
+.tag-phase{background:var(--color-surface-offset);color:var(--color-text-muted);border-color:var(--color-border)}
+.tag-version{background:var(--color-surface-offset);color:var(--color-text-faint);font-family:var(--font-mono)}
+
+/* ─── F2T2EA STEP BADGES ─────────────────────────────────────── */
+.steps{display:flex;flex-wrap:wrap;gap:var(--space-1)}
+.step{padding:2px 8px;border-radius:var(--radius-full);font-size:10px;font-weight:700;
+      letter-spacing:.06em;border:1px solid transparent;font-family:var(--font-mono)}
+.step-find{background:color-mix(in oklch,var(--color-blue) 15%,var(--color-surface));color:var(--color-blue);border-color:color-mix(in oklch,var(--color-blue) 20%,var(--color-border))}
+.step-fix{background:color-mix(in oklch,var(--color-gold) 15%,var(--color-surface));color:var(--color-gold);border-color:color-mix(in oklch,var(--color-gold) 20%,var(--color-border))}
+.step-track{background:color-mix(in oklch,var(--color-primary) 15%,var(--color-surface));color:var(--color-primary);border-color:color-mix(in oklch,var(--color-primary) 20%,var(--color-border))}
+.step-target{background:color-mix(in oklch,var(--color-orange) 15%,var(--color-surface));color:var(--color-orange);border-color:color-mix(in oklch,var(--color-orange) 20%,var(--color-border))}
+.step-engage{background:color-mix(in oklch,var(--color-error) 15%,var(--color-surface));color:var(--color-error);border-color:color-mix(in oklch,var(--color-error) 20%,var(--color-border))}
+.step-assess{background:color-mix(in oklch,var(--color-success) 15%,var(--color-surface));color:var(--color-success);border-color:color-mix(in oklch,var(--color-success) 20%,var(--color-border))}
+.step-all{background:color-mix(in oklch,var(--color-purple) 15%,var(--color-surface));color:var(--color-purple);border-color:color-mix(in oklch,var(--color-purple) 20%,var(--color-border))}
+
+/* ─── ABI PILLARS ────────────────────────────────────────────── */
+.pillars{display:flex;flex-direction:column;gap:var(--space-1)}
+.pillar{
+  display:flex;align-items:flex-start;gap:var(--space-2);
+  font-size:var(--text-xs);padding:var(--space-2) var(--space-3);
+  background:var(--color-surface-2);border-radius:var(--radius-md);
+  border:1px solid var(--color-divider);
+}
+.pillar-dot{
+  width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:5px;
+  background:var(--color-primary);
+}
+.pillar-dot.p2{background:var(--color-gold)}
+.pillar-dot.p3{background:var(--color-blue)}
+.pillar-dot.p4{background:var(--color-purple)}
+.pillar-name{font-weight:600;color:var(--color-text);margin-right:var(--space-1)}
+.pillar-desc{color:var(--color-text-muted)}
+
+/* ─── IO SECTION ─────────────────────────────────────────────── */
+.io-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3)}
+@media(max-width:480px){.io-grid{grid-template-columns:1fr}}
+.io-block{background:var(--color-surface-2);border-radius:var(--radius-md);
+  padding:var(--space-3);border:1px solid var(--color-divider)}
+.io-label{font-size:10px;font-weight:700;letter-spacing:.08em;
+  color:var(--color-text-faint);margin-bottom:var(--space-2);text-transform:uppercase}
+.io-item{font-size:var(--text-xs);color:var(--color-text-muted);
+  padding:2px 0;display:flex;align-items:flex-start;gap:var(--space-2)}
+.io-item code{font-family:var(--font-mono);font-size:10px;color:var(--color-text);
+  background:color-mix(in oklch,var(--color-primary) 8%,var(--color-surface));
+  padding:1px 5px;border-radius:3px;flex-shrink:0}
+
+/* ─── SAFETY BLOCK ───────────────────────────────────────────── */
+.safety{
+  background:color-mix(in oklch,var(--color-error) 8%,var(--color-surface));
+  border:1px solid color-mix(in oklch,var(--color-error) 20%,var(--color-border));
+  border-radius:var(--radius-md);padding:var(--space-3);
+}
+.safety-head{font-size:10px;font-weight:700;letter-spacing:.08em;
+  color:var(--color-error);text-transform:uppercase;margin-bottom:var(--space-2)}
+.safety-item{font-size:var(--text-xs);color:var(--color-text-muted);
+  display:flex;align-items:flex-start;gap:var(--space-2);padding:2px 0}
+.safety-item::before{content:"⚠";color:var(--color-error);font-size:11px;flex-shrink:0}
+
+/* ─── HIGHLIGHT TEXT ─────────────────────────────────────────── */
+mark{
+  background:color-mix(in oklch,var(--color-gold) 30%,transparent);
+  color:inherit;border-radius:2px;padding:0 2px;
+}
+[data-theme="dark"] mark{
+  background:color-mix(in oklch,var(--color-gold) 20%,transparent);
+}
+
+/* ─── NO RESULTS ─────────────────────────────────────────────── */
+#no-results{
+  display:none;text-align:center;padding:var(--space-10) var(--space-6);
+  color:var(--color-text-muted);font-size:var(--text-sm);
+  max-width:1100px;margin-inline:auto;
+}
+#no-results.show{display:block}
+
+/* ─── SECTION DIVIDER ────────────────────────────────────────── */
+.section-label{
+  font-size:var(--text-xs);font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--color-text-faint);
+  padding:var(--space-3) var(--space-6) var(--space-2);
+  max-width:1100px;margin-inline:auto;
+  border-top:1px solid var(--color-divider);margin-top:var(--space-4);
+}
+.section-label:first-child{border-top:none;margin-top:0}
+
+/* ─── MOBILE ─────────────────────────────────────────────────── */
+@media(max-width:600px){
+  .header-inner{flex-wrap:wrap}
+  .header-controls{width:100%}
+  #search{width:100%;flex:1}
+  .hero{padding:var(--space-6) var(--space-4) var(--space-4)}
+  .grid{padding-inline:var(--space-4)}
+  .section-label{padding-inline:var(--space-4)}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══════════════════════════════════════════════ -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <svg class="logo-icon" viewBox="0 0 32 32" fill="none" aria-label="Hermes">
+        <rect width="32" height="32" rx="8" fill="var(--color-primary)" opacity=".15"/>
+        <path d="M8 10 L16 6 L24 10 L24 22 L16 26 L8 22 Z" stroke="var(--color-primary)" stroke-width="1.5" fill="none"/>
+        <path d="M8 10 L16 14 L24 10" stroke="var(--color-primary)" stroke-width="1.5" fill="none"/>
+        <line x1="16" y1="14" x2="16" y2="26" stroke="var(--color-primary)" stroke-width="1.5"/>
+        <circle cx="16" cy="14" r="2" fill="var(--color-primary)"/>
+      </svg>
+      <div>
+        <div class="logo-text">HERMES</div>
+        <div class="logo-sub">Sense-Strike Skill Reference</div>
+      </div>
+    </a>
+    <div class="header-controls">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input type="search" id="search" placeholder="Search skills, ABI pillars, F2T2EA steps…" autocomplete="off" spellcheck="false">
+      </div>
+      <span id="search-count"></span>
+      <button class="theme-btn" data-theme-toggle aria-label="Toggle theme" title="Toggle dark / light mode">
+        <svg id="theme-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <span id="theme-label" style="font-size:11px;font-weight:700;letter-spacing:.06em;white-space:nowrap">LIGHT</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ HERO ══════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-tags">
+    <span class="tag tag-phase">v2.0.0</span>
+    <span class="tag tag-phase">ABI • Activity-Based Intelligence</span>
+    <span class="tag tag-phase">F2T2EA Kill Chain</span>
+    <span class="tag tag-phase">UNCLASSIFIED // FOUO</span>
+  </div>
+  <h1>Hermes Sense-Strike Skill Bundle</h1>
+  <p>8 Hermes Agent Framework skills implementing ABI four-pillar methodology across the full F2T2EA kill chain. Human-in-the-loop gates enforced at all kinetic decision points.</p>
+  <div class="pipeline" role="navigation" aria-label="F2T2EA pipeline">
+    <span class="pipe-step ps-find" data-filter="find">FIND</span>
+    <span class="pipe-arrow">→</span>
+    <span class="pipe-step ps-fix" data-filter="fix">FIX</span>
+    <span class="pipe-arrow">→</span>
+    <span class="pipe-step ps-track" data-filter="track">TRACK</span>
+    <span class="pipe-arrow">→</span>
+    <span class="pipe-step ps-target" data-filter="target">TARGET</span>
+    <span class="pipe-arrow">→</span>
+    <span class="pipe-step ps-engage" data-filter="engage">ENGAGE</span>
+    <span class="pipe-arrow">→</span>
+    <span class="pipe-step ps-assess" data-filter="assess">ASSESS</span>
+    <span class="pipe-arrow">·</span>
+    <span class="pipe-step ps-all" data-filter="all-steps">ALL STEPS</span>
+  </div>
+</section>
+
+<!-- ═══ SKILL CARDS ═══════════════════════════════════════════ -->
+<p class="section-label">Sense Phase — Collection &amp; Fusion</p>
+<div class="grid" id="skill-grid">
+
+  <!-- OSINT COLLECTION -->
+  <article class="card" data-keywords="osint collection abi find fix geoint sigint socmint humint ais adsb entity graph georeferencing data neutrality sequence neutrality integrate before exploit spatiotemporal pattern of life collection gap retask">
+    <div class="card-head">
+      <div class="card-icon" style="background:color-mix(in oklch,var(--color-blue) 12%,var(--color-surface));border-color:color-mix(in oklch,var(--color-blue) 20%,var(--color-border))">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-blue)" stroke-width="1.8">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          <path d="M11 8v3l2 2"/>
+        </svg>
+      </div>
+      <div>
+        <div class="card-title">skill-osint-collection</div>
+        <div class="card-subtitle">Intelligence Collection · Sense Phase</div>
+      </div>
+    </div>
+    <p class="card-desc">Multi-source OSINT collection executing F2T2EA FIND and FIX steps via ABI four-pillar methodology. Activity-centric — all data georeferenced at ingestion, integrated before exploitation, archived for sequence neutrality. Drives dynamic sensor re-tasking from discovered gaps.</p>
+    <div class="steps" aria-label="F2T2EA steps">
+      <span class="step step-find">FIND</span>
+      <span class="step step-fix">FIX</span>
+    </div>
+    <div class="pillars">
+      <div class="pillar"><span class="pillar-dot"></span><span><span class="pillar-name">Georeference to Discover</span><span class="pillar-desc">All data spatially/temporally indexed at ingestion</span></span></div>
+      <div class="pillar"><span class="pillar-dot p2"></span><span><span class="pillar-name">Data Neutrality</span><span class="pillar-desc">SOCMINT = SIGINT weight; no source bias</span></span></div>
+      <div class="pillar"><span class="pillar-dot p3"></span><span><span class="pillar-name">Sequence Neutrality</span><span class="pillar-desc">90-day archive retroactively correlated</span></span></div>
+      <div class="pillar"><span class="pillar-dot p4"></span><span><span class="pillar-name">Integrate Before Exploit</span><span class="pillar-desc">Multi-INT fused before single-source analysis</span></span></div>
+    </div>
+    <div class="io-grid">
+      <div class="io-block">
+        <div class="io-label">Key Inputs</div>
+        <div class="io-item"><code>target_entity</code> name or AOI</div>
+        <div class="io-item"><code>collection_types</code> GEOINT, SIGINT…</div>
+        <div class="io-item"><code>tipping_cues</code> sparse indicators</div>
+      </div>
+      <div class="io-block">
+        <div class="io-label">Key Outputs</div>
+        <div class="io-item"><code>abi_entity_graph</code> fused multi-INT</div>
+        <div class="io-item"><code>find_fix_report</code> MGRS fix + confidence</div>
+        <div class="io-item"><code>collection_gap_retasks</code> sensor loop</div>
+      </div>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-phase">v2.0.0</span>
+      <span class="tag" style="background:color-mix(in oklch,var(--color-blue) 10%,var(--color-surface));color:var(--color-blue)">min_confidence: 0.75</span>
+    </div>
+  </article>
+
+  <!-- ARABIC LLM -->
+  <article class="card" data-keywords="arabic hebrew farsi nlp translation ner socmint mena entity graph abi data neutrality geocoding find fix intent classification urgency propaganda callsign unit weapon person location">
+    <div class="card-head">
+      <div class="card-icon" style="background:color-mix(in oklch,var(--color-gold) 12%,var(--color-surface));border-color:color-mix(in oklch,var(--color-gold) 20%,var(--color-border))">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="1.8">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="card-title">skill-arabic-llm-translation</div>
+        <div class="card-subtitle">MENA NLP · Sense Phase</div>
+      </div>
+    </div>
+    <p class="card-desc">ABI-aware multilingual NLP for Arabic, Hebrew, Farsi, and Dari. Data neutrality: unclassified SOCMINT processed equal to classified intercepts. LOC entities geocoded at ingestion and fed into ABI entity graph as FIND/FIX cues.</p>
+    <div class="steps">
+      <span class="step step-find">FIND</span>
+      <span class="step step-fix">FIX</span>
+    </div>
+    <div class="pillars">
+      <div class="pillar"><span class="pillar-dot p2"></span><span><span class="pillar-name">Data Neutrality</span><span class="pillar-desc">Telegram post = SIGINT intercept in entity graph</span></span></div>
+      <div class="pillar"><span class="pillar-dot"></span><span><span class="pillar-name">Georeference</span><span class="pillar-desc">Arabic place names geocoded to lat/lon at ingestion</span></span></div>
+      <div class="pillar"><span class="pillar-dot p4"></span><span><span class="pillar-name">Integrate Before Exploit</span><span class="pillar-desc">NER feeds entity graph — not isolated reports</span></span></div>
+    </div>
+    <div class="io-grid">
+      <div class="io-block">
+        <div class="io-label">NER Labels</div>
+        <div class="io-item"><code>PERSON</code> names, callsigns, aliases</div>
+        <div class="io-item"><code>UNIT</code> military designators</div>
+        <div class="io-item"><code>LOC</code> geocoded coordinates</div>
+        <div class="io-item"><code>WEAPON</code> systems, munitions</div>
+      </div>
+      <div class="io-block">
+        <div class="io-label">Key Outputs</div>
+        <div class="io-item"><code>abi_graph_contribution</code> nodes + edges</div>
+        <div class="io-item"><code>location_fixes</code> FIND cues</div>
+        <div class="io-item"><code>urgency_score</code> 0.0–1.0 TST trigger</div>
+      </div>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-phase">v2.0.0</span>
+      <span class="tag" style="background:color-mix(in oklch,var(--color-gold) 10%,var(--color-surface));color:var(--color-gold)">urgency ≥ 0.8 → TST</span>
+    </div>
+  </article>
+
+  <!-- GEOINT FUSION -->
+  <article class="card" data-keywords="geoint fusion cop common operating picture cesium maplibre geojson czml satellite sar change detection object detection find fix track assess f2t2ea abi spatial backbone discovery layer civilian proximity">
+    <div class="card-head">
+      <div class="card-icon" style="background:color-mix(in oklch,var(--color-primary) 12%,var(--color-surface));border-color:color-mix(in oklch,var(--color-primary) 20%,var(--color-border))">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.8">
+          <polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+      </div>
+      <div>
+        <div class="card-title">skill-geoint-fusion</div>
+        <div class="card-subtitle">Spatial Backbone · COP · All Phases</div>
+      </div>
+    </div>
+    <p class="card-desc">ABI spatial backbone producing a Cesium/MapLibre COP that visualizes live F2T2EA kill chain step per entity. Implements georeference-to-discover as universal join key. Discovery clusters surface unknown co-located entities. SAR change detection spans FIND and ASSESS.</p>
+    <div class="steps">
+      <span class="step step-find">FIND</span>
+      <span class="step step-fix">FIX</span>
+      <span class="step step-track">TRACK</span>
+      <span class="step step-assess">ASSESS</span>
+    </div>
+    <div class="pillars">
+      <div class="pillar"><span class="pillar-dot"></span><span><span class="pillar-name">Georeference to Discover</span><span class="pillar-desc">Spatial backbone — universal join key for all INT</span></span></div>
+      <div class="pillar"><span class="pillar-dot p2"></span><span><span class="pillar-name">Data Neutrality</span><span class="pillar-desc">Sentinel-2 = WorldView — all imagery equal weight</span></span></div>
+    </div>
+    <div class="io-grid">
+      <div class="io-block">
+        <div class="io-label">COP Symbology</div>
+        <div class="io-item">🟠 <code>FIND</code> orange dot</div>
+        <div class="io-item">🟡 <code>FIX</code> yellow diamond</div>
+        <div class="io-item">🔵 <code>TRACK</code> chevron + path</div>
+        <div class="io-item">🔴 <code>TARGET</code> reticle</div>
+        <div class="io-item">⚡ <code>ENGAGE</code> flashing red</div>
+        <div class="io-item">⬜ <code>ASSESS</code> grey overlay</div>
+      </div>
+      <div class="io-block">
+        <div class="io-label">Key Outputs</div>
+        <div class="io-item"><code>cop_geojson</code> full COP</div>
+        <div class="io-item"><code>czml_3d_scene</code> Cesium package</div>
+        <div class="io-item"><code>abi_discovery_layer</code> unknown entities</div>
+        <div class="io-item"><code>change_detection_delta</code> SAR diff</div>
+      </div>
+    </div>
+    <div class="safety">
+      <div class="safety-head">Civilian Alert Threshold</div>
+      <div class="safety-item">Proximity &lt; 50m triggers mandatory alert</div>
+      <div class="safety-item">Protected sites: hospital, school, mosque, church, refugee camp</div>
+    </div>
+  </article>
+
+</div>
+
+<p class="section-label">Sense Phase — Behavioral Analysis</p>
+<div class="grid">
+
+  <!-- PATTERN OF LIFE -->
+  <article class="card" data-keywords="pattern of life pol track behavioral analysis abi sequence neutrality kalman bayesian exploitation window anomaly detection network association entity graph spatiotemporal f2t2ea track handoff confidence prediction mobile target">
+    <div class="card-head">
+      <div class="card-icon" style="background:color-mix(in oklch,var(--color-primary) 12%,var(--color-surface));border-color:color-mix(in oklch,var(--color-primary) 20%,var(--color-border))">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.8">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+      </div>
+      <div>
+        <div class="card-title">skill-pattern-of-life</div>
+        <div class="card-subtitle">ABI PoL · F2T2EA TRACK</div>
+      </div>
+    </div>
+    <p class="card-desc">ABI-driven behavioral baseline building, exploitation window prediction, and continuous target custody from FIX to TARGET handoff. Sequence neutrality re-evaluates 90-day archive on every update. Network-level PoL extends tracking to N-order associates via entity graph traversal.</p>
+    <div class="steps">
+      <span class="step step-track">TRACK</span>
+    </div>
+    <div class="pillars">
+      <div class="pillar"><span class="pillar-dot p3"></span><span><span class="pillar-name">Sequence Neutrality</span><span class="pillar-desc">90-day archive re-evaluated on every baseline update</span></span></div>
+      <div class="pillar"><span class="pillar-dot p4"></span><span><span class="pillar-name">Integrate Before Exploit</span><span class="pillar-desc">Multi-INT entity graph input — not single-source tracks</span></span></div>
+    </div>
+    <div class="io-grid">
+      <div class="io-block">
+        <div class="io-label">TRACK Handoff Criteria</div>
+        <div class="io-item"><code>track_confidence</code> ≥ 0.70</div>
+        <div class="io-item"><code>exploitation_window</code> P ≥ 0.75</div>
+        <div class="io-item"><code>no_fix_source_gap</code> required</div>
+      </div>
+      <div class="io-block">
+        <div class="io-label">Anomaly Types</div>
+        <div class="io-item">New cluster location</div>
+        <div class="io-item">Activity &gt; 2σ temporal mean</div>
+        <div class="io-item">Associate network shift</div>
+        <div class="io-item">Archive retroactive hit</div>
+      </div>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-phase">min 5 observations</span>
+      <span class="tag tag-phase">90d sequence lookback</span>
+    </div>
+  </article>
+
+</div>
+
+<p class="section-label">Fires — Targeting &amp; Strike</p>
+<div class="grid">
+
+  <!-- TARGET DEVELOPMENT -->
+  <article class="card" data-keywords="target development jdf joint target folder cde collateral damage estimate weaponeering loac f2t2ea target abi network analysis node criticality tsa deliberate dynamic time sensitive exploitation window sja legal authorization commander">
+    <div class="card-head">
+      <div class="card-icon" style="background:color-mix(in oklch,var(--color-orange) 12%,var(--color-surface));border-color:color-mix(in oklch,var(--color-orange) 20%,var(--color-border))">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-orange)" stroke-width="1.8">
+          <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+        </svg>
+      </div>
+      <div>
+        <div class="card-title">skill-target-development</div>
+        <div class="card-subtitle">Fires · F2T2EA TARGET</div>
+      </div>
+    </div>
+    <p class="card-desc">Builds Joint Target Folder from TRACK handoff and ABI entity graph. Network target system analysis: traverses entity graph for node criticality scoring. ABI-discovered nodes can be targeted — not limited to deliberate target list. Exploitation window from PoL TRACK step drives TOA.</p>
+    <div class="steps">
+      <span class="step step-target">TARGET</span>
+    </div>
+    <div class="pillars">
+      <div class="pillar"><span class="pillar-dot p4"></span><span><span class="pillar-name">Integrate Before Exploit</span><span class="pillar-desc">ABI entity graph informs target system analysis</span></span></div>
+      <div class="pillar"><span class="pillar-dot p3"></span><span><span class="pillar-name">Sequence Neutrality</span><span class="pillar-desc">Archived patterns inform node vulnerability assessment</span></span></div>
+    </div>
+    <div class="io-grid">
+      <div class="io-block">
+        <div class="io-label">JTF Contents</div>
+        <div class="io-item"><code>abi_network_position</code> criticality</div>
+        <div class="io-item"><code>target_system_analysis</code> nodes/links</div>
+        <div class="io-item"><code>exploitation_window</code> TOA from PoL</div>
+        <div class="io-item"><code>cde_estimate</code> per munition option</div>
+        <div class="io-item"><code>weaponeering_options</code> ranked</div>
+      </div>
+      <div class="io-block">
+        <div class="io-label">LOAC Gates</div>
+        <div class="io-item">Civilian &lt; 100m → SJA halt</div>
+        <div class="io-item">Protected site &lt; 200m → SJA halt</div>
+        <div class="io-item">CDE Cat &gt; III → Cmdr +1</div>
+        <div class="io-item">Node criticality &lt; 0.40 → flag</div>
+      </div>
+    </div>
+    <div class="safety">
+      <div class="safety-head">Authorization Gates</div>
+      <div class="safety-item">auto_strike_prohibited: true — all outputs advisory only</div>
+      <div class="safety-item">SJA legal review mandatory when legal_flag = true</div>
+      <div class="safety-item">Commander authorization required before ENGAGE handoff</div>
+    </div>
+  </article>
+
+  <!-- C2 COORDINATION -->
+  <article class="card" data-keywords="c2 coordination fire mission engage f2t2ea kill chain compression sensor to shooter airspace deconfliction tst time sensitive targeting toa exploitation window abort criteria operator authentication bda cue">
+    <div class="card-head">
+      <div class="card-icon" style="background:color-mix(in oklch,var(--color-error) 12%,var(--color-surface));border-color:color-mix(in oklch,var(--color-error) 20%,var(--color-border))">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-error)" stroke-width="1.8">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.09 13"/>
+          <path d="M22 2 11 13"/><path d="M22 2 15 22 11 13 2 9l20-7z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="card-title">skill-c2-coordination</div>
+        <div class="card-subtitle">Fires · F2T2EA ENGAGE</div>
+      </div>
+    </div>
+    <p class="card-desc">Translates authorized JTF into executable fire mission using PoL TRACK exploitation window as primary TOA. Tracks kill chain compression clock from FIND to ENGAGE. Alerts on window expiry. Auto-generates BDA collection cue on impact. Authentication codes operator-only.</p>
+    <div class="steps">
+      <span class="step step-engage">ENGAGE</span>
+    </div>
+    <div class="io-grid">
+      <div class="io-block">
+        <div class="io-label">Kill Chain Targets</div>
+        <div class="io-item">FIND → FIX: &lt; 5 min</div>
+        <div class="io-item">FIX → TRACK: &lt; 15 min</div>
+        <div class="io-item">TRACK → TARGET: &lt; 20 min</div>
+        <div class="io-item">TARGET → ENGAGE: &lt; 10 min (TST)</div>
+        <div class="io-item" style="font-weight:600;color:var(--color-text)">Total FIND→ENGAGE: &lt; 60 min</div>
+      </div>
+      <div class="io-block">
+        <div class="io-label">Abort Triggers</div>
+        <div class="io-item">Civilian ingress into CDE radius</div>
+        <div class="io-item">ID confidence &lt; 0.75</div>
+        <div class="io-item">Exploitation window expired</div>
+        <div class="io-item">Comms loss &gt; 5 min</div>
+        <div class="io-item">Commander abort order</div>
+      </div>
+    </div>
+    <div class="safety">
+      <div class="safety-head">Hard Constraints</div>
+      <div class="safety-item">auto_fire_prohibited: true — no autonomous weapon release</div>
+      <div class="safety-item">authentication_codes: OPERATOR-FILLED ONLY — never agent-populated</div>
+      <div class="safety-item">Window expired → halt and request TRACK refresh</div>
+    </div>
+  </article>
+
+</div>
+
+<p class="section-label">Post-Strike — Assessment &amp; Loop Closure</p>
+<div class="grid">
+
+  <!-- BDA ASSESSMENT -->
+  <article class="card" data-keywords="bda battle damage assessment assess f2t2ea post strike kill chain closure re-attack network bda abi data neutrality socmint imagery change detection damage category collateral damage civilian casualties audit locked recycle find loop">
+    <div class="card-head">
+      <div class="card-icon" style="background:color-mix(in oklch,var(--color-success) 12%,var(--color-surface));border-color:color-mix(in oklch,var(--color-success) 20%,var(--color-border))">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="1.8">
+          <path d="M9 11l3 3L22 4"/>
+          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+        </svg>
+      </div>
+      <div>
+        <div class="card-title">skill-bda-assessment</div>
+        <div class="card-subtitle">Post-Strike · F2T2EA ASSESS</div>
+      </div>
+    </div>
+    <p class="card-desc">Closes or recycles the F2T2EA kill chain. Physical BDA via SAR/EO change detection + structural damage classification (A–E). ABI network BDA: entity graph diff to assess system-level degradation. Data neutrality: SOCMINT post-strike videos weighted equal to classified imagery.</p>
+    <div class="steps">
+      <span class="step step-assess">ASSESS</span>
+    </div>
+    <div class="pillars">
+      <div class="pillar"><span class="pillar-dot p2"></span><span><span class="pillar-name">Data Neutrality</span><span class="pillar-desc">SOCMINT video = classified SAR — equal BDA weight</span></span></div>
+      <div class="pillar"><span class="pillar-dot p3"></span><span><span class="pillar-name">Sequence Neutrality</span><span class="pillar-desc">Future collections can retroactively confirm BDA</span></span></div>
+    </div>
+    <div class="io-grid">
+      <div class="io-block">
+        <div class="io-label">Network BDA Indicators</div>
+        <div class="io-item">SIGINT silence → command disrupted</div>
+        <div class="io-item">Associate PoL anomaly → reorganizing</div>
+        <div class="io-item">New entity in graph → redundancy</div>
+        <div class="io-item">Route change AIS/ADS-B → logistics</div>
+      </div>
+      <div class="io-block">
+        <div class="io-label">Disposition Options</div>
+        <div class="io-item"><code>closed</code> effects achieved</div>
+        <div class="io-item"><code>recycle_to_find</code> re-attack loop</div>
+        <div class="io-item"><code>escalate</code> collateral damage</div>
+      </div>
+    </div>
+    <div class="safety">
+      <div class="safety-head">Mandatory Audit-Locked Fields</div>
+      <div class="safety-item">collateral_damage_actual — cannot be modified post-generation</div>
+      <div class="safety-item">ci_casualties_assessed — mandatory honest reporting, audit-locked</div>
+      <div class="safety-item">re-attack requires fresh commander authorization</div>
+    </div>
+  </article>
+
+</div>
+
+<p class="section-label">Enabling Layer — Infrastructure</p>
+<div class="grid">
+
+  <!-- CLOUD AI INTEGRATION -->
+  <article class="card" data-keywords="cloud azure aws google ai infrastructure abi four vs volume velocity variety veracity entity graph routing kill chain audit log f2t2ea provenance classification secret fouo unclassified rekognition vertex gemini gpt4 claude bedrock bigquery sagemaker">
+    <div class="card-head">
+      <div class="card-icon" style="background:color-mix(in oklch,var(--color-purple) 12%,var(--color-surface));border-color:color-mix(in oklch,var(--color-purple) 20%,var(--color-border))">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-purple)" stroke-width="1.8">
+          <path d="M20 16.7v2.3a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-2.3"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+      </div>
+      <div>
+        <div class="card-title">skill-cloud-ai-integration</div>
+        <div class="card-subtitle">Infrastructure · All F2T2EA Steps</div>
+      </div>
+    </div>
+    <p class="card-desc">Enabling layer routing ABI workloads across Azure, AWS, and Google Cloud. ABI four-Vs (volume, velocity, variety, veracity) require cloud-scale compute. Routes entity graph, spatiotemporal clustering, LLM inference to optimal providers. Maintains tamper-evident F2T2EA kill chain audit log with 365-day legal retention.</p>
+    <div class="steps">
+      <span class="step step-all">ALL STEPS</span>
+    </div>
+    <div class="pillars">
+      <div class="pillar"><span class="pillar-dot p2"></span><span><span class="pillar-name">Data Neutrality</span><span class="pillar-desc">All INT sources treated equally at infrastructure level</span></span></div>
+      <div class="pillar"><span class="pillar-dot p4"></span><span><span class="pillar-name">Integrate Before Exploit</span><span class="pillar-desc">Entity graph DB (Azure Cosmos/AWS Neptune) = ABI backbone</span></span></div>
+    </div>
+    <div class="io-grid">
+      <div class="io-block">
+        <div class="io-label">ABI Four-Vs → Provider</div>
+        <div class="io-item"><code>Volume</code> Azure Cosmos / AWS Neptune</div>
+        <div class="io-item"><code>Velocity</code> AWS Kinesis / GCP Pub/Sub</div>
+        <div class="io-item"><code>Variety</code> BigQuery Geo / SageMaker</div>
+        <div class="io-item"><code>Veracity</code> Azure GPT-4 / AWS Claude</div>
+      </div>
+      <div class="io-block">
+        <div class="io-label">Classification Routing</div>
+        <div class="io-item">UNCLASSIFIED → any cloud</div>
+        <div class="io-item">FOUO → commercial (encrypted)</div>
+        <div class="io-item" style="color:var(--color-error);font-weight:600">SECRET → on-prem ONLY</div>
+      </div>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-phase">v2.0.0</span>
+      <span class="tag" style="background:color-mix(in oklch,var(--color-purple) 10%,var(--color-surface));color:var(--color-purple)">audit_ttl: 365 days</span>
+    </div>
+  </article>
+
+</div>
+
+<div id="no-results">
+  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin:0 auto var(--space-4);opacity:.4">
+    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><line x1="8" y1="11" x2="14" y2="11"/>
+  </svg>
+  <p>No skills match your search. Try keywords like <strong>ABI</strong>, <strong>F2T2EA</strong>, <strong>TRACK</strong>, <strong>OSINT</strong>, or <strong>CDE</strong>.</p>
+</div>
+
+<!-- ═══ SCRIPT ════════════════════════════════════════════════ -->
+<script>
+(function(){
+  /* ── Theme toggle ── */
+  const html=document.documentElement;
+  const tb=document.querySelector('[data-theme-toggle]');
+  let theme=html.getAttribute('data-theme')||
+    (matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  html.setAttribute('data-theme',theme);
+
+  const SUN='<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  const MOON='<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
+
+  function updateToggle(){
+    if(!tb)return;
+    const iconEl=document.getElementById('theme-icon');
+    const labelEl=document.getElementById('theme-label');
+    /* dark active: click goes light → show SUN + label "LIGHT" */
+    /* light active: click goes dark → show MOON + label "DARK" */
+    if(iconEl) iconEl.innerHTML=theme==='dark'?SUN:MOON;
+    if(labelEl) labelEl.textContent=theme==='dark'?'LIGHT':'DARK';
+    tb.setAttribute('aria-label','Switch to '+(theme==='dark'?'light':'dark')+' mode');
+    if(theme==='dark'){
+      tb.style.color='var(--color-primary)';
+      tb.style.borderColor='var(--color-primary)';
+    } else {
+      tb.style.color='';
+      tb.style.borderColor='';
+    }
+  }
+  updateToggle();
+  tb&&tb.addEventListener('click',()=>{
+    theme=theme==='dark'?'light':'dark';
+    html.setAttribute('data-theme',theme);
+    updateToggle();
+  });
+
+  /* ── Pipeline step filter ── */
+  const cards=Array.from(document.querySelectorAll('.card'));
+  let activeFilter=null;
+  document.querySelectorAll('.pipe-step[data-filter]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const f=btn.getAttribute('data-filter');
+      if(activeFilter===f){
+        activeFilter=null;
+        btn.style.opacity='';
+        document.querySelectorAll('.pipe-step').forEach(b=>b.style.opacity='');
+        searchAndFilter();
+        return;
+      }
+      activeFilter=f;
+      document.querySelectorAll('.pipe-step').forEach(b=>{
+        b.style.opacity=b.getAttribute('data-filter')===f?'1':'0.35';
+      });
+      searchAndFilter();
+    });
+  });
+
+  /* ── Search ── */
+  const inp=document.getElementById('search');
+  const noRes=document.getElementById('no-results');
+  const countEl=document.getElementById('search-count');
+
+  function highlight(el,term){
+    const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null);
+    const nodes=[];
+    let n;
+    while((n=walker.nextNode()))nodes.push(n);
+    nodes.forEach(node=>{
+      if(!node.parentElement)return;
+      const tag=node.parentElement.tagName;
+      if(['SCRIPT','STYLE','MARK'].includes(tag))return;
+      const text=node.textContent;
+      if(!term){node.parentElement.innerHTML=node.parentElement.innerHTML.replace(/<mark>(.*?)<\/mark>/gi,'$1');return;}
+      const re=new RegExp('('+escRe(term)+')','gi');
+      if(re.test(text)){
+        const span=document.createElement('span');
+        span.innerHTML=text.replace(re,'<mark>$1</mark>');
+        node.parentElement.replaceChild(span,node);
+      }
+    });
+  }
+
+  function clearHighlights(el){
+    el.querySelectorAll('mark').forEach(m=>{
+      const t=document.createTextNode(m.textContent);
+      m.parentNode.replaceChild(t,m);
+    });
+  }
+
+  function escRe(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}
+
+  const stepMap={find:'step-find',fix:'step-fix',track:'step-track',
+    target:'step-target',engage:'step-engage',assess:'step-assess','all-steps':'step-all'};
+
+  function searchAndFilter(){
+    const q=(inp.value||'').trim().toLowerCase();
+    let visible=0;
+
+    cards.forEach(card=>{
+      clearHighlights(card);
+      const kw=(card.getAttribute('data-keywords')||'').toLowerCase();
+      const text=card.textContent.toLowerCase();
+      const combined=kw+' '+text;
+
+      // Step filter
+      let stepOk=true;
+      if(activeFilter){
+        const cls=stepMap[activeFilter];
+        if(activeFilter==='all-steps'){
+          stepOk=!!card.querySelector('.step-all');
+        } else {
+          stepOk=!!card.querySelector('.'+cls);
+        }
+      }
+
+      // Search filter
+      let searchOk=true;
+      if(q.length>0){
+        searchOk=q.split(/\s+/).every(tok=>combined.includes(tok));
+      }
+
+      const show=stepOk&&searchOk;
+      card.toggleAttribute('data-hidden',!show);
+      if(show){
+        visible++;
+        if(q.length>1)highlight(card,q);
+      }
+    });
+
+    // Sync section labels
+    document.querySelectorAll('.section-label').forEach(lbl=>{
+      let nextEl=lbl.nextElementSibling;
+      let hasVisible=false;
+      while(nextEl&&nextEl.classList.contains('grid')){
+        if(nextEl.querySelectorAll('.card:not([data-hidden])').length>0)hasVisible=true;
+        nextEl=nextEl.nextElementSibling;
+      }
+      lbl.style.display=hasVisible?'':'none';
+    });
+
+    noRes.classList.toggle('show',visible===0);
+    countEl.textContent=q.length>0||activeFilter
+      ? visible+' skill'+(visible!==1?'s':'')
+      : '';
+  }
+
+  inp.addEventListener('input',searchAndFilter);
+
+  // Focus search with / key
+  document.addEventListener('keydown',e=>{
+    if(e.key==='/'&&document.activeElement!==inp){
+      e.preventDefault();inp.focus();inp.select();
+    }
+    if(e.key==='Escape'&&document.activeElement===inp){
+      inp.value='';activeFilter=null;
+      document.querySelectorAll('.pipe-step').forEach(b=>b.style.opacity='');
+      searchAndFilter();inp.blur();
+    }
+  });
+})();
+</script>
+</body>
+</html>
