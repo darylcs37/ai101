@@ -1,0 +1,409 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Urban Building-Material RF Model</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'\[',right:'\]',display:true},{left:'\(',right:'\)',display:false}],throwOnError:false});"></script><style>
+:root{--bg:#0b1220;--panel:#111b2e;--card:#15233b;--text:#e7edf7;--muted:#a7b6cf;--accent:#53d3a6;--accent2:#6aa9ff;--line:#2a3a57;--code:#0a1020;--warn:#f9ca6b}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(135deg,#08101e,#101b32 45%,#0a1425);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.65}.layout{display:grid;grid-template-columns:290px minmax(0,1fr);min-height:100vh}.sidebar{position:sticky;top:0;align-self:start;height:100vh;overflow:auto;padding:28px 22px;border-right:1px solid var(--line);background:rgba(9,16,30,.86);backdrop-filter:blur(16px)}.brand{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:800;margin-bottom:10px}.title{font-weight:800;font-size:21px;line-height:1.2;margin-bottom:26px}.toc a{display:block;padding:7px 8px;border-radius:7px;color:var(--muted);text-decoration:none;font-size:13px}.toc a:hover{background:#172644;color:var(--text)}main{max-width:1120px;width:100%;padding:46px 58px 80px;margin:0 auto}h1{font-size:40px;line-height:1.13;margin:0 0 14px;letter-spacing:-.035em}h2{font-size:26px;line-height:1.25;margin:52px 0 16px;padding-top:8px;border-top:1px solid var(--line)}h3{font-size:19px;color:#d8e6ff;margin:28px 0 8px}p{color:#d7e0ee;margin:12px 0}blockquote{margin:20px 0;padding:15px 19px;border-left:4px solid var(--accent);background:rgba(83,211,166,.08);border-radius:0 10px 10px 0;color:#d7f9ed}code{font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;background:#192844;color:#c9e6ff;padding:2px 5px;border-radius:4px;font-size:.88em}pre{background:var(--code);border:1px solid var(--line);border-radius:12px;padding:18px;overflow:auto;box-shadow:0 12px 40px rgba(0,0,0,.2)}pre code{background:transparent;padding:0;color:#dce9ff;font-size:13px}table{width:100%;border-collapse:separate;border-spacing:0;margin:18px 0 24px;border:1px solid var(--line);border-radius:11px;overflow:hidden;font-size:14px}th{background:#1a2a49;color:#e8f2ff;text-align:left}th,td{padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}tr:last-child td{border-bottom:0}td{color:#ced9e9;background:rgba(17,27,46,.55)}ul{padding-left:22px}li{margin:7px 0;color:#d7e0ee}.math{overflow-x:auto;padding:2px 0}.katex-display{margin:1.2em 0!important}.citation{color:#8fc8ff;font-size:.9em}.meta{display:flex;flex-wrap:wrap;gap:9px;margin:14px 0 28px}.pill{font-size:12px;color:#c8daff;border:1px solid #34517c;background:#142440;padding:4px 9px;border-radius:999px}.footer{margin-top:58px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:20px}@media(max-width:900px){.layout{display:block}.sidebar{position:relative;height:auto;border-right:0;border-bottom:1px solid var(--line)}.toc{display:none}main{padding:30px 22px 60px}h1{font-size:33px}h2{font-size:24px}table{font-size:13px}}
+</style></head><body><div class="layout"><aside class="sidebar"><div class="brand">RF Physics Skill</div><div class="title">Urban Building-Material RF Model</div><nav class="toc"><a href="#purpose">Purpose</a><a href="#scope-and-model-hierarchy">Scope and model hierarchy</a><a href="#required-inputs">Required inputs</a><a href="#energy-partition">Energy partition</a><a href="#material-electromagnetic-properties">Material electromagnetic properties</a><a href="#local-ray-geometry-and-polarization">Local ray geometry and polarization</a><a href="#fresnel-reflection-and-transmission">Fresnel reflection and transmission</a><a href="#finite-lossy-slab-model">Finite lossy slab model</a><a href="#multilayer-transfer-matrix">Multilayer transfer matrix</a><a href="#facade-archetypes">Facade archetypes</a><a href="#surface-roughness-and-diffuse-scatter">Surface roughness and diffuse scatter</a><a href="#statistical-outdoor-to-indoor-model">Statistical outdoor-to-indoor model</a><a href="#measurement-and-calibration">Measurement and calibration</a><a href="#production-ray-interaction-pipeline">Production ray-interaction pipeline</a><a href="#uncertainty-reporting">Uncertainty reporting</a><a href="#quality-assurance">Quality assurance</a><a href="#common-failure-modes">Common failure modes</a><a href="#references">References</a></nav></aside><main><div class="meta"><span class="pill">Version 1.3.0</span><span class="pill">ITU-R P.2040</span><span class="pill">3GPP TR 38.901</span><span class="pill">1 MHz–450 GHz</span></div><h1 id="urban-building-material-rf-model">Urban Building-Material RF Model</h1>
+<h2 id="purpose">Purpose</h2>
+<p>A production-oriented reference for modelling RF reflection, transmission, penetration, absorption, and diffuse scattering from urban building materials. It supports deterministic ray tracing, hybrid RF digital twins, and 3GPP-aligned outdoor-to-indoor (O2I) simulations from sub-6 GHz through mmWave.</p>
+<blockquote><strong>Core principle:</strong> preserve complex field amplitude and phase for deterministic paths; convert to power only after coherent ray summation at the receiver.</blockquote>
+<h2 id="scope-and-model-hierarchy">Scope and model hierarchy</h2>
+<table><tr><th>Tier</th><th>Representation</th><th>Use case</th><th>Key limitation</th></tr><tr><td>0</td><td>Opaque blocker / fixed loss</td><td>Rapid outdoor coverage</td><td>No path-specific reflections or O2I detail</td></tr><tr><td>1</td><td>Single-interface Fresnel coefficient</td><td>Facade reflection rays</td><td>No finite thickness or multilayer structure</td></tr><tr><td>2</td><td>Finite lossy dielectric slab</td><td>Concrete, brick, plain glass, timber</td><td>Misses detailed coatings and reinforcement</td></tr><tr><td>3</td><td>Multilayer transfer matrix</td><td>Curtain wall, glazing, insulated facade</td><td>Requires layer data</td></tr><tr><td>4</td><td>Explicit roughness/rebar/aperture model</td><td>Critical mmWave or forensic work</td><td>Computationally costly</td></tr><tr><td>5</td><td>Statistical O2I model</td><td>Network/system simulation</td><td>Not building-specific</td></tr></table>
+<p>Use a hybrid model for city-scale RF twins: resolve geometry and dominant external rays deterministically, assign material archetypes or stacks to facades, then represent unresolved construction variation with calibrated stochastic uncertainty.</p>
+<h2 id="required-inputs">Required inputs</h2>
+<pre><code>frequency_hz: 28000000000
+incident_direction_unit_vector: [0.0, 1.0, 0.0]
+surface_normal_unit_vector: [0.0, -1.0, 0.0]
+incident_electric_field_complex: &quot;Ex + jEy&quot;
+polarization: dual_slant_45
+material_stack:
+  - material: outer_glass
+    thickness_m: 0.006
+  - material: low_e_coating
+    boundary: sheet_impedance
+  - material: argon_gap
+    thickness_m: 0.012
+  - material: inner_glass
+    thickness_m: 0.006
+surface_roughness_rms_m: 0.001
+material_moisture_state: nominal
+preserve_phase: true</code></pre>
+<h2 id="energy-partition">Energy partition</h2>
+<p>For incident power \\(P_i\\):</p>
+<div class="math">\[</p>
+<p>P_i=P_{\mathrm{spec}}+P_{\mathrm{diff}}+P_t+P_a</p>
+<p>\\]</div>
+<p>where \\(P_{\mathrm{spec}}\\) is coherent specular reflection, \\(P_{\mathrm{diff}}\\) is diffuse scatter, \\(P_t\\) is transmitted power, and \\(P_a\\) is absorbed power.</p>
+<p>For an ideal smooth, lossless interface:</p>
+<div class="math">\[</p>
+<p>R+T=1</p>
+<p>\\]</div>
+<p>For realistic facade materials:</p>
+<div class="math">\[</p>
+<p>R+T+A+S=1</p>
+<p>\\]</div>
+<h2 id="material-electromagnetic-properties">Material electromagnetic properties</h2>
+<p>Represent a material with complex relative permittivity:</p>
+<div class="math">\[</p>
+<p>\tilde{\epsilon}_r(f)=\epsilon_r&#x27;(f)-j\epsilon_r&#x27;&#x27;(f)</p>
+<p>\\]</div>
+<p>or with conductivity explicitly represented:</p>
+<div class="math">\[</p>
+<p>\tilde{\epsilon}_r(f)=\epsilon_r&#x27;(f)-j\left[\epsilon_r&#x27;&#x27;(f)+\frac{\sigma(f)}{\omega\epsilon_0}\right]</p>
+<p>\\]</div>
+<div class="math">\[</p>
+<p>\omega=2\pi f</p>
+<p>\\]</div>
+<p>The complex propagation constant is:</p>
+<div class="math">\[</p>
+<p>\gamma=\alpha+j\beta=j\omega\sqrt{\mu\left(\epsilon-j\frac{\sigma}{\omega}\right)}</p>
+<p>\\]</div>
+<p>The field in a layer is:</p>
+<div class="math">\[</p>
+<p>E(z)=E_0e^{-\gamma z}=E_0e^{-\alpha z}e^{-j\beta z}</p>
+<p>\\]</div>
+<p>Material-only power attenuation through thickness \\(d\\) is:</p>
+<div class="math">\[</p>
+<p>L_{\mathrm{bulk}}=8.686\alpha d\quad[\mathrm{dB}]</p>
+<p>\\]</div>
+<p>A pragmatic frequency-dependent fitting form is:</p>
+<div class="math">\[</p>
+<p>\epsilon_r&#x27;(f)=af^b,\qquad \sigma(f)=cf^d</p>
+<p>\\]</div>
+<p>The frequency unit used in these fits must be stored with the coefficients. Material properties vary with composition, moisture, curing, temperature, coatings, and frequency; use distributions rather than immutable universal constants.</p>
+<h2 id="local-ray-geometry-and-polarization">Local ray geometry and polarization</h2>
+<p>For ray direction \\(\hat{k}_i\\) pointing toward a facade and outward normal \\(\hat{n}\\):</p>
+<div class="math">\[</p>
+<p>\cos\theta_i=-\hat{k}_i\cdot\hat{n}</p>
+<p>\\]</div>
+<p>Specular outgoing direction:</p>
+<div class="math">\[</p>
+<p>\hat{k}_r=\hat{k}_i-2(\hat{k}_i\cdot\hat{n})\hat{n}</p>
+<p>\\]</div>
+<p>Construct local TE/s direction:</p>
+<div class="math">\[</p>
+<p>\hat{s}=\frac{\hat{n}\times\hat{k}_i}{\|\hat{n}\times\hat{k}_i\|}</p>
+<p>\\]</div>
+<p>and local TM/p direction:</p>
+<div class="math">\[</p>
+<p>\hat{p}_i=\hat{s}\times\hat{k}_i</p>
+<p>\\]</div>
+<p>Decompose incident electric field:</p>
+<div class="math">\[</p>
+<p>E_{\mathrm{TE}}=\mathbf{E}_i\cdot\hat{s},\qquad E_{\mathrm{TM}}=\mathbf{E}_i\cdot\hat{p}_i</p>
+<p>\\]</div>
+<p>Antenna vertical, horizontal, or ±45° slant polarization is a global antenna reference. Reflection and transmission must use the <strong>local</strong> TE/TM basis at every interaction.</p>
+<h2 id="fresnel-reflection-and-transmission">Fresnel reflection and transmission</h2>
+<p>For complex media 1 and 2, with complex intrinsic impedance \\(\tilde{\eta}\\):</p>
+<div class="math">\[</p>
+<p>\tilde{\eta}=\sqrt{\frac{\tilde{\mu}}{\tilde{\epsilon}}}</p>
+<p>\\]</div>
+<p>Complex Snell&#x27;s law:</p>
+<div class="math">\[</p>
+<p>\tilde{n}_1\sin\theta_i=\tilde{n}_2\sin\theta_t</p>
+<p>\\]</div>
+<p>TE reflection:</p>
+<div class="math">\[</p>
+<p>\Gamma_{\mathrm{TE}}=\frac{\tilde{\eta}_2\cos\theta_i-\tilde{\eta}_1\cos\theta_t}{\tilde{\eta}_2\cos\theta_i+\tilde{\eta}_1\cos\theta_t}</p>
+<p>\\]</div>
+<p>TM reflection:</p>
+<div class="math">\[</p>
+<p>\Gamma_{\mathrm{TM}}=\frac{\tilde{\eta}_2\cos\theta_t-\tilde{\eta}_1\cos\theta_i}{\tilde{\eta}_2\cos\theta_t+\tilde{\eta}_1\cos\theta_i}</p>
+<p>\\]</div>
+<p>Reflected power fraction and reflection loss:</p>
+<div class="math">\[</p>
+<p>R=|\Gamma|^2,\qquad L_{\mathrm{refl}}=-10\log_{10}(R)</p>
+<p>\\]</div>
+<p>At normal incidence:</p>
+<div class="math">\[</p>
+<p>\Gamma=\frac{\tilde{n}_1-\tilde{n}_2}{\tilde{n}_1+\tilde{n}_2}</p>
+<p>\\]</div>
+<p>For air to a low-loss dielectric:</p>
+<div class="math">\[</p>
+<p>\Gamma\approx\frac{1-\sqrt{\epsilon_r&#x27;}}{1+\sqrt{\epsilon_r&#x27;}}</p>
+<p>\\]</div>
+<p>For an ideal \\(\epsilon_r=4\\) dielectric, \\(\Gamma=-1/3\\), yielding \\(R=1/9\\), or about 11.1% reflection at the front interface. This does not represent the full finite-wall response.</p>
+<h2 id="finite-lossy-slab-model">Finite lossy slab model</h2>
+<p>A physical wall has two interfaces. For a slab of thickness \\(d\\), material layer 1 between media 0 and 2:</p>
+<div class="math">\[</p>
+<p>k_{z,1}=k_0\sqrt{\tilde{\epsilon}_{r,1}-\sin^2\theta_i},\qquad k_0=\frac{2\pi f}{c}</p>
+<p>\\]</div>
+<p>Complex field transmission:</p>
+<div class="math">\[</p>
+<p>T_{\mathrm{slab}}=\frac{t_{01}t_{12}e^{-jk_{z,1}d}}{1+r_{01}r_{12}e^{-j2k_{z,1}d}}</p>
+<p>\\]</div>
+<p>Complex slab reflection:</p>
+<div class="math">\[</p>
+<p>R_{\mathrm{slab}}=\frac{r_{01}+r_{12}e^{-j2k_{z,1}d}}{1+r_{01}r_{12}e^{-j2k_{z,1}d}}</p>
+<p>\\]</div>
+<p>For air–slab–air:</p>
+<div class="math">\[</p>
+<p>L_{\mathrm{pen}}=-10\log_{10}(|T_{\mathrm{slab}}|^2)</p>
+<p>\\]</div>
+<p>For different surrounding media, use normal Poynting-flux ratio:</p>
+<div class="math">\[</p>
+<p>T_{\mathrm{power}}=\frac{\operatorname{Re}(Y_2)}{\operatorname{Re}(Y_0)}|T_{\mathrm{field}}|^2</p>
+<p>\\]</div>
+<p>A simple oblique bulk-distance approximation is:</p>
+<div class="math">\[</p>
+<p>d_{\mathrm{eff}}=\frac{d}{\cos\theta_t},\qquad L_{\mathrm{bulk,oblique}}=8.686\alpha\frac{d}{\cos\theta_t}</p>
+<p>\\]</div>
+<p>Use it only as a fallback. The slab model is preferred because it includes coupling, refraction, absorption, phase, and repeated internal reflections.</p>
+<h2 id="multilayer-transfer-matrix">Multilayer transfer matrix</h2>
+<p>For a realistic facade of \\(N\\) ordered layers, define for layer \\(i\\):</p>
+<div class="math">\[</p>
+<p>\mathbf{M}_i=</p>
+<p>\begin{bmatrix}</p>
+<p>\cos(k_{z,i}d_i) &amp; j\sin(k_{z,i}d_i)/Y_i\\</p>
+<p>jY_i\sin(k_{z,i}d_i) &amp; \cos(k_{z,i}d_i)</p>
+<p>\end{bmatrix}</p>
+<p>\\]</div>
+<p>Then multiply in physical order:</p>
+<div class="math">\[</p>
+<p>\mathbf{M}=\prod_{i=1}^{N}\mathbf{M}_i=</p>
+<p>\begin{bmatrix}A&amp;B\\C&amp;D\end{bmatrix}</p>
+<p>\\]</div>
+<p>For incident admittance \\(Y_0\\) and exit-side admittance \\(Y_s\\):</p>
+<div class="math">\[</p>
+<p>r=\frac{Y_0A+Y_0Y_sB-C-Y_sD}{Y_0A+Y_0Y_sB+C+Y_sD}</p>
+<p>\\]</div>
+<div class="math">\[</p>
+<p>t=\frac{2Y_0}{Y_0A+Y_0Y_sB+C+Y_sD}</p>
+<p>\\]</div>
+<div class="math">\[</p>
+<p>R=|r|^2,\qquad T=\frac{\operatorname{Re}(Y_s)}{\operatorname{Re}(Y_0)}|t|^2</p>
+<p>\\]</div>
+<div class="math">\[</p>
+<p>L_{\mathrm{pen}}=-10\log_{10}(T)</p>
+<p>\\]</div>
+<p>Use a multilayer model for glazing, air gaps, laminated glass, insulation, foil barriers, cavity walls, gypsum partitions, curtain walls, and building-integrated antenna structures.</p>
+<h2 id="facade-archetypes">Facade archetypes</h2>
+<h3 id="plain-concrete-and-masonry">Plain concrete and masonry</h3>
+<p>Treat concrete as a lossy, heterogeneous dielectric. Critical variables are thickness, water content, aggregate, reinforcement, exterior render, frequency, incidence angle, and surface roughness.</p>
+<pre><code>concrete_archetype:
+  dielectric_model: complex_permittivity_frequency_fit
+  moisture_states:
+    dry: {weight: 0.20, parameter_set: lower_loss}
+    nominal: {weight: 0.60, parameter_set: median}
+    wet: {weight: 0.20, parameter_set: upper_loss}
+  thickness_m:
+    distribution: truncated_normal
+    mean: 0.20
+    std: 0.04
+  transmission_model: finite_slab_or_multilayer
+  reflection_model: fresnel_plus_roughness</code></pre>
+<h3 id="reinforced-concrete">Reinforced concrete</h3>
+<p>Reinforced concrete is a composite:</p>
+<div class="math">\[</p>
+<p>L_{\mathrm{RC}}=L_{\mathrm{concrete}}+L_{\mathrm{rebar}}+L_{\mathrm{scatter}}+X_{\sigma,\mathrm{RC}}</p>
+<p>\\]</div>
+<table><tr><th>Rebar regime</th><th>Condition</th><th>Modelling approach</th></tr><tr><td>Dense mesh</td><td>\\(s\ll\lambda\\)</td><td>Conductive screen or high-loss equivalent layer</td></tr><tr><td>Transitional grid</td><td>\\(s\sim\lambda/2\\) to \\(\lambda\\)</td><td>Explicit wire grid, periodic unit cell, or calibrated excess loss</td></tr><tr><td>Sparse bars</td><td>\\(s\gg\lambda\\)</td><td>Explicit bars only for critical paths</td></tr><tr><td>Unknown construction</td><td>Rebar geometry unavailable</td><td>High-loss class with broad uncertainty</td></tr></table>
+<p>At mmWave, reinforcement may be electrically large and can cause strong polarization dependence, localized leakage, diffraction, and spatially variable indoor coverage.</p>
+<h3 id="plain-and-insulated-glazing">Plain and insulated glazing</h3>
+<pre><code>double_glazing:
+  layers:
+    - {material: glass, thickness_m: 0.006}
+    - {material: air_or_argon_gap, thickness_m: 0.012}
+    - {material: glass, thickness_m: 0.006}</code></pre>
+<p>Use the multilayer transfer matrix to retain angle, polarization, phase, and cavity effects.</p>
+<h3 id="low-e-irr-solar-control-glazing">Low-E / IRR / solar-control glazing</h3>
+<p>Treat conductive coatings as thin sheet boundaries when electrically thin:</p>
+<div class="math">\[</p>
+<p>Z_s\approx\frac{1}{\sigma_ct_c},\qquad Y_s=\frac{1}{Z_s}</p>
+<p>\\]</div>
+<p>For a sheet in free space at normal incidence:</p>
+<div class="math">\[</p>
+<p>\Gamma_{\mathrm{sheet}}=\frac{-\eta_0Y_s}{2+\eta_0Y_s},\qquad T_{\mathrm{sheet}}=\frac{2}{2+\eta_0Y_s}</p>
+<p>\\]</div>
+<p>Insert the coating at its actual location in the glazing stack. Do not group all windows under “glass”: coated glazing may dramatically increase outdoor-to-indoor loss and external reflection.</p>
+<h3 id="metal-cladding-foil-and-conductive-panels">Metal cladding, foil, and conductive panels</h3>
+<p>For a good conductor:</p>
+<div class="math">\[</p>
+<p>\delta=\sqrt{\frac{2}{\omega\mu\sigma}}</p>
+<p>\\]</div>
+<p>If \\(d\gtrsim3\delta\\), bulk transmission through an intact panel is generally negligible. Treat it as an opaque reflector. Model actual coupling through seams, apertures, vents, doors, windows, cable penetrations, perforations, panel edges, and diffraction paths.</p>
+<h2 id="surface-roughness-and-diffuse-scatter">Surface roughness and diffuse scatter</h2>
+<p>A practical roughness smoothness criterion is:</p>
+<div class="math">\[</p>
+<p>\sigma_h&lt;\frac{\lambda}{8\cos\theta_i}</p>
+<p>\\]</div>
+<p>Coherent-specular reflection reduction:</p>
+<div class="math">\[</p>
+<p>\rho_{\mathrm{coh}}=\exp\left[-\frac{1}{2}\left(\frac{4\pi\sigma_h\cos\theta_i}{\lambda}\right)^2\right]</p>
+<p>\\]</div>
+<div class="math">\[</p>
+<p>\Gamma_{\mathrm{coh}}=\rho_{\mathrm{coh}}\Gamma_{\mathrm{smooth}}</p>
+<p>\\]</div>
+<div class="math">\[</p>
+<p>P_{\mathrm{spec}}=|\Gamma_{\mathrm{coh}}|^2P_i</p>
+<p>\\]</div>
+<p>Allocate coherence-reduced reflected power into a calibrated diffuse term:</p>
+<div class="math">\[</p>
+<p>P_{\mathrm{diff}}=\zeta\left(|\Gamma_{\mathrm{smooth}}|^2-|\Gamma_{\mathrm{coh}}|^2\right)P_i</p>
+<p>\\]</div>
+<p>A directional diffuse-scattering lobe can be represented by:</p>
+<div class="math">\[</p>
+<p>p(\theta_s)\propto\cos^m(\theta_s)</p>
+<p>\\]</div>
+<p>Larger \\(m\\) produces a narrow lobe around specular direction; smaller \\(m\\) yields broader scatter. At mmWave, facade texture that is irrelevant at sub-6 GHz can substantially change coherent and diffuse energy partition.</p>
+<h2 id="statistical-outdoor-to-indoor-model">Statistical outdoor-to-indoor model</h2>
+<p>For system-level O2I modelling:</p>
+<div class="math">\[</p>
+<p>PL_{\mathrm{O2I}}=PL_{\mathrm{out}}+PL_{\mathrm{tw}}+PL_{\mathrm{in}}+X_{\sigma,\mathrm{O2I}}</p>
+<p>\\]</div>
+<p>Where \\(PL_{\mathrm{out}}\\) is outdoor loss to the exterior, \\(PL_{\mathrm{tw}}\\) is external-wall loss, \\(PL_{\mathrm{in}}\\) is indoor propagation loss, and \\(X_{\sigma,\mathrm{O2I}}\\) captures building-to-building variation.</p>
+<p>For facade fractions \\(p_i\\), combine materials in linear transmission domain:</p>
+<div class="math">\[</p>
+<p>PL_{\mathrm{tw}}=PL_{\mathrm{angle}}-10\log_{10}\left[\sum_i p_i10^{-L_i/10}\right]</p>
+<p>\\]</div>
+<p>Never average material losses directly in dB:</p>
+<div class="math">\[</p>
+<p>PL_{\mathrm{tw}}\ne\sum_i p_iL_i</p>
+<p>\\]</div>
+<h3 id="3gpp-tr-38-901-material-abstractions">3GPP TR 38.901 material abstractions</h3>
+<p>For \\(f_c\\) in GHz:</p>
+<div class="math">\[</p>
+<p>L_{\mathrm{glass}}=2+0.2f_c</p>
+<p>\\]</div>
+<div class="math">\[</p>
+<p>L_{\mathrm{IRRglass}}=25.4+0.11f_c</p>
+<p>\\]</div>
+<div class="math">\[</p>
+<p>L_{\mathrm{concrete}}=5+4f_c</p>
+<p>\\]</div>
+<div class="math">\[</p>
+<p>L_{\mathrm{plywood}}=4.85+0.12f_c</p>
+<p>\\]</div>
+<p>Low-loss external-wall model:</p>
+<div class="math">\[</p>
+<p>PL_{\mathrm{tw,low}}=5-10\log_{10}\left[0.3\cdot10^{-L_{\mathrm{glass}}/10}+0.7\cdot10^{-L_{\mathrm{concrete}}/10}\right]</p>
+<p>\\]</div>
+<p>High-loss external-wall model:</p>
+<div class="math">\[</p>
+<p>PL_{\mathrm{tw,high}}=5-10\log_{10}\left[0.7\cdot10^{-L_{\mathrm{IRRglass}}/10}+0.3\cdot10^{-L_{\mathrm{concrete}}/10}\right]</p>
+<p>\\]</div>
+<p>Indoor-depth loss:</p>
+<div class="math">\[</p>
+<p>PL_{\mathrm{in}}=0.5d_{\mathrm{in}}</p>
+<p>\\]</div>
+<h3 id="28-ghz-illustration">28 GHz illustration</h3>
+<p>At \\(f_c=28\\) GHz:</p>
+<table><tr><th>Component</th><th>Value</th></tr><tr><td>\\(L_{\mathrm{glass}}\\)</td><td>7.6 dB</td></tr><tr><td>\\(L_{\mathrm{IRRglass}}\\)</td><td>28.48 dB</td></tr><tr><td>\\(L_{\mathrm{concrete}}\\)</td><td>117 dB</td></tr><tr><td>Low-loss façade wall term</td><td>approximately 17.8 dB</td></tr><tr><td>High-loss façade wall term</td><td>approximately 35.0 dB</td></tr><tr><td>Indoor-depth term at 10 m</td><td>5.0 dB</td></tr></table>
+<p>These are standardized statistical abstractions for network simulation. They are not substitutes for measured or multilayer deterministic material models.</p>
+<h2 id="measurement-and-calibration">Measurement and calibration</h2>
+<p>Use a calibrated free-space reference path:</p>
+<div class="math">\[</p>
+<p>H(f)=\frac{S_{21,\mathrm{material}}(f)}{S_{21,\mathrm{reference}}(f)}</p>
+<p>\\]</div>
+<div class="math">\[</p>
+<p>L_{\mathrm{trans}}(f)=-20\log_{10}|H(f)|</p>
+<p>\\]</div>
+<p>Approximate reflection and transmission metrics, after proper calibration and de-embedding:</p>
+<div class="math">\[</p>
+<p>R(f)\approx|S_{11}(f)|^2,\qquad T(f)\approx|S_{21}(f)|^2</p>
+<p>\\]</div>
+<pre><code>measurement_campaign:
+  frequencies:
+    - carrier_centre
+    - band_edges
+    - fine_sweep_for_multilayer_or_coated_facades
+  incidence_angles_deg: [0, 15, 30, 45, 60]
+  polarization: [TE, TM, co_polar, cross_polar]
+  environmental_states: [dry, nominal, wet_if_relevant]
+  facade_samples:
+    - glass_centre
+    - coated_glass
+    - concrete_panel
+    - spandrel
+    - mullion
+    - door
+    - vent_or_louvre
+    - panel_seam
+  outputs:
+    - complex_reflection
+    - complex_transmission
+    - penetration_loss_distribution
+    - diffuse_scattering_pattern
+    - cross_polarization_ratio</code></pre>
+<p>Fit reflection and transmission jointly where possible:</p>
+<div class="math">\[</p>
+<p>\hat{\boldsymbol{\theta}}=\arg\min_{\boldsymbol{\theta}}\sum_{f,\theta,\mathrm{pol}}\left[w_R|R_{\mathrm{pred}}-R_{\mathrm{meas}}|^2+w_T|T_{\mathrm{pred}}-T_{\mathrm{meas}}|^2\right]</p>
+<p>\\]</div>
+<h2 id="production-ray-interaction-pipeline">Production ray-interaction pipeline</h2>
+<pre><code>facade_interaction_pipeline:
+  - intersect_ray_with_facade_triangle
+  - retrieve_material_stack_and_uncertainty_state
+  - calculate_incidence_angle_and_local_TE_TM_basis
+  - calculate_complex_interface_or_multilayer_coefficients
+  - launch_coherent_specular_reflection
+  - launch_transmitted_ray_when_power_exceeds_threshold
+  - compute_roughness_induced_diffuse_power
+  - launch_or_sample_diffuse_scattering_lobes
+  - apply_propagation_spreading_and_atmospheric_losses
+  - apply_tx_rx_antenna_patterns_and_polarization_response
+  - coherently_sum_receiver_fields
+  - convert_total_field_to_received_power
+  - add_stochastic_residual_only_for_unresolved_effects</code></pre>
+<h2 id="uncertainty-reporting">Uncertainty reporting</h2>
+<pre><code>facade_result:
+  facade_class: low_e_double_glazing
+  frequency_hz: 28000000000
+  incidence_angle_deg: 37.4
+  penetration_loss_db:
+    p05: null
+    p50: null
+    p95: null
+  reflection:
+    coefficient_te_complex: null
+    coefficient_tm_complex: null
+    coherent_power_fraction: null
+  scattering:
+    roughness_rms_m: null
+    diffuse_power_fraction: null
+    lobe_exponent_m: null
+  dominant_uncertainty_sources:
+    - coating_sheet_resistance
+    - glass_stack_composition
+    - moisture
+    - facade_classification
+    - incidence_angle</code></pre>
+<h2 id="quality-assurance">Quality assurance</h2>
+<pre><code>acceptance_checks:
+  physics:
+    - TE and TM coefficients converge at normal incidence
+    - passive smooth slabs satisfy R_plus_T_less_than_or_equal_to_one
+    - increased conductivity or wall thickness does not increase transmission
+    - good conductors reflect strongly with negligible bulk transmission
+    - no passive material produces net gain
+  numerical:
+    - complex_square_root_branch_decays_in_lossy_media
+    - transfer_matrix_is_stable_for_lossy_thick_stacks
+    - near_normal_incidence_has_TE_TM_basis_fallback
+    - grazing_incidence_uses_numerical_tolerance
+    - field_and_power_domains_are_never_mixed
+  geospatial:
+    - normals_are_consistently_outward
+    - windows_frames_spandrels_and_walls_are_distinguishable
+    - layer_order_and_thickness_are_plausible
+    - wall_crossings_use_refraction_or_transmission
+  model_integrity:
+    - deterministic_wall_loss_not_combined_with_complete_empirical_O2I_wall_loss
+    - diffuse_power_not_double_counted
+    - parallel_facade_paths_combined_in_linear_power
+    - residual_uncertainty_applied_only_to_unmodelled_effects</code></pre>
+<h2 id="common-failure-modes">Common failure modes</h2>
+<ul>
+<li>Treating a front-interface Fresnel coefficient as total loss through a wall.</li>
+<li>Adding bulk attenuation but omitting entry and exit coupling.</li>
+<li>Treating low-E, IRR, laminated, tinted, and ordinary glazing as one class.</li>
+<li>Averaging wall losses in dB across concrete and glass regions.</li>
+<li>Applying global antenna polarization directly to a local TE/TM interaction.</li>
+<li>Adding diffuse scatter after already counting the lost specular power as absorption.</li>
+<li>Modelling reinforced concrete as homogeneous dry concrete without an uncertainty term.</li>
+<li>Treating metal cladding as a finite moderate-loss wall rather than an opaque reflector with seams and openings.</li>
+<li>Combining deterministic façade transmission with full empirical O2I wall penetration loss.</li>
+<li>Returning one “building penetration loss” number without frequency, angle, polarization, facade class, or uncertainty bounds.</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li>ITU-R P.2040 describes building-material and structure effects on radiowave propagation over 1 MHz–450 GHz, including reflection, transmission, electrical-property models, and multilayer structures. <span class="citation">[web:57]</span><span class="citation">[web:32]</span></li>
+<li>3GPP TR 38.901 models O2I building penetration for channel studies over 0.5–100 GHz, including low- and high-loss façade cases. <span class="citation">[web:59]</span><span class="citation">[web:46]</span></li>
+<li>Measurements indicate roughness RMS height and correlation length are important inputs for diffuse-scattering models across 8, 12, and 28 GHz. <span class="citation">[web:56]</span></li>
+</ul><div class="footer">Standalone technical reference • Equations render with KaTeX when an internet connection is available.</div></main></div></body></html>

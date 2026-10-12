@@ -1,0 +1,947 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strike UAV Mission Physics Simulator</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 4 L28 26 L16 20 L4 26 Z' fill='%23f2c14e'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c1117; --panel:#121a23; --panel-2:#17212c; --line:#243241; --line-2:#2f4255;
+  --text:#dfe7ee; --muted:#8a9cad; --faint:#5f7182;
+  --amber:#f2c14e; --blue:#5b9be0; --green:#5fc48f; --red:#e5605a; --violet:#a98be8;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --sans:'General Sans',system-ui,-apple-system,Segoe UI,sans-serif;
+  --r:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1480px;margin:0 auto;padding:20px 24px 60px}
+header{display:flex;align-items:center;gap:14px;padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:20px;flex-wrap:wrap}
+header svg{color:var(--amber);flex:none}
+header h1{font-size:19px;font-weight:600;letter-spacing:.01em}
+header p{color:var(--muted);font-size:13px}
+.badge{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--amber);border:1px solid #f2c14e55;padding:4px 10px;border-radius:99px;letter-spacing:.06em}
+.grid{display:grid;grid-template-columns:320px minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:980px){.grid{grid-template-columns:1fr}.controls{position:static}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r)}
+.panel h2{font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:14px 16px 0}
+.controls{padding-bottom:8px;position:sticky;top:16px}
+.group{padding:12px 16px 4px;border-bottom:1px solid var(--line)}
+.group:last-child{border-bottom:0}
+.group-title{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+.ctl{margin:10px 0 14px}
+.ctl-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.ctl label{font-size:13.5px;color:var(--text)}
+.ctl output{font-family:var(--mono);font-size:13px;color:var(--amber)}
+.ctl .hint{font-size:11.5px;color:var(--faint);margin-top:3px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;background:var(--line-2);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--amber);border:3px solid var(--panel);box-shadow:0 0 0 1px var(--amber);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:var(--amber);border:3px solid var(--panel);cursor:pointer}
+input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 3px #f2c14e66}
+.toggle{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--muted);margin:8px 0 12px;cursor:pointer}
+.toggle input{accent-color:var(--amber)}
+.btn{font-family:var(--mono);font-size:12px;background:var(--panel-2);color:var(--text);border:1px solid var(--line-2);border-radius:6px;padding:7px 12px;cursor:pointer}
+.btn:hover{border-color:var(--amber);color:var(--amber)}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;padding:12px 16px}
+.main{display:flex;flex-direction:column;gap:20px;min-width:0}
+.kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+@media (max-width:1250px){.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:560px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;min-width:0}
+.kpi .k{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpi .v{font-family:var(--mono);font-size:22px;font-weight:500;margin-top:4px;font-variant-numeric:tabular-nums}
+.kpi .s{font-size:11.5px;color:var(--faint);margin-top:2px}
+.ok{color:var(--green)} .warn{color:var(--amber)} .bad{color:var(--red)}
+.canvas-wrap{position:relative;padding:0 0 12px}
+.canvas-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px 10px;flex-wrap:wrap;gap:8px}
+.canvas-head h2{padding:0}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:3px;border-radius:2px;display:inline-block}
+.sw.d{background:repeating-linear-gradient(90deg,var(--red) 0 4px,transparent 4px 7px)}
+canvas{display:block;width:100%}
+#map{height:430px;background:#0a0f14;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+#chart{height:230px}
+.status{font-family:var(--mono);font-size:12px;color:var(--muted);padding:10px 16px 0;display:flex;gap:18px;flex-wrap:wrap}
+.two{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:20px}
+@media (max-width:1150px){.two{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:8px 16px;border-bottom:1px solid var(--line)}
+th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500}
+td{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;padding:14px 16px 16px}
+.step{background:var(--panel-2);border:1px solid var(--line);border-radius:8px;padding:14px 14px 12px;min-width:0}
+.step .n{font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:.08em}
+.step h3{font-size:14.5px;font-weight:600;margin:2px 0 4px}
+.step p{font-size:12.5px;color:var(--muted);margin-bottom:8px}
+.eq{font-family:var(--mono);font-size:12.5px;line-height:1.7;background:#0d141b;border:1px solid var(--line);border-radius:6px;padding:8px 10px;overflow-x:auto;white-space:pre}
+.eq .f{color:var(--blue)} .eq .sub{color:var(--text)} .eq .res{color:var(--amber);font-weight:700}
+.phase{grid-column:1/-1;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);padding-top:6px;border-top:1px dashed var(--line)}
+.phase:first-child{border-top:0;padding-top:0}
+.note{font-size:12.5px;color:var(--muted);padding:14px 16px;line-height:1.6}
+.note b{color:var(--text);font-weight:500}
+footer{margin-top:24px;font-size:12px;color:var(--faint);line-height:1.6;border-top:1px solid var(--line);padding-top:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-label="Simulator logo">
+    <circle cx="17" cy="17" r="15" stroke="currentColor" stroke-width="1.5" opacity=".45"/>
+    <path d="M17 6 L26 25 L17 20 L8 25 Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+    <path d="M17 1v4M17 29v4M1 17h4M29 17h4" stroke="currentColor" stroke-width="1.5"/>
+  </svg>
+  <div>
+    <h1>Strike UAV Mission Physics Simulator</h1>
+    <p>Long-range one-way electric fixed-wing UAV, inspired by the Ukraine conflict: range, wind triangle, battery drain and intercept exposure</p>
+  </div>
+  <span class="badge">EDUCATIONAL · SIMPLIFIED MODEL</span>
+</header>
+
+<div class="grid">
+  <!-- CONTROLS -->
+  <aside class="panel controls" aria-label="Simulation inputs">
+    <h2>Mission inputs</h2>
+    <div class="group">
+      <div class="group-title">Primary</div>
+      <div class="ctl"><div class="ctl-top"><label for="wind">Wind speed</label><output id="wind_o"></output></div>
+        <input type="range" id="wind" min="0" max="25" step="0.5" value="8"><div class="hint">Steady wind at cruise altitude</div></div>
+      <div class="ctl"><div class="ctl-top"><label for="payload">Payload mass</label><output id="payload_o"></output></div>
+        <input type="range" id="payload" min="0" max="10" step="0.1" value="2"></div>
+      <div class="ctl"><div class="ctl-top"><label for="dist">Distance to target</label><output id="dist_o"></output></div>
+        <input type="range" id="dist" min="2" max="150" step="1" value="60"></div>
+      <div class="ctl"><div class="ctl-top"><label for="batt">Battery capacity</label><output id="batt_o"></output></div>
+        <input type="range" id="batt" min="50" max="1500" step="10" value="600"><div class="hint">Li-ion pack at 200 Wh/kg (mass is computed)</div></div>
+    </div>
+    <div class="group">
+      <div class="group-title">Environment &amp; flight</div>
+      <div class="ctl"><div class="ctl-top"><label for="wdir">Wind from (compass)</label><output id="wdir_o"></output></div>
+        <input type="range" id="wdir" min="0" max="355" step="5" value="30"><div class="hint">Route bearing is fixed at 090° (due east)</div></div>
+      <div class="ctl"><div class="ctl-top"><label for="tas">Cruise airspeed</label><output id="tas_o"></output></div>
+        <input type="range" id="tas" min="15" max="45" step="0.5" value="27"></div>
+      <label class="toggle"><input type="checkbox" id="crab" checked> Apply wind-drift compensation (crab)</label>
+    </div>
+    <div class="group">
+      <div class="group-title">Threat environment</div>
+      <div class="ctl"><div class="ctl-top"><label for="zones">Air-defence zones</label><output id="zones_o"></output></div>
+        <input type="range" id="zones" min="0" max="8" step="1" value="4"></div>
+      <div class="ctl"><div class="ctl-top"><label for="lam">Engagement rate λ</label><output id="lam_o"></output></div>
+        <input type="range" id="lam" min="0.02" max="1.5" step="0.01" value="0.12"><div class="hint">Expected successful engagements per minute inside a zone</div></div>
+      <div class="ctl"><div class="ctl-top"><label for="seed">Zone layout seed</label><output id="seed_o"></output></div>
+        <input type="range" id="seed" min="1" max="40" step="1" value="7"></div>
+    </div>
+    <div class="btnrow">
+      <button class="btn" id="play">Pause</button>
+      <button class="btn" id="reset">Reset defaults</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <section class="kpis" id="kpis" aria-live="polite"></section>
+
+    <section class="panel canvas-wrap">
+      <div class="canvas-head">
+        <h2>Flight-path plot · top-down</h2>
+        <div class="legend">
+          <span><i class="sw" style="background:var(--amber)"></i>Compensated track</span>
+          <span><i class="sw d"></i>Uncompensated drift</span>
+          <span><i class="sw" style="background:var(--blue)"></i>Heading vector</span>
+          <span><i class="sw" style="background:#e5605a55;height:8px"></i>Air-defence zone</span>
+        </div>
+      </div>
+      <canvas id="map" aria-label="Top-down flight path plot"></canvas>
+      <div class="status" id="status"></div>
+    </section>
+
+    <div class="two">
+      <section class="panel">
+        <div class="canvas-head"><h2>Battery state of charge vs distance</h2>
+          <div class="legend"><span><i class="sw" style="background:var(--green)"></i>SoC</span><span><i class="sw" style="background:var(--red)"></i>Reserve floor</span><span><i class="sw" style="background:var(--violet)"></i>Still-air reference</span></div></div>
+        <canvas id="chart" aria-label="Battery drain chart"></canvas>
+      </section>
+      <section class="panel">
+        <div class="canvas-head"><h2>Zone exposure breakdown</h2></div>
+        <table><thead><tr><th>Zone</th><th>Chord</th><th>Exposure</th><th>P(intercept)</th></tr></thead><tbody id="ztable"></tbody></table>
+        <div class="note" id="znote"></div>
+      </section>
+    </div>
+
+    <section class="panel">
+      <div class="canvas-head"><h2>Step-by-step formula breakdown</h2><span class="legend"><span style="color:var(--blue)">blue: general formula</span><span>white: substituted values</span><span style="color:var(--amber)">amber: result</span></span></div>
+      <div class="steps" id="steps"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Model assumptions</h2>
+      <div class="note">
+        <b>Airframe:</b> generic electric fixed-wing, empty mass 4.5 kg, wing area S = 0.55 m², aspect ratio AR = 9, Oswald efficiency e = 0.80, zero-lift drag CD₀ = 0.035, propulsive efficiency η = 0.55 (propeller × motor × ESC). <b>Atmosphere:</b> ISA sea level, ρ = 1.225 kg/m³. <b>Battery:</b> 200 Wh/kg pack, 90% usable depth of discharge, 10% reserve floor, linear energy drain (no voltage sag, temperature or Peukert effects). <b>Wind:</b> uniform and steady; no gusts, shear or thermals. <b>Intercept:</b> each zone is a circle with constant engagement hazard λ. Survival through each zone is modelled as a Poisson process, P = e<sup>−λt</sup>, and zones are treated as independent. Cruise is level, with no climb, loiter or terminal-phase energy.
+      </div>
+    </section>
+
+    <footer>
+      This is an educational physics demonstrator built on public textbook models: the Breguet-style electric range equation, the navigation wind triangle and exponential exposure survival. The airframe and threat numbers are illustrative and do not represent any real system. Do not use this model for real-world mission planning or targeting.
+    </footer>
+  </main>
+</div>
+</div>
+<script>
+const C = { rho:1.225, g:9.81, S:0.55, AR:9, e:0.80, CD0:0.035, eta:0.55, mEmpty:4.5, spec:200, dod:0.90, reserve:0.10 };
+const DEF = { wind:8, payload:2, dist:60, batt:600, wdir:30, tas:27, zones:4, lam:0.12, seed:7, crab:true };
+const ids = ['wind','payload','dist','batt','wdir','tas','zones','lam','seed'];
+const el = id => document.getElementById(id);
+const fmt = (x,d=1) => (isFinite(x) ? x.toFixed(d) : '∞');
+const deg = r => r*180/Math.PI, rad = d => d*Math.PI/180;
+const units = { wind:v=>v.toFixed(1)+' m/s', payload:v=>v.toFixed(1)+' kg', dist:v=>v+' km', batt:v=>v+' Wh',
+  wdir:v=>String(v).padStart(3,'0')+'°', tas:v=>v.toFixed(1)+' m/s', zones:v=>v, lam:v=>v.toFixed(2)+' /min', seed:v=>'#'+v };
+
+function rng(seed){ let s = seed*9301+49297; return () => { s = (s*9301+49297)%233280; return s/233280; }; }
+
+function readInputs(){
+  const p = {}; ids.forEach(k => { p[k] = parseFloat(el(k).value); el(k+'_o').textContent = units[k](p[k]); });
+  p.crab = el('crab').checked; return p;
+}
+
+function compute(p){
+  const r = { p };
+  // 1. mass
+  r.mBatt = p.batt / C.spec; r.m = C.mEmpty + p.payload + r.mBatt; r.W = r.m*C.g
+;
+  // 2-4. aero & power
+  const V = p.tas; r.q = 0.5*C.rho*V*V; r.CL = r.W/(r.q*C.S);
+  r.Dp = r.q*C.S*C.CD0; r.k = 1/(Math.PI*C.e*C.AR); r.Di = r.q*C.S*r.k*r.CL*r.CL; r.D = r.Dp + r.Di;
+  r.Pshaft = r.D*V; r.P = r.Pshaft/C.eta;
+  r.Vmd = Math.sqrt(2*r.W/(C.rho*C.S)) * Math.pow(r.k/C.CD0, 0.25);
+  // 5-7. wind triangle (route bearing 090)
+  const wf = rad(p.wdir);
+  r.Hw = p.wind*Math.sin(wf);           // headwind (+) along track
+  r.Cw = -p.wind*Math.cos(wf);          // crosswind toward north (+)
+  r.feasibleWind = Math.abs(r.Cw) < V;
+  r.WCA = r.feasibleWind ? Math.asin(-r.Cw/V) : NaN;   // + = turn north (left of track)
+  r.heading = 90 - deg(r.WCA);
+  r.Vg = V*Math.cos(r.WCA) - r.Hw;
+  r.VgNo = V - r.Hw;                     // along-track speed without crab
+  r.VgUse = p.crab ? r.Vg : r.VgNo;
+  r.canProgress = r.feasibleWind && r.VgUse > 0.5;
+  // 8-10. time, energy, range
+  const d = p.dist*1000;
+  r.t = r.canProgress ? d/r.VgUse : Infinity;
+  r.Ereq = r.P*r.t/3600;
+  r.Euse = p.batt*C.dod; r.Eavail = r.Euse*(1-C.reserve);
+  r.whkm = r.canProgress ? r.P/(r.VgUse*3.6) : Infinity;
+  r.whkmStill = r.P/(V*3.6);
+  r.range = r.canProgress ? (r.Eavail*3600/r.P)*r.VgUse/1000 : 0;
+  r.rangeStill = (r.Eavail*3600/r.P)*V/1000;
+  r.socEnd = 100*(1 - r.Ereq/r.Euse);
+  r.energyOK = r.Ereq <= r.Eavail;
+  r.margin = r.Eavail - r.Ereq;
+  // 11. drift
+  r.tNo = r.VgNo > 0.5 ? d/r.VgNo : Infinity;
+  r.drift = r.Cw * r.tNo;               // metres, + north
+  r.driftAngle = deg(Math.atan2(r.Cw, r.VgNo));
+  // 12-13. zones
+  const R = rng(p.seed); r.zonesArr = [];
+  for (let i=0;i<p.zones;i++){
+    const x = p.dist*(0.18 + 0.72*R());
+    const rad_ = Math.min(1.5 + 3.5*R(), p.dist*0.1 + 1);
+    const y = (R()*2-1)*rad_*1.25;
+    r.zonesArr.push({x, y, r:rad_});
+  }
+  r.zonesArr.sort((a,b)=>a.x-b.x);
+  let sumLT = 0;
+  r.zonesArr.forEach((z,i) => {
+    z.id = 'Z'+(i+1);
+    z.chord = Math.abs(z.y) < z.r ? 2*Math.sqrt(z.r*z.r - z.y*z.y) : 0;     // km, along compensated straight track
+    z.tExp = r.canProgress ? z.chord*1000/r.VgUse : Infinity;               // s
+    z.pK = 1 - Math.exp(-p.lam*z.tExp/60);
+    sumLT += p.lam*z.tExp/60;
+  });
+  r.sumLT = sumLT; r.pSurv = Math.exp(-sumLT); r.pInt = 1 - r.pSurv;
+  r.tExpTot = r.zonesArr.reduce((a,z)=>a+(isFinite(z.tExp)?z.tExp:0),0);
+  r.pMission = (r.energyOK && r.canProgress ? 1 : 0) * r.pSurv * (p.crab ? 1 : (Math.abs(r.drift) < 50 ? 1 : 0));
+  return r;
+}
+function cls(ok, warn){ return ok ? 'ok' : (warn ? 'warn' : 'bad'); }
+function renderKPIs(r){
+  const p = r.p;
+  const k = [
+    ['Max range', fmt(r.range,1)+' km', `still air ${fmt(r.rangeStill,0)} km`, cls(r.range >= p.dist*1.15, r.range>=p.dist)],
+    ['Ground speed', fmt(r.VgUse,1)+' m/s', `${fmt(r.VgUse*3.6,0)} km/h`, cls(r.VgUse>0.6*p.tas, r.VgUse>0)],
+    ['Wind correction', r.feasibleWind ? (r.WCA>=0?'L ':'R ')+fmt(Math.abs(deg(r.WCA)),1)+'°' : 'n/a', (p.crab?'':'not applied · ')+`heading ${r.feasibleWind?fmt((r.heading+360)%360,0).padStart(3,'0'):'---'}°`, ''],
+    ['SoC at target', r.canProgress ? fmt(Math.max(r.socEnd,0),0)+'%' : '—', `${fmt(r.whkm,2)} Wh/km`, cls(r.socEnd >= 100*C.reserve*1.5, r.energyOK)],
+    ['P(intercept)', fmt(r.pInt*100,1)+'%', `${fmt(r.tExpTot/60,1)} min exposed`, cls(r.pInt<0.25, r.pInt<0.6)],
+    ['P(mission)', fmt(r.pMission*100,1)+'%', r.energyOK ? (p.crab||Math.abs(r.drift)<50 ? 'energy OK' : 'misses: drift') : 'energy short', cls(r.pMission>0.6, r.pMission>0.3)],
+  ];
+  el('kpis').innerHTML = k.map(([a,b,c,d]) => `<div class="kpi"><div class="k">${a}</div><div class="v ${d}">${b}</div><div class="s">${c}</div></div>`).join('');
+}
+const S = (n,title,desc,f,sub,res) => `<div class="step"><div class="n">STEP ${String(n).padStart(2,'0')}</div><h3>${title}</h3><p>${desc}</p><div class="eq"><span class="f">${f}</span>\n<span class="sub">${sub}</span>\n<span class="res">${res}</span></div></div>`;
+function renderSteps(r){
+  const p = r.p, V = p.tas; let n = 0, h = '';
+  h += `<div class="phase">Phase A · Mass and aerodynamics</div>`;
+  h += S(++n,'Mass budget','Total take-off mass = airframe + payload + battery. Battery mass comes from capacity ÷ specific energy.',
+    'm = m_empty + m_payload + E_batt / e_spec',
+    `m = ${C.mEmpty} + ${fmt(p.payload,1)} + ${p.batt} / ${C.spec}`,
+    `m = ${fmt(r.m,2)} kg   →   W = m·g = ${fmt(r.W,1)} N`);
+  h += S(++n,'Dynamic pressure & lift coefficient','In level flight lift equals weight. This fixes the required CL at the chosen airspeed.',
+    'q = ½·ρ·V²      C_L = W / (q·S)',
+    `q = 0.5 × ${C.rho} × ${fmt(V,1)}²      C_L = ${fmt(r.W,1)} / (${fmt(r.q,1)} × ${C.S})`,
+    `q = ${fmt(r.q,1)} Pa      C_L = ${fmt(r.CL,3)}`);
+  h += S(++n,'Drag polar','Parasitic drag grows with V², while induced drag (from lift) falls with V². Heavier payloads raise induced drag.',
+    'D = q·S·C_D0 + q·S·k·C_L²,   k = 1/(π·e·AR)',
+    `D = ${fmt(r.Dp,2)} + ${fmt(r.q,1)}×${C.S}×${fmt(r.k,4)}×${fmt(r.CL,3)}²`,
+    `D = ${fmt(r.Dp,2)} + ${fmt(r.Di,2)} = ${fmt(r.D,2)} N   (L/D = ${fmt(r.W/r.D,1)})`);
+  h += S(++n,'Electrical power required','Shaft power = drag × airspeed. Dividing by propulsive chain efficiency gives battery draw.',
+    'P_elec = D·V / η',
+    `P_elec = ${fmt(r.D,2)} × ${fmt(V,1)} / ${C.eta}`,
+    `P_elec = ${fmt(r.P,0)} W   (best-range airspeed V_md ≈ ${fmt(r.Vmd,1)} m/s)`);
+  h += `<div class="phase">Phase B · Wind triangle and drift compensation</div>`;
+  h += S(++n,'Resolve wind components','Split the wind vector into headwind along the 090° route and crosswind perpendicular to it.',
+    'H_w = W_s·sin(θ_w)    C_w = −W_s·cos(θ_w)',
+    `H_w = ${fmt(p.wind,1)}·sin(${p.wdir}°)    C_w = −${fmt(p.wind,1)}·cos(${p.wdir}°)`,
+    `H_w = ${fmt(r.Hw,2)} m/s ${r.Hw>=0?'(head)':'(tail)'}    C_w = ${fmt(r.Cw,2)} m/s ${r.Cw>=0?'(→N)':'(→S)'}`);
+  h += S(++n,'Wind correction angle (crab)','Turn the nose into the crosswind so the airspeed vector cancels lateral drift exactly.',
+    'WCA = asin(−C_w / V)',
+    r.feasibleWind ? `WCA = asin(${fmt(-r.Cw,2)} / ${fmt(V,1)})` : `|C_w| ≥ V: cannot be compensated`,
+    r.feasibleWind ? `WCA = ${fmt(deg(r.WCA),2)}°   →   heading ${fmt((r.heading+360)%360,1)}°` : 'WCA undefined');
+  h += S(++n,'Ground speed','Some airspeed is "spent" on crabbing (cos WCA), and the headwind subtracts directly.',
+    p.crab ? 'V_g = V·cos(WCA) − H_w' : 'V_g(along) = V − H_w   (no crab)',
+    p.crab ? `V_g = ${fmt(V,1)}·cos(${fmt(deg(r.WCA),2)}°) − ${fmt(r.Hw,2)}` : `V_g = ${fmt(V,1)} − ${fmt(r.Hw,2)}`,
+    `V_g = ${fmt(r.VgUse,2)} m/s = ${fmt(r.VgUse*3.6,1)} km/h`);
+  h += S(++n,'Uncompensated drift','Without a crab angle, the crosswind displaces the drone for the whole flight time.',
+    'Δy = C_w · t_nc,   t_nc = d / (V − H_w)',
+    `Δy = ${fmt(r.Cw,2)} × ${fmt(r.tNo,0)} s`,
+    `Δy = ${fmt(r.drift/1000,2)} km off-track   (drift angle ${fmt(r.driftAngle,1)}°)`);
+  h += `<div class="phase">Phase C · Endurance, battery drain and range</div>`;
+  h += S(++n,'Flight time to target','Time comes from ground distance and ground speed, not airspeed.',
+    't = d / V_g',
+    `t = ${fmt(p.dist*1000,0)} m / ${fmt(r.VgUse,2)} m/s`,
+    `t = ${fmt(r.t,0)} s = ${fmt(r.t/60,1)} min`);
+  h += S(++n,'Battery drain rate per distance','Energy per ground kilometre. Headwind raises it and tailwind lowers it.',
+    'ε = P_elec / (3.6 · V_g)   [Wh/km]',
+    `ε = ${fmt(r.P,0)} / (3.6 × ${fmt(r.VgUse,2)})`,
+    `ε = ${fmt(r.whkm,2)} Wh/km   (still air ${fmt(r.whkmStill,2)})`);
+  h += S(++n,'Energy required & SoC at target','Linear drain model: state of charge falls in proportion to ground distance covered.',
+    'E_req = ε·d      SoC(x) = 100·(1 − ε·x / E_usable)',
+    `E_req = ${fmt(r.whkm,2)} × ${p.dist}      E_usable = ${p.batt} × ${C.dod}`,
+    `E_req = ${fmt(r.Ereq,0)} Wh   SoC_target = ${fmt(r.socEnd,1)}%   ${r.energyOK?'✓':'✗'} reserve ${C.reserve*100}%`);
+  h += S(++n,'Maximum range (electric Breguet form)','Usable energy above the reserve, divided by power and multiplied by ground speed.',
+    'R = E_usable·(1 − r_res)·3600 / P_elec · V_g',
+    `R = ${fmt(r.Eavail,0)} × 3600 / ${fmt(r.P,0)} × ${fmt(r.VgUse,2)}`,
+    `R = ${fmt(r.range,1)} km   (margin ${fmt(r.range - p.dist,1)} km)`);
+  h += `<div class="phase">Phase D · Intercept exposure</div>`;
+  h += S(++n,'Exposure time per zone','The straight track crosses each circular zone along a chord. Faster ground speed shortens exposure.',
+    'c_i = 2·√(r_i² − y_i²)      t_i = c_i / V_g',
+    r.zonesArr.length ? r.zonesArr.slice(0,3).map(z=>`${z.id}: 2√(${fmt(z.r,2)}² − ${fmt(z.y,2)}²)`).join('   ') : 'no zones',
+    `Σ t_i = ${fmt(r.tExpTot,0)} s = ${fmt(r.tExpTot/60,2)} min`);
+  h += S(++n,'Intercept probability (Poisson exposure)','Constant hazard λ inside each zone. Survival multiplies across zones as exponentials.',
+    'P_int = 1 − exp(−λ · Σ t_i)',
+    `P_int = 1 − exp(−${fmt(p.lam,2)} × ${fmt(r.tExpTot/60,2)})`,
+    `P_int = ${fmt(r.pInt*100,2)}%    P_survive = ${fmt(r.pSurv*100,2)}%`);
+  h += S(++n,'Combined mission probability','Mission reaches the target only if energy suffices, the drone stays on track and it survives exposure.',
+    'P_mission = 𝟙[E ok] · 𝟙[on-track] · P_survive',
+    `P_mission = ${r.energyOK&&r.canProgress?1:0} · ${p.crab||Math.abs(r.drift)<50?1:0} · ${fmt(r.pSurv,4)}`,
+    `P_mission = ${fmt(r.pMission*100,2)}%`);
+  el('steps').innerHTML = h;
+}
+function renderZones(r){
+  el('ztable').innerHTML = r.zonesArr.length ? r.zonesArr.map(z =>
+    `<tr><td>${z.id} · r ${fmt(z.r,1)} km</td><td>${fmt(z.chord,2)} km</td><td>${fmt(z.tExp,0)} s</td><td class="${z.pK<0.2?'ok':z.pK<0.5?'warn':'bad'}">${fmt(z.pK*100,1)}%</td></tr>`).join('')
+    : `<tr><td colspan="4" style="color:var(--faint)">No air-defence zones configured.</td></tr>`;
+  el('znote').innerHTML = `Combined survival is the product of the per-zone survivals: <b>${fmt(r.pSurv*100,1)}%</b>. Raising airspeed shortens exposure but increases power draw. Headwind does the opposite on both counts. Zones the track does not cross have a chord of zero.`;
+}
+
+// ---------- Canvas rendering ----------
+const map = el('map'), chart = el('chart');
+const mctx = map.getContext('2d'), cctx = chart.getContext('2d');
+let R = null, prog = 0, playing = true, last = performance.now(), particles = [];
+function fit(cv){ const dpr = Math.min(window.devicePixelRatio||1, 2); const w = cv.clientWidth, h = cv.clientHeight;
+  if (cv.width !== Math.round(w*dpr) || cv.height !== Math.round(h*dpr)){ cv.width = Math.round(w*dpr); cv.height = Math.round(h*dpr); }
+  const ctx = cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); return [w,h]; }
+function niceStep(range, target){ const raw = range/target, p = Math.pow(10, Math.floor(Math.log10(raw))); const n = raw/p; return (n<1.5?1:n<3.5?2:n<7.5?5:10)*p; }
+function socColor(s){ return s > 40 ? '#5fc48f' : s > 15 ? '#f2c14e' : '#e5605a'; }
+
+function drawDrone(ctx, x, y, hdgDeg, size, color){
+  // hdg compass: 0 = north(up), 90 = east, right
+  const a = rad(hdgDeg - 90);
+  ctx.save(); ctx.translate(x,y); ctx.rotate(a);
+  ctx.beginPath(); ctx.moveTo(size,0); ctx.lineTo(-size*0.7, size*0.75); ctx.lineTo(-size*0.35,0); ctx.lineTo(-size*0.7,-size*0.75); ctx.closePath();
+  ctx.fillStyle = color; ctx.fill(); ctx.restore();
+}
+function resetParticles(w,h){ particles = Array.from({length:110}, () => ({x:Math.random()*w, y:Math.random()*h, a:Math.random()})); }
+function drawMap(dt){
+  const [w,h] = fit(map); const r = R, p = r.p;
+  if (particles.length === 0) resetParticles(w,h);
+  mctx.clearRect(0,0,w,h);
+  const padL = 70, padR = 70, sc = (w - padL - padR)/p.dist, cy = h/2;
+  const X = km => padL + km*sc, Y = km => cy - km*sc;
+  // grid
+  const step = niceStep(p.dist, 8);
+  mctx.lineWidth = 1; mctx.font = '10.5px JetBrains Mono, monospace'; mctx.fillStyle = '#5f7182';
+  for (let k = 0; k <= p.dist + 1e-6; k += step){ const x = X(k); mctx.strokeStyle = '#17222d'; mctx.beginPath(); mctx.moveTo(x,0); mctx.lineTo(x,h); mctx.stroke(); mctx.fillText(k.toFixed(step<1?1:0)+' km', x+3, h-8); }
+  for (let k = step; k*sc < h/2; k += step){ [Y(k),Y(-k)].forEach(y => { mctx.strokeStyle = '#141e28'; mctx.beginPath(); mctx.moveTo(0,y); mctx.lineTo(w,y); mctx.stroke(); }); }
+  // wind particles: wind blows toward (from+180)
+  const wt = rad(p.wdir + 180), vx = Math.sin(wt), vy = -Math.cos(wt);
+  const spd = 8 + p.wind*5;
+  mctx.strokeStyle = 'rgba(140,170,200,0.22)'; mctx.lineWidth = 1.2;
+  particles.forEach(q => {
+    q.x +=
+ vx*spd*dt; q.y += vy*spd*dt;
+    if (q.x < -20 || q.x > w+20 || q.y < -20 || q.y > h+20){ q.x = Math.random()*w; q.y = Math.random()*h; }
+    if (p.wind > 0.2){ const L = 6 + p.wind*1.2; mctx.beginPath(); mctx.moveTo(q.x, q.y); mctx.lineTo(q.x - vx*L, q.y - vy*L); mctx.stroke(); }
+  });
+  // zones
+  r.zonesArr.forEach(z => {
+    const zx = X(z.x), zy = Y(z.y), zr = z.r*sc;
+    const g = mctx.createRadialGradient(zx,zy,0,zx,zy,zr);
+    g.addColorStop(0,'rgba(229,96,90,0.28)'); g.addColorStop(1,'rgba(229,96,90,0.06)');
+    mctx.fillStyle = g; mctx.beginPath(); mctx.arc(zx,zy,zr,0,Math.PI*2); mctx.fill();
+    mctx.strokeStyle = 'rgba(229,96,90,0.55)'; mctx.setLineDash([3,4]); mctx.stroke(); mctx.setLineDash([]);
+    mctx.fillStyle = '#e5605a'; mctx.fillText(z.id, zx-7, zy-zr-5);
+    if (z.chord > 0){ const hc = z.chord/2; mctx.strokeStyle = 'rgba(229,96,90,0.9)'; mctx.lineWidth = 5; mctx.beginPath(); mctx.moveTo(X(z.x-hc), cy); mctx.lineTo(X(z.x+hc), cy); mctx.stroke(); mctx.lineWidth = 1; }
+  });
+  // uncompensated drift path
+  if (r.VgNo > 0.5){
+    let ex = p.dist, ey = r.drift/1000;
+    const lim = (h/2 - 14)/sc;
+    if (Math.abs(ey) > lim){ const f = lim/Math.abs(ey); ex *= f; ey *= f; }
+    mctx.strokeStyle = '#e5605a'; mctx.lineWidth = 1.6; mctx.setLineDash([6,5]);
+    mctx.beginPath(); mctx.moveTo(X(0),cy); mctx.lineTo(X(ex),Y(ey)); mctx.stroke(); mctx.setLineDash([]);
+    mctx.fillStyle = '#e5605a';
+    const lbl = `Δy ${(r.drift/1000).toFixed(2)} km`;
+    mctx.fillText(lbl, Math.min(X(ex)+6, w-90), Y(ey) + (ey>0?-6:14));
+  }
+  // compensated track
+  const reach = Math.min(p.dist, r.range);
+  mctx.strokeStyle = '#f2c14e'; mctx.lineWidth = 2.2;
+  mctx.beginPath(); mctx.moveTo(X(0),cy); mctx.lineTo(X(p.dist),cy); mctx.globalAlpha = r.energyOK ? 1 : 0.35; mctx.stroke(); mctx.globalAlpha = 1;
+  if (!r.energyOK && r.canProgress){ mctx.beginPath(); mctx.moveTo(X(0),cy); mctx.lineTo(X(reach),cy); mctx.stroke();
+    const bx = X(reach); mctx.strokeStyle = '#e5605a'; mctx.lineWidth = 2; mctx.beginPath(); mctx.moveTo(bx-6,cy-6); mctx.lineTo(bx+6,cy+6); mctx.moveTo(bx+6,cy-6); mctx.lineTo(bx-6,cy+6); mctx.stroke();
+    mctx.fillStyle = '#e5605a'; mctx.fillText('reserve reached', bx-40, cy+22); }
+  // heading ticks along the track
+  if (r.feasibleWind){
+    const hd = p.crab ? r.heading : 90; const n = 7;
+    for (let i=1;i<n;i++){ const kx = p.dist*i/n, px = X(kx);
+      const a = rad(hd-90); mctx.strokeStyle = '#5b9be0'; mctx.lineWidth = 1.4;
+      mctx.beginPath(); mctx.moveTo(px,cy); mctx.lineTo(px+Math.cos(a)*22, cy+Math.sin(a)*22); mctx.stroke(); }
+  }
+  // launch / target
+  mctx.fillStyle = '#5b9be0'; mctx.beginPath(); mctx.arc(X(0),cy,6,0,Math.PI*2); mctx.fill();
+  mctx.fillStyle = '#dfe7ee'; mctx.fillText('LAUNCH', X(0)-22, cy+22);
+  const tx = X(p.dist); mctx.strokeStyle = '#dfe7ee'; mctx.lineWidth = 1.5;
+  mctx.beginPath(); mctx.arc(tx,cy,9,0,Math.PI*2); mctx.stroke(); mctx.beginPath(); mctx.arc(tx,cy,3,0,Math.PI*2); mctx.fillStyle='#dfe7ee'; mctx.fill();
+  mctx.fillText('TARGET', tx-22, cy+26);
+  // animated drone
+  if (r.canProgress || r.VgNo > 0.5){
+    const maxX = r.energyOK ? p.dist : reach;
+    const kx = prog*maxX, soc = 100*(1 - r.whkm*kx/r.Euse);
+    if (p.crab && r.feasibleWind){
+      drawDrone(mctx, X(kx), cy, r.heading, 9, socColor(soc));
+    } else {
+      const lim = (h/2 - 14)/sc; let gy = (r.drift/1000)*(kx/p.dist); gy = Math.max(-lim, Math.min(lim, gy));
+      drawDrone(mctx, X(kx), Y(gy), 90, 9, socColor(soc));
+    }
+    mctx.fillStyle = '#8a9cad'; mctx.fillText(`${kx.toFixed(1)} km · SoC ${Math.max(0,soc).toFixed(0)}%`, Math.min(X(kx)-30, w-130), cy-16);
+  }
+  // compass / wind rose
+  const cx0 = w - 46, cy0 = 46;
+  mctx.strokeStyle = '#2f4255'; mctx.lineWidth = 1; mctx.beginPath(); mctx.arc(cx0,cy0,28,0,Math.PI*2); mctx.stroke();
+  mctx.fillStyle = '#5f7182'; mctx.fillText('N', cx0-3, cy0-32);
+  if (p.wind > 0){ const L = 8 + 18*Math.min(1,p.wind/25);
+    mctx.strokeStyle = '#dfe7ee'; mctx.lineWidth = 2; mctx.beginPath(); mctx.moveTo(cx0 - vx*L, cy0 - vy*L); mctx.lineTo(cx0 + vx*L, cy0 + vy*L); mctx.stroke();
+    drawDrone(mctx, cx0 + vx*L, cy0 + vy*L, p.wdir+180, 6, '#dfe7ee'); }
+  mctx.fillStyle = '#8a9cad'; mctx.fillText(`${p.wind.toFixed(1)} m/s`, cx0-24, cy0+44);
+  mctx.fillText(`scale 1 km = ${sc.toFixed(1)} px`, 12, 18);
+}
+
+function drawChart(){
+  const [w,h] = fit(chart); const r = R, p = r.p, ctx = cctx;
+  ctx.clearRect(0,0,w,h);
+  const L = 44, Rt = 16, T = 12, B = 30, pw = w-L-Rt, ph = h-T-B;
+  const xMax = Math.max(p.dist*1.15, Math.min(isFinite(r.range)?r.range:p.dist, p.dist*2));
+  const X = v => L + v/xMax*pw, Y = s => T + (1 - s/100)*ph;
+  ctx.font = '10.5px JetBrains Mono, monospace'; ctx.lineWidth = 1;
+  for (let s=0;s<=100;s+=25){ ctx.strokeStyle='#1a2531'; ctx.beginPath(); ctx.moveTo(L,Y(s)); ctx.lineTo(w-Rt,Y(s)); ctx.stroke(); ctx.fillStyle='#5f7182'; ctx.fillText(s+'%', 8, Y(s)+3); }
+  const st = niceStep(xMax,6); for (let k=0;k<=xMax;k+=st){ ctx.fillStyle='#5f7182'; ctx.fillText(k.toFixed(0), X(k)-6, h-10); }
+  ctx.fillText('km', w-Rt-14, h-10);
+  // reserve
+  ctx.strokeStyle='#e5605a'; ctx.setLineDash([4,4]); ctx.beginPath(); ctx.moveTo(L,Y(C.reserve*100)); ctx.lineTo(w-Rt,Y(C.reserve*100)); ctx.stroke(); ctx.setLineDash([]);
+  // target
+  ctx.strokeStyle='#dfe7ee55'; ctx.beginPath(); ctx.moveTo(X(p.dist),T); ctx.lineTo(X(p.dist),T+ph); ctx.stroke(); ctx.fillStyle='#dfe7ee'; ctx.fillText('target', X(p.dist)+4, T+10);
+  const line = (eps, color, dash) => { if (!isFinite(eps)) return; const x0 = 100/eps*r.Euse/100; const xe = Math.min(xMax, r.Euse/eps);
+    ctx.strokeStyle=color; ctx.lineWidth=2; ctx.setLineDash(dash||[]); ctx.beginPath(); ctx.moveTo(X(0),Y(100)); ctx.lineTo(X(xe), Y(100*(1-eps*xe/r.Euse))); ctx.stroke(); ctx.setLineDash([]); };
+  line(r.whkmStill, '#a98be8', [5,4]);
+  line(r.whkm, '#5fc48f');
+  if (isFinite(r.whkm)){ const maxX = r.energyOK ? p.dist : Math.min(p.dist, r.range); const kx = prog*maxX, s = 100*(1-r.whkm*kx/r.Euse);
+    ctx.fillStyle = socColor(s); ctx.beginPath(); ctx.arc(X(kx), Y(s), 4.5, 0, Math.PI*2); ctx.fill(); }
+}
+
+function status(r){
+  const p = r.p, msgs = [];
+  if (!r.feasibleWind) msgs.push('<span class="bad">Crosswind exceeds airspeed: the drift cannot be compensated</span>');
+  else if (!r.canProgress) msgs.push('<span class="bad">Headwind exceeds effective airspeed: no forward progress</span>');
+  msgs.push(`Heading <b style="color:var(--blue)">${r.feasibleWind?((r.heading+360)%360).toFixed(1):'---'}°</b> → track 090°`);
+  msgs.push(`Flight time ${isFinite(r.t)?(r.t/60).toFixed(1):'∞'} min`);
+  msgs.push(r.energyOK ? `<span class="ok">Energy margin ${r.margin.toFixed(0)} Wh</span>` : `<span class="bad">Energy short by ${(-r.margin).toFixed(0)} Wh</span>`);
+  if (!p.crab) msgs.push(`<span class="warn">Compensation off: lands ${(Math.abs(r.drift)/1000).toFixed(2)} km ${r.drift>=0?'north':'south'} of target</span>`);
+  el('status').innerHTML = msgs.join('<span style="color:#2f4255">|</span>');
+}
+
+function update(){ R = compute(readInputs()); renderKPIs(R); renderSteps(R); renderZones(R); status(R); prog = 0; }
+function loop(now){ const dt = Math.min(0.05,(now-last)/1000); last = now;
+  if (playing){ prog += dt/9; if (prog > 1.15) prog = 0; }
+  const pp = prog; prog = Math.min(prog,1); drawMap(playing?dt:0); drawChart(); prog = pp;
+  requestAnimationFrame(loop); }
+
+ids.forEach(k => el(k).addEventListener('input', update));
+el('crab').addEventListener('change', update);
+el('play').addEventListener('click', () => { playing = !playing; el('play').textContent = playing ? 'Pause' : 'Play'; });
+el('reset').addEventListener('click', () => { ids.forEach(k => el(k).value = DEF[k]); el('crab').checked = DEF.crab; update(); });
+window.addEventListener('resize', () => resetParticles(map.clientWidth, map.clientHeight));
+update(); requestAnimationFrame(loop);
+</script>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://perplexity.localhost","http://localhost:1420","http://127.0.0.1:1420","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  const DEFAULT_LINE_HEIGHT = 16;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  const PICK_CAPABILITIES = ["pick"];
+  const PICK_CHAIN_LENGTH = 4;
+  const PICK_MAX_TEXT_CHARS = 120;
+  const PICK_MAX_HTML_CHARS = 300;
+
+  function truncate(value, maxChars) {
+    return value.length > maxChars ? value.slice(0, maxChars - 1) + "…" : value;
+  }
+
+  function isPickableElement(element) {
+    return (
+      element instanceof Element &&
+      element !== document.documentElement &&
+      element !== document.body
+    );
+  }
+
+  function resolvePickTarget(x, y) {
+    if (!Number.isFinite(x) || !Number.isFinite(y)) return null;
+    const element = document.elementFromPoint(x, y);
+    return isPickableElement(element) ? element.closest("svg") || element : null;
+  }
+
+  function pickLabel(element) {
+    if (element.id) return element.localName + "#" + element.id;
+    return [element.localName].concat(Array.from(element.classList).slice(0, 2)).join(".");
+  }
+
+  // Only attributes that help find the element in source. data-* values and URL
+  // query strings or fragments can carry tokens.
+  const PICK_ATTRIBUTES = new Set([
+    "id",
+    "class",
+    "name",
+    "type",
+    "role",
+    "alt",
+    "aria-label",
+    "href",
+    "src",
+  ]);
+
+  function pickAttributeValue(attribute) {
+    return attribute.name === "href" || attribute.name === "src"
+      ? attribute.value.split(/[?#]/)[0]
+      : attribute.value;
+  }
+
+  function describePickElement(element) {
+    const chain = [];
+    for (
+      let current = element;
+      isPickableElement(current) && chain.length < PICK_CHAIN_LENGTH;
+      current = current.parentElement
+    ) {
+      chain.unshift(current);
+    }
+    const attributes = Array.from(element.attributes)
+      .filter((attribute) => PICK_ATTRIBUTES.has(attribute.name))
+      .map((attribute) => ` ${attribute.name}="${pickAttributeValue(attribute).replace(/"/g, "&quot;")}"`)
+      .join("");
+    const text = (element.innerText || element.textContent || "").replace(/\s+/g, " ").trim();
+    return {
+      chain: chain.map(pickLabel),
+      html: truncate(`<${element.localName}${attributes}>`, PICK_MAX_HTML_CHARS),
+      text: text ? truncate(text, PICK_MAX_TEXT_CHARS) : undefined,
+    };
+  }
+
+  // Hover asks once per frame, and innerText on a large section forces layout,
+  // so only the rect is re-read while the pointer stays on the same element.
+  // Clicks ask for fresh details since the page may have changed the element.
+  let lastPick = null;
+
+  function describePickTarget(element, fresh) {
+    if (fresh || lastPick?.element !== element) {
+      lastPick = { element, details: describePickElement(element) };
+    }
+    const rect = element.getBoundingClientRect();
+    return {
+      rect: { x: rect.left, y: rect.top, width: rect.width, height: rect.height },
+      ...lastPick.details,
+    };
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+      capabilities: PICK_CAPABILITIES,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="position:relative;left:-${scrollX}px;top:-${scrollY}px">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_PICK") {
+      const element = resolvePickTarget(event.data.x, event.data.y);
+      postToTrustedTop({
+        type: "INLINE_EDIT_PICK_RESULT",
+        seq: event.data.seq,
+        target: element ? describePickTarget(element, event.data.fresh === true) : null,
+      });
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_BY") {
+      const { deltaX, deltaY, deltaMode } = event.data;
+      if (!scrollForwarding || !Number.isFinite(deltaX) || !Number.isFinite(deltaY)) return;
+      if (deltaMode !== 0 && deltaMode !== 1 && deltaMode !== 2) return;
+      const lineHeight =
+        parseFloat(getComputedStyle(document.documentElement).lineHeight) || DEFAULT_LINE_HEIGHT;
+      const scaleX = deltaMode === 1 ? lineHeight : deltaMode === 2 ? window.innerWidth : 1;
+      const scaleY = deltaMode === 1 ? lineHeight : deltaMode === 2 ? window.innerHeight : 1;
+      // The selection overlay receives the wheel event instead of this iframe.
+      // Instant scrolling preserves trackpad deltas even on smooth-scroll sites.
+      window.scrollBy({ left: deltaX * scaleX, top: deltaY * scaleY, behavior: "instant" });
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

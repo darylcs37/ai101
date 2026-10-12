@@ -1,0 +1,1160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>APELUX201V01 Antenna Pattern Calculator</title>
+
+  <style>
+    :root {
+      --bg: #eef2f7;
+      --card: #ffffff;
+      --ink: #152033;
+      --muted: #667085;
+      --line: #d9e1ec;
+      --blue: #1468e9;
+      --purple: #7c3aed;
+      --green: #128a52;
+      --amber: #a55d00;
+      --red: #b42318;
+      --soft-blue: #eff6ff;
+      --soft-purple: #f5f3ff;
+      --soft-green: #ecfdf3;
+      --soft-amber: #fff8e8;
+      --soft-red: #fff1f0;
+      --radius: 14px;
+      --shadow: 0 10px 30px rgba(20, 34, 62, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    .app {
+      width: min(1240px, calc(100% - 32px));
+      margin: 32px auto 48px;
+    }
+
+    header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    h1, h2, h3, p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 6px;
+      letter-spacing: -0.035em;
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      line-height: 1.1;
+    }
+
+    h1 span {
+      color: var(--red);
+    }
+
+    h2 {
+      margin-bottom: 16px;
+      font-size: 1.2rem;
+      letter-spacing: -0.015em;
+    }
+
+    h3 {
+      margin-bottom: 12px;
+      font-size: 1rem;
+    }
+
+    .subtitle,
+    .fine-print,
+    .formula-note {
+      color: var(--muted);
+    }
+
+    .date {
+      flex: 0 0 auto;
+      padding: 8px 12px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .card {
+      padding: 24px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .controls {
+      position: sticky;
+      top: 16px;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: #344054;
+      font-size: 0.9rem;
+      font-weight: 750;
+    }
+
+    .input-wrap {
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      border: 1px solid #b9c5d5;
+      border-radius: 10px;
+      background: #fff;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .input-wrap:focus-within {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(20, 104, 233, 0.15);
+    }
+
+    input {
+      width: 100%;
+      min-width: 0;
+      padding: 12px 13px;
+      border: 0;
+      outline: 0;
+      color: var(--ink);
+      background: transparent;
+      font: inherit;
+      font-size: 1rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .unit {
+      padding-right: 13px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .help {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.79rem;
+    }
+
+    .button-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    button {
+      min-height: 42px;
+      padding: 10px 14px;
+      border: 1px solid transparent;
+      border-radius: 9px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.9rem;
+      font-weight: 750;
+      transition: transform 0.12s, background 0.12s, border-color 0.12s;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    button.primary {
+      color: #fff;
+      background: var(--blue);
+    }
+
+    button.primary:hover {
+      background: #0957cb;
+    }
+
+    button.secondary {
+      color: #344054;
+      background: #fff;
+      border-color: #cdd7e4;
+    }
+
+    button.secondary:hover {
+      background: #f6f8fb;
+    }
+
+    .error-text {
+      display: none;
+      margin: 13px 0 0;
+      padding: 10px 12px;
+      color: var(--red);
+      background: var(--soft-red);
+      border-left: 3px solid var(--red);
+      border-radius: 0 7px 7px 0;
+      font-size: 0.86rem;
+    }
+
+    .right-column {
+      display: grid;
+      gap: 22px;
+    }
+
+    .result-banner {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .result {
+      padding: 20px;
+      border-radius: 11px;
+    }
+
+    .result.co {
+      background: var(--soft-blue);
+      border: 1px solid #cce0ff;
+    }
+
+    .result.cross {
+      background: var(--soft-purple);
+      border: 1px solid #ddd3ff;
+    }
+
+    .result-label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 750;
+    }
+
+    .result-value {
+      display: block;
+      color: var(--ink);
+      font-size: clamp(1.55rem, 3vw, 2.25rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .result-meta {
+      display: block;
+      margin-top: 4px;
+      color: #475467;
+      font-size: 0.82rem;
+    }
+
+    .derived-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      min-height: 94px;
+      padding: 15px;
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+
+    .metric-name {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.81rem;
+      font-weight: 750;
+    }
+
+    .metric-value {
+      display: block;
+      font-size: 1.05rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .metric-unit {
+      margin-left: 3px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .chart-card {
+      padding-bottom: 18px;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 650;
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .dot.co { background: var(--blue); }
+    .dot.cross { background: var(--purple); }
+    .dot.point { background: #111827; }
+
+    .chart-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      min-width: 520px;
+      height: 360px;
+      border: 1px solid #e3e8ef;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .status-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .status {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 9px;
+      font-size: 0.88rem;
+    }
+
+    .status strong {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.035em;
+    }
+
+    .status.ok {
+      background: var(--soft-green);
+      color: #05603a;
+      border: 1px solid #b7eccf;
+    }
+
+    .status.warning {
+      background: var(--soft-amber);
+      color: #875102;
+      border: 1px solid #f3d299;
+    }
+
+    .status.error {
+      background: var(--soft-red);
+      color: #9f1d16;
+      border: 1px solid #ffc9c5;
+    }
+
+    .formula-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .formula-box {
+      padding: 18px;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+
+    .formula-box h3 {
+      color: #344054;
+    }
+
+    .equation {
+      margin: 12px 0;
+      padding: 13px;
+      overflow-x: auto;
+      color: #1e293b;
+      background: #fff;
+      border: 1px solid #e3e8ef;
+      border-radius: 7px;
+      font-family: "Cambria Math", Cambria, Georgia, serif;
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    .footnote {
+      margin-top: 15px;
+      color: var(--muted);
+      font-size: 0.79rem;
+    }
+
+    @media (max-width: 920px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .controls {
+        position: static;
+      }
+
+      .derived-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 620px) {
+      .app {
+        width: min(100% - 20px, 1240px);
+        margin-top: 18px;
+      }
+
+      header,
+      .chart-header {
+        display: block;
+      }
+
+      .date {
+        display: inline-block;
+        margin-top: 10px;
+      }
+
+      .card {
+        padding: 18px;
+      }
+
+      .result-banner,
+      .formula-grid,
+      .derived-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .button-row {
+        grid-template-columns: 1fr;
+      }
+
+      .status {
+        grid-template-columns: 1fr;
+        gap: 3px;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .app {
+        width: 100%;
+        margin: 0;
+      }
+
+      .controls {
+        position: static;
+      }
+
+      .card {
+        box-shadow: none;
+      }
+
+      button {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+    <header>
+      <div>
+        <h1><span>APELUX201V01</span> Pattern Calculator</h1>
+        <p class="subtitle">
+          Transmitting earth-station antenna pattern calculator for Appendix 30A analysis.
+        </p>
+      </div>
+      <div class="date">Pattern date: 2022-04-28</div>
+    </header>
+
+    <div class="layout">
+      <aside class="card controls" aria-label="Calculator inputs">
+        <h2>Inputs</h2>
+
+        <div class="field">
+          <label for="gmax">Maximum gain, G<sub>max</sub></label>
+          <div class="input-wrap">
+            <input
+              id="gmax"
+              type="number"
+              inputmode="decimal"
+              min="0"
+              max="100"
+              step="0.01"
+              value="45"
+              aria-describedby="gmax-help"
+            />
+            <span class="unit">dBi</span>
+          </div>
+          <small id="gmax-help" class="help">
+            The submitted pattern uses maximum gain to derive D/λ and all breakpoints.
+          </small>
+        </div>
+
+        <div class="field">
+          <label for="phi">Off-axis angle, φ</label>
+          <div class="input-wrap">
+            <input
+              id="phi"
+              type="number"
+              inputmode="decimal"
+              min="0"
+              max="180"
+              step="0.01"
+              value="3"
+              aria-describedby="phi-help"
+            />
+            <span class="unit">degrees</span>
+          </div>
+          <small id="phi-help" class="help">
+            Valid range: 0° to 180°.
+          </small>
+        </div>
+
+        <div class="button-row">
+          <button class="primary" id="calculate" type="button">Calculate</button>
+          <button class="secondary" id="reset" type="button">Reset example</button>
+        </div>
+
+        <p id="inputError" class="error-text" role="alert"></p>
+
+        <p class="footnote">
+          Fixed aperture efficiency: η = 0.61. Logarithms are base 10.
+        </p>
+      </aside>
+
+      <div class="right-column">
+        <section class="result-banner" aria-label="Calculated gains">
+          <article class="result co">
+            <span class="result-label">Co-polar gain, G(φ)</span>
+            <output id="coGain" class="result-value">—</output>
+            <span id="coRegion" class="result-meta">—</span>
+          </article>
+
+          <article class="result cross">
+            <span class="result-label">Cross-polar gain, G<sub>x</sub>(φ)</span>
+            <output id="crossGain" class="result-value">—</output>
+            <span id="crossRegion" class="result-meta">—</span>
+          </article>
+        </section>
+
+        <section class="card" aria-labelledby="derived-title">
+          <h2 id="derived-title">Derived pattern parameters</h2>
+
+          <div class="derived-grid">
+            <div class="metric">
+              <span class="metric-name">D / λ</span>
+              <output id="dLambda" class="metric-value">—</output>
+            </div>
+
+            <div class="metric">
+              <span class="metric-name">G₁</span>
+              <output id="g1" class="metric-value">—</output>
+            </div>
+
+            <div class="metric">
+              <span class="metric-name">φₘ</span>
+              <output id="phiM" class="metric-value">—</output>
+            </div>
+
+            <div class="metric">
+              <span class="metric-name">φᵣ</span>
+              <output id="phiR" class="metric-value">—</output>
+            </div>
+
+            <div class="metric">
+              <span class="metric-name">φₓ</span>
+              <output id="phiX" class="metric-value">—</output>
+            </div>
+
+            <div class="metric">
+              <span class="metric-name">φᵦ</span>
+              <output id="phiB" class="metric-value">—</output>
+            </div>
+          </div>
+        </section>
+
+        <section class="card chart-card" aria-labelledby="chart-title">
+          <div class="chart-header">
+            <h2 id="chart-title">Antenna pattern plot</h2>
+            <div class="legend" aria-label="Chart legend">
+              <span><i class="dot co"></i> Co-polar</span>
+              <span><i class="dot cross"></i> Cross-polar</span>
+              <span><i class="dot point"></i> Selected φ</span>
+            </div>
+          </div>
+
+          <div class="chart-wrap">
+            <canvas id="patternChart" width="900" height="360">
+              Your browser does not support canvas.
+            </canvas>
+          </div>
+
+          <p class="fine-print">
+            Plot range is 0°–180°. A vertical marker identifies the entered off-axis angle.
+          </p>
+        </section>
+
+        <section class="card" aria-labelledby="validation-title">
+          <h2 id="validation-title">Pattern validation</h2>
+          <div id="validation" class="status-list"></div>
+        </section>
+
+        <section class="card" aria-labelledby="formula-title">
+          <h2 id="formula-title">Implemented formulas</h2>
+
+          <div class="formula-grid">
+            <article class="formula-box">
+              <h3>Co-polar component</h3>
+
+              <div class="equation">
+                G(φ) = G<sub>max</sub> − 2.5 × 10<sup>−3</sup>(D/λ · φ)<sup>2</sup>,
+                for 0° ≤ φ &lt; φ<sub>m</sub>
+              </div>
+
+              <div class="equation">
+                G(φ) = G<sub>1</sub>,
+                for φ<sub>m</sub> ≤ φ &lt; φ<sub>r</sub>
+              </div>
+
+              <div class="equation">
+                G(φ) = 29 − 25 log<sub>10</sub>(φ),
+                for φ<sub>r</sub> ≤ φ &lt; φ<sub>b</sub>
+              </div>
+
+              <div class="equation">
+                G(φ) = −10,
+                for φ<sub>b</sub> ≤ φ ≤ 180°
+              </div>
+            </article>
+
+            <article class="formula-box">
+              <h3>Cross-polar component</h3>
+
+              <div class="equation">
+                G<sub>x</sub>(φ) = G<sub>max</sub> − 30,
+                for 0° ≤ φ &lt; φ<sub>x</sub>
+              </div>
+
+              <div class="equation">
+                G<sub>x</sub>(φ) = 29 − 25 log<sub>10</sub>(φ),
+                for φ<sub>x</sub> ≤ φ &lt; φ<sub>b</sub>
+              </div>
+
+              <div class="equation">
+                G<sub>x</sub>(φ) = −10,
+                for φ<sub>b</sub> ≤ φ ≤ 180°
+              </div>
+            </article>
+          </div>
+
+          <div class="formula-note">
+            <p><strong>Derived parameters</strong></p>
+            <div class="equation">
+              D/λ = √[10<sup>(G<sub>max</sub>/10)</sup> / (ηπ<sup>2</sup>)]<br>
+              φ<sub>r</sub> = 15.85(D/λ)<sup>−0.6</sup><br>
+              G<sub>1</sub> = 29 − 25 log<sub>10</sub>(φ<sub>r</sub>) = −1 + 15 log<sub>10</sub>(D/λ)<br>
+              φ<sub>m</sub> = [20(λ/D)] / √(G<sub>max</sub> − G<sub>1</sub>)<br>
+              φ<sub>x</sub> = 10<sup>(59 − G<sub>max</sub>)/25</sup><br>
+              φ<sub>b</sub> = 10<sup>39/25</sup>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    "use strict";
+
+    const ETA = 0.61;
+    const PHI_B = Math.pow(10, 39 / 25);
+
+    const el = {
+      gmax: document.getElementById("gmax"),
+      phi: document.getElementById("phi"),
+      calculate: document.getElementById("calculate"),
+      reset: document.getElementById("reset"),
+      inputError: document.getElementById("inputError"),
+
+      coGain: document.getElementById("coGain"),
+      crossGain: document.getElementById("crossGain"),
+      coRegion: document.getElementById("coRegion"),
+      crossRegion: document.getElementById("crossRegion"),
+
+      dLambda: document.getElementById("dLambda"),
+      g1: document.getElementById("g1"),
+      phiM: document.getElementById("phiM"),
+      phiR: document.getElementById("phiR"),
+      phiX: document.getElementById("phiX"),
+      phiB: document.getElementById("phiB"),
+
+      validation: document.getElementById("validation"),
+      canvas: document.getElementById("patternChart")
+    };
+
+    function number(value, decimals = 3) {
+      if (!Number.isFinite(value)) return "—";
+
+      const abs = Math.abs(value);
+
+      if (abs !== 0 && (abs < 0.001 || abs >= 100000)) {
+        return value.toExponential(3);
+      }
+
+      return value.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: decimals
+      });
+    }
+
+    function dbi(value) {
+      return `${number(value, 3)} dBi`;
+    }
+
+    function degrees(value) {
+      return `${number(value, 4)}°`;
+    }
+
+    function derive(gmax) {
+      const dLambda = Math.sqrt(Math.pow(10, gmax / 10) / (ETA * Math.PI * Math.PI));
+      const phiR = 15.85 * Math.pow(dLambda, -0.6);
+      const g1 = 29 - 25 * Math.log10(phiR);
+      const radicand = gmax - g1;
+      const phiM = radicand > 0
+        ? (20 / dLambda) / Math.sqrt(radicand)
+        : NaN;
+      const phiX = Math.pow(10, (59 - gmax) / 25);
+
+      return {
+        gmax,
+        dLambda,
+        phiR,
+        g1,
+        radicand,
+        phiM,
+        phiX,
+        phiB: PHI_B
+      };
+    }
+
+    function coPolar(phi, p) {
+      if (!Number.isFinite(p.phiM)) {
+        return { gain: NaN, region: "Invalid: Gmax − G1 must be positive" };
+      }
+
+      if (phi < p.phiM) {
+        const gain = p.gmax - 2.5e-3 * Math.pow(p.dLambda * phi, 2);
+        return { gain, region: "Main lobe: 0° ≤ φ < φm" };
+      }
+
+      if (phi < p.phiR) {
+        return { gain: p.g1, region: "Plateau: φm ≤ φ < φr" };
+      }
+
+      if (phi < p.phiB) {
+        return {
+          gain: 29 - 25 * Math.log10(phi),
+          region: "Log roll-off: φr ≤ φ < φb"
+        };
+      }
+
+      return { gain: -10, region: "Back/side-lobe floor: φb ≤ φ ≤ 180°" };
+    }
+
+    function crossPolar(phi, p) {
+      if (phi < p.phiX) {
+        return {
+          gain: p.gmax - 30,
+          region: "Cross-polar plateau: 0° ≤ φ < φx"
+        };
+      }
+
+      if (phi < p.phiB) {
+        return {
+          gain: 29 - 25 * Math.log10(phi),
+          region: "Log roll-off: φx ≤ φ < φb"
+        };
+      }
+
+      return {
+        gain: -10,
+        region: "Back/side-lobe floor: φb ≤ φ ≤ 180°"
+      };
+    }
+
+    function validationItems(p) {
+      const items = [];
+
+      if (!Number.isFinite(p.phiM)) {
+        items.push({
+          type: "error",
+          label: "Error",
+          text: "Gmax − G1 is not positive, so φm cannot be calculated."
+        });
+        return items;
+      }
+
+      /*
+        Source validation:
+        1. Co-polar curve less than cross-polar at plateau level;
+           report says Gmax too big.
+        2. φr less than φm.
+        3. φb less than φx.
+      */
+      const coPlateau = p.g1;
+      const crossPlateau = p.gmax - 30;
+
+      if (coPlateau < crossPlateau) {
+        items.push({
+          type: "error",
+          label: "Error",
+          text: `Co-polar plateau G1 (${number(coPlateau)} dBi) is below cross-polar plateau Gmax − 30 (${number(crossPlateau)} dBi). The submitted validation identifies Gmax as too large.`
+        });
+      } else {
+        items.push({
+          type: "ok",
+          label: "Pass",
+          text: `Co-polar plateau G1 (${number(coPlateau)} dBi) is not below cross-polar plateau Gmax − 30 (${number(crossPlateau)} dBi).`
+        });
+      }
+
+      if (p.phiR < p.phiM) {
+        items.push({
+          type: "warning",
+          label: "Warning",
+          text: `φr (${degrees(p.phiR)}) is less than φm (${degrees(p.phiM)}). The nominal co-polar plateau interval is reversed.`
+        });
+      } else {
+        items.push({
+          type: "ok",
+          label: "Pass",
+          text: `Breakpoint ordering is valid for the co-polar plateau: φm (${degrees(p.phiM)}) ≤ φr (${degrees(p.phiR)}).`
+        });
+      }
+
+      if (p.phiB < p.phiX) {
+        items.push({
+          type: "error",
+          label: "Error",
+          text: `φb (${degrees(p.phiB)}) is less than φx (${degrees(p.phiX)}). The cross-polar log-roll-off interval is reversed.`
+        });
+      } else {
+        items.push({
+          type: "ok",
+          label: "Pass",
+          text: `Breakpoint ordering is valid for cross-polar gain: φx (${degrees(p.phiX)}) ≤ φb (${degrees(p.phiB)}).`
+        });
+      }
+
+      return items;
+    }
+
+    function renderValidation(p) {
+      const items = validationItems(p);
+
+      el.validation.innerHTML = items.map(item => `
+        <div class="status ${item.type}">
+          <strong>${item.label}</strong>
+          <span>${item.text}</span>
+        </div>
+      `).join("");
+    }
+
+    function clearCanvas(ctx, width, height) {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, width, height);
+    }
+
+    function drawPatternChart(p, selectedPhi) {
+      const canvas = el.canvas;
+      const ctx = canvas.getContext("2d");
+      const cssWidth = Math.max(520, canvas.parentElement.clientWidth || 900);
+      const cssHeight = 360;
+      const dpr = window.devicePixelRatio || 1;
+
+      canvas.style.width = `${cssWidth}px`;
+      canvas.style.height = `${cssHeight}px`;
+      canvas.width = Math.round(cssWidth * dpr);
+      canvas.height = Math.round(cssHeight * dpr);
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const width = cssWidth;
+      const height = cssHeight;
+      const margin = { top: 22, right: 20, bottom: 42, left: 56 };
+      const plotWidth = width - margin.left - margin.right;
+      const plotHeight = height - margin.top - margin.bottom;
+
+      clearCanvas(ctx, width, height);
+
+      const values = [];
+      const samples = 900;
+
+      for (let i = 0; i <= samples; i++) {
+        const phi = 180 * i / samples;
+        const co = coPolar(phi, p).gain;
+        const cross = crossPolar(phi, p).gain;
+
+        if (Number.isFinite(co)) values.push(co);
+        if (Number.isFinite(cross)) values.push(cross);
+      }
+
+      const yMin = Math.min(-15, Math.floor((Math.min(...values) - 2) / 5) * 5);
+      const yMax = Math.max(5, Math.ceil((Math.max(...values) + 2) / 5) * 5);
+
+      const xToPx = phi => margin.left + (phi / 180) * plotWidth;
+      const yToPx = gain => margin.top + ((yMax - gain) / (yMax - yMin)) * plotHeight;
+
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = "#e8edf3";
+      ctx.fillStyle = "#667085";
+      ctx.font = "12px Inter, system-ui, sans-serif";
+
+      for (let gain = yMin; gain <= yMax; gain += 5) {
+        const y = yToPx(gain);
+        ctx.beginPath();
+        ctx.moveTo(margin.left, y);
+        ctx.lineTo(width - margin.right, y);
+        ctx.stroke();
+
+        ctx.textAlign = "right";
+        ctx.textBaseline = "middle";
+        ctx.fillText(`${gain}`, margin.left - 8, y);
+      }
+
+      for (let angle = 0; angle <= 180; angle += 20) {
+        const x = xToPx(angle);
+        ctx.beginPath();
+        ctx.moveTo(x, margin.top);
+        ctx.lineTo(x, height - margin.bottom);
+        ctx.stroke();
+
+        ctx.textAlign = "center";
+        ctx.textBaseline = "top";
+        ctx.fillText(`${angle}°`, x, height - margin.bottom + 10);
+      }
+
+      ctx.strokeStyle = "#98a2b3";
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(margin.left, margin.top);
+      ctx.lineTo(margin.left, height - margin.bottom);
+      ctx.lineTo(width - margin.right, height - margin.bottom);
+      ctx.stroke();
+
+      ctx.save();
+      ctx.translate(16, margin.top + plotHeight / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillStyle = "#475467";
+      ctx.fillText("Gain (dBi)", 0, 0);
+      ctx.restore();
+
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillStyle = "#475467";
+      ctx.fillText("Off-axis angle φ (degrees)", margin.left + plotWidth / 2, height - 10);
+
+      function plot(getGain, color) {
+        ctx.beginPath();
+        let started = false;
+
+        for (let i = 0; i <= samples; i++) {
+          const phi = 180 * i / samples;
+          const gain = getGain(phi);
+
+          if (!Number.isFinite(gain)) {
+            started = false;
+            continue;
+          }
+
+          const x = xToPx(phi);
+          const y = yToPx(gain);
+
+          if (!started) {
+            ctx.moveTo(x, y);
+            started = true;
+          } else {
+            ctx.lineTo(x, y);
+          }
+        }
+
+        ctx.lineWidth = 2.25;
+        ctx.strokeStyle = color;
+        ctx.stroke();
+      }
+
+      plot(phi => coPolar(phi, p).gain, "#1468e9");
+      plot(phi => crossPolar(phi, p).gain, "#7c3aed");
+
+      const selectedX = xToPx(selectedPhi);
+      ctx.setLineDash([5, 4]);
+      ctx.strokeStyle = "#111827";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(selectedX, margin.top);
+      ctx.lineTo(selectedX, height - margin.bottom);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      const selectedCo = coPolar(selectedPhi, p).gain;
+      const selectedCross = crossPolar(selectedPhi, p).gain;
+
+      function marker(gain, color) {
+        if (!Number.isFinite(gain)) return;
+        ctx.beginPath();
+        ctx.arc(selectedX, yToPx(gain), 4.5, 0, Math.PI * 2);
+        ctx.fillStyle = "#ffffff";
+        ctx.fill();
+        ctx.lineWidth = 2.5;
+        ctx.strokeStyle = color;
+        ctx.stroke();
+      }
+
+      marker(selectedCo, "#1468e9");
+      marker(selectedCross, "#7c3aed");
+    }
+
+    function setOutput(element, value, unit = "") {
+      element.innerHTML = `${value}${unit ? `<span class="metric-unit">${unit}</span>` : ""}`;
+    }
+
+    function calculate() {
+      const gmax = Number(el.gmax.value);
+      const phi = Number(el.phi.value);
+
+      el.inputError.style.display = "none";
+      el.inputError.textContent = "";
+
+      if (!Number.isFinite(gmax) || !Number.isFinite(phi)) {
+        el.inputError.textContent = "Enter numeric values for Gmax and φ.";
+        el.inputError.style.display = "block";
+        return;
+      }
+
+      if (gmax <= 0 || gmax > 100) {
+        el.inputError.textContent = "Gmax must be greater than 0 dBi and no more than 100 dBi.";
+        el.inputError.style.display = "block";
+        return;
+      }
+
+      if (phi < 0 || phi > 180) {
+        el.inputError.textContent = "The off-axis angle φ must be between 0° and 180°.";
+        el.inputError.style.display = "block";
+        return;
+      }
+
+      const p = derive(gmax);
+      const co = coPolar(phi, p);
+      const cross = crossPolar(phi, p);
+
+      el.coGain.textContent = dbi(co.gain);
+      el.crossGain.textContent = dbi(cross.gain);
+      el.coRegion.textContent = co.region;
+      el.crossRegion.textContent = cross.region;
+
+      setOutput(el.dLambda, number(p.dLambda, 5));
+      setOutput(el.g1, number(p.g1, 3), "dBi");
+      setOutput(el.phiM, degrees(p.phiM));
+      setOutput(el.phiR, degrees(p.phiR));
+      setOutput(el.phiX, degrees(p.phiX));
+      setOutput(el.phiB, degrees(p.phiB));
+
+      renderValidation(p);
+      drawPatternChart(p, phi);
+    }
+
+    function reset() {
+      el.gmax.value = "45";
+      el.phi.value = "3";
+      calculate();
+    }
+
+    el.calculate.addEventListener("click", calculate);
+    el.reset.addEventListener("click", reset);
+
+    [el.gmax, el.phi].forEach(input => {
+      input.addEventListener("keydown", event => {
+        if (event.key === "Enter") calculate();
+      });
+
+      input.addEventListener("input", () => {
+        if (el.gmax.value !== "" && el.phi.value !== "") calculate();
+      });
+    });
+
+    window.addEventListener("resize", () => {
+      const gmax = Number(el.gmax.value);
+      const phi = Number(el.phi.value);
+
+      if (Number.isFinite(gmax) && Number.isFinite(phi)) {
+        drawPatternChart(derive(gmax), phi);
+      }
+    });
+
+    calculate();
+  </script>
+</body>
+</html>
