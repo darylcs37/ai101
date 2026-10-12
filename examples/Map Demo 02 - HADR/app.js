@@ -91,7 +91,7 @@ const map = L.map('map', {
 });
 
 const tileLayers = {
-  dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  dark: L.tileLayer('https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}{r}.png', {
     attribution: '© OpenStreetMap contributors © CartoDB',
     maxZoom: 19,
   }),
